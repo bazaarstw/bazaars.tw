@@ -1,21 +1,195 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0014)about:internet -->
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>index</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--Fireworks CS6 Dreamweaver CS6 target.  Created Mon Jul 20 16:58:35 GMT+0800 2015-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>我的菜市場</title>
+	<meta name="author" content="King Ocean" />
+	<meta name="description" content="bazaar" />
+	<meta name="keywords"  content="bazaar , market" />
+	<meta name="Resource-type" content="Document" />
+
+
+	<link rel="stylesheet" type="text/css" href="_css/index.css" />
+
+	<!--[if IE]>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
+		</script>
+	<![endif]-->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="_js/jquery.slimscroll.min.js"></script>
+
+	<script type="text/javascript" src="_js/jquery.fullPage.js"></script>
+	<script type="text/javascript" src="_js/index.js"></script>
+	<script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			$('#centerFrame').fullpage({
+				anchors: ['firstPage', 'secondPage', 'footerFrame'],
+				scrollBar: true,
+				autoScrolling: true,
+				fitToSection: false
+			});
+			
+			$('#link-1').animate({
+				opacity: 1,
+				top: "-=30",
+				height: "show"
+			}, 500, function() {
+				// Animation complete.
+			});
+			
+			$('#link-2').animate({
+				opacity: 1,
+				top: "+=30",
+				height: "show"
+			}, 500, function() {
+				// Animation complete.
+			});
+			
+			$('#link-3').animate({
+				opacity: 1,
+				top: "-=30",
+				height: "show"
+			}, 500, function() {
+				$('#link-4').animate({
+					opacity: 1,
+					bottom: "-=30",
+					height: "show"
+				}, 500, function() {
+					// Animation complete.
+				});
+			});
+
+			$('#link-4').on('mouseover',function(){
+				$(this).animate({
+					opacity: 0.8,
+					bottom: "-=20",
+					height: "show"
+				}, 500, function() {
+					// Animation complete.
+				});
+			});
+			
+			$('#link-4').on('mouseout',function(){
+				$(this).animate({
+					opacity: 1,
+					bottom: "+=20",
+					height: "show"
+				}, 500, function() {
+					// Animation complete.
+				});
+			});
+			
+		});
+	</script>
+
 </head>
-<body bgcolor="#ffffff">
-<img name="index" src="assets/images/index.jpg" id="index" usemap="#m_index" alt="" height="1809" width="1280"><map name="m_index" id="m_index">
-<area shape="rect" coords="1019,800,1128,836" href="http://projects.ko-tw.com/test/bazaar_webview20150720/news-list.htm" alt="">
-<area shape="rect" coords="158,860,1136,1166" href="http://projects.ko-tw.com/test/bazaar_webview20150720/food.htm" alt="">
-<area shape="rect" coords="318,800,830,836" href="http://projects.ko-tw.com/test/bazaar_webview20150720/news-detail.htm" alt="">
-<area shape="rect" coords="846,1222,1136,1514" href="http://projects.ko-tw.com/test/bazaar_webview20150720/schedule.htm" alt="">
-<area shape="rect" coords="503,1222,793,1514" href="http://projects.ko-tw.com/test/bazaar_webview20150720/store-search.htm" alt="">
-<area shape="rect" coords="158,1222,448,1514" href="http://projects.ko-tw.com/test/bazaar_webview20150720/food.htm" alt="">
-<area shape="rect" coords="1063,36,1116,58" href="http://projects.ko-tw.com/test/bazaar_webview20150720/register.htm" alt="">
-<area shape="rect" coords="1006,36,1059,58" href="http://projects.ko-tw.com/test/bazaar_webview20150720/login.htm" alt="">
-</map>
+<body>
+<div class="trPic"> <div class="redO"> </div> </div>
+<div id="mainFrame">
+	<div id="headerFrame">
+		<nav id="MenuBar" class="navbar navbar-inverse navbar-static-top">
+		  <div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#">我的菜市場</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+			  <ul class="nav navbar-nav">
+				<li class="active"><a href="#">菜市場link1</a></li>
+				<li><a href="#about">菜市場link2</a></li>
+				<li><a href="#contact">菜市場link3</a></li>
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜市場 Group link <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action1</a></li>
+						<li><a href="#">Action2</a></li>
+						<li><a href="#">Action3</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">分類</li>
+						<li><a href="#">Action4</a></li>
+						<li><a href="#">Action5</a></li>
+					</ul> 
+				</li>
+			  </ul>
+			</div>
+		  </div>
+		</nav>
+	</div>
+	
+	<div id="centerFrame">
+		<div class="section " id="section0">
+			<div class="intro">
+				<a href="#" class="links" id="link-0">登入</a>
+				<a href="#" class="links" id="link-1">&nbsp;</a>
+				<a href="#" class="links" id="link-2">&nbsp;</a>
+				<a href="#" class="links" id="link-3">&nbsp;</a>
+				<a href="#secondPage" class="links" id="link-4">發現更多</a>
+				
+			</div>
+		</div>
+		<div class="section" id="section1">
+			<div class="main">
+				<ul class="active-news row">
+					<li class="col-lg-2 title">活動報報</li>
+					<li class="col-lg-9 content">
+						<marquee>
+							<a href="">我是第一個訊息</a>
+							<a href="">我是第二個訊息</a>
+						</marquee>
+					</li>
+					<li class="col-lg-1 more"><button type="button" class="btn btn-more">活動列表</button></li>
+				</ul>
+				
+				<div class="slider-wrapper">
+					<img src="_images/99_df_img_01.jpg" />
+				</div>
+				
+				<div class="intro">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="effect-overlay">
+								<img src="_images/10_index_intro_food.jpg"/>
+								<a href="#" target="_blank" class="mask"> <p>嚴選食材來自一群台灣在地的農夫們，改採自然的方式耕種，可以讓一切開始改變，找回充滿樂趣的大地，也讓我們遠離傷害身體的食物。</p></a>
+							</div>
+						</div><!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<div class="effect-overlay">
+								<img src="_images/10_index_intro_store.jpg"/>
+								<a href="#" target="_blank" class="mask"> <p>嚴選食材來自一群台灣在地的農夫們，改採自然的方式耕種，可以讓一切開始改變，找回充滿樂趣的大地，也讓我們遠離傷害身體的食物。</p></a>
+							</div>
+						</div><!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<div class="effect-overlay">
+								<img src="_images/10_index_intro_msg.jpg"/>
+								<a href="#" target="_blank" class="mask"> <p>嚴選食材來自一群台灣在地的農夫們，改採自然的方式耕種，可以讓一切開始改變，找回充滿樂趣的大地，也讓我們遠離傷害身體的食物。</p></a>
+							</div>
+						</div><!-- /.col-lg-4 -->
+					</div>
+					<hr>
+				</div>
+				<div id="footerFrame" class="project-style">
+					<p id="copyright">Copyright © 2015 All Rights Reserved</p>
+				</div>
+			</div>
+		</div>		
+	</div>
+	
+	
+</div>
 
-
-</body></html>
+</body>
+</html>
