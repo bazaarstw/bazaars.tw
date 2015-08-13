@@ -1,9 +1,9 @@
 language: php
 php:
   - 5.3
-script: test.sh
+script: "./test.sh"
 deploy:
   provider: script
-  script: deploy.sh
+  script: "./deploy.sh"
   on:
     branch: release
