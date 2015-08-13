@@ -1,6 +1,8 @@
 language: php
 php:
   - 5.3
+install:
+  - 
 deploy:
   provider: script
   script: deploy.sh
