@@ -1,3 +1,6 @@
+language: php
+php:
+  - 5.3
 deploy:
   provider: script
   script: deploy.sh
