@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+body,html{
+	height: 100%;
+	font-size: 13px;
+	font-family: "微軟正黑體", "新細明體", "Arial Unicode MS";
+}
+
+
+ /* Demos Menu
+ * --------------------------------------- */
+ #MenuBar{
+	position:absolute;
+	width: 100%;
+	z-index: 999;
+ }
