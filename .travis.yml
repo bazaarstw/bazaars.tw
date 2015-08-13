@@ -8,4 +8,4 @@ deploy:
   provider: script
   script: "./deploy.sh"
   on:
-    branch: release
+    branch: master
