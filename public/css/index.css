@@ -14,7 +14,7 @@
 
 #mainFrame{
 	background-color:#CCC;
-	background:url('../_images/00_comm_bg.png') no-repeat bottom center;
+	background:url('../images/00_comm_bg.png') no-repeat bottom center;
 }
 #centerFrame{
 	
@@ -46,7 +46,7 @@
 
  
  #section0{
-	background:url('../_images/index-cover.jpg') no-repeat top center;
+	background:url('../images/index-cover.jpg') no-repeat top center;
 	margin: 0px;
 	padding: 0px;
  }
@@ -64,28 +64,28 @@
 	#section0 .intro a#link-1{
 		top: 60%;
 		left: 30%;
-		background:url('../_images/10_index_menu_food.png') no-repeat top center;
+		background:url('../images/10_index_menu_food.png') no-repeat top center;
 	}
 	#section0 .intro a#link-1:hover{
-		background:url('../_images/10_index_menu_food_mhover.png') no-repeat top center;
+		background:url('../images/10_index_menu_food_mhover.png') no-repeat top center;
 	}
 
 	#section0 .intro a#link-2{
 		top: 40%;
 		left: 50%;
-		background:url('../_images/10_index_menu_store.png') no-repeat top center;
+		background:url('../images/10_index_menu_store.png') no-repeat top center;
 	}
 	#section0 .intro a#link-2:hover{
-		background:url('../_images/10_index_menu_store_mhover.png') no-repeat top center;
+		background:url('../images/10_index_menu_store_mhover.png') no-repeat top center;
 	}
 	
 	#section0 .intro a#link-3{
 		top: 60%;
 		left: 75%;
-		background:url('../_images/10_index_menu_msg.png') no-repeat top center;
+		background:url('../images/10_index_menu_msg.png') no-repeat top center;
 	}
 	#section0 .intro a#link-3:hover{
-		background:url('../_images/10_index_menu_msg_mhover.png') no-repeat top center;
+		background:url('../images/10_index_menu_msg_mhover.png') no-repeat top center;
 	}
 	
 	#section0 .intro a#link-4{
@@ -96,7 +96,7 @@
 		padding: 40px 0 0 0;
 		width: 168px;
 		height: 168px;
-		background:url('../_images/90_index_icon_find.png') no-repeat top center;
+		background:url('../images/90_index_icon_find.png') no-repeat top center;
 		opacity: 0;
 		text-align: center;
 	}
@@ -162,7 +162,7 @@
 	opacity:0;
 }
 .effect-overlay:hover .mask { 
-	background:url('../_images/10_index_mask.png') repeat top center;
+	background:url('../images/10_index_mask.png') repeat top center;
 	opacity:1;
 
 	-webkit-transition: opacity 0.5s 0s ease-in-out;
