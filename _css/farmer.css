@@ -1,0 +1,55 @@
+@CHARSET "ISO-8859-1";
+@import url("_commsubpages.css");
+
+
+#farmer-personal{
+	padding: 10px 30px;
+	border-right: 1px solid #CCC;
+}
+	#farmer-personal .cover,
+	#farmer-personal .name{
+		text-align: center;
+		font-size: 31px;
+		padding: 10px;
+	}
+		#farmer-personal .cover img{	
+			height: 150px;
+			width: 150px;
+			border-radius: 50%;
+		}
+	#farmer-personal .phone,
+	#farmer-personal .addrs{	
+		font-size: 18px;
+		padding: 5px 10px;
+	}
+	#farmer-personal .atricle{
+		padding: 10px 10px;
+		font-size: 18px;
+		color: #666;
+	}
+
+#farmer-information{
+	padding: 10px 30px;
+}
+	#farmer-information .title{
+		font-size: 21px;
+		padding: 10px 0px;
+	}
+	#farmer-information .list-offerfoods{
+		padding: 20px;
+	}
+		#farmer-information .list-offerfoods .items{
+			font-size: 21px;
+			color: #000;
+			background-color:#FC5;
+		}
+		#farmer-information .list-offerfoods .items:hover{
+			background-color:#C80;
+			color: #FFF;
+		}
+		
+	#farmer-information .link-stores .items a{
+		text-align: center;
+		display: block;
+		padding: 10px;
+	}

@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+a{
+	color: #333;
+}
+a:hover{
+	color: #999;	
+}
+.clear{
+	clear: both;	
+}
+.Line_Dot_Gray_01{
+	border-top: 1px solid #CCC;	
+}
+.loading{
+	text-align: center;
+	padding: 50px;
+	border: 1px solid #CCC;
+	height: 150px;
+	margin: 10px 0px;
+}
+.text {
+	border: 1px solid #CCC;
+	
+}
+.empty{
+	padding: 10px;
+	color: #999;
+}
+.example{
+	color: #666;
+}
+
+.data_hide{
+
+	display: none;
+}
+.data_show{
+
+	display: none;
+}
+
+/******FooerFrame******/
+#Formdata_Default,#Formdata_Start,#Formdata_Complete{
+	display: none;
+	text-align: center;
+}
+
+/*****Bakcground Style******/
+.move_background{
+	background: #EEE;
+}
+
+.error{
+	color: #F00;
+}
+
+.errorBlock{
+	text-align: center;
+}

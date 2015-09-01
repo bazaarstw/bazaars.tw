@@ -1,0 +1,45 @@
+@CHARSET "ISO-8859-1";
+@import url("_commsubpages.css");
+
+
+#store-personal{
+	padding: 10px 30px;
+	border-right: 1px solid #CCC;
+}
+	#store-personal .cover,
+	#store-personal .name{
+		text-align: center;
+		font-size: 31px;
+		padding: 10px;
+	}
+	#store-personal .phone,
+	#store-personal .addrs{	
+		font-size: 18px;
+		padding: 5px 10px;
+	}
+	#store-personal .atricle{
+		padding: 10px 10px;
+		font-size: 18px;
+		color: #666;
+	}
+
+#cooperation-farmers{
+	padding: 10px 30px;
+}
+	#cooperation-farmers .title{
+		font-size: 21px;
+		padding: 10px 0px;
+	}
+	
+	#cooperation-farmers .link-stores .items{
+		text-align: center;
+	}
+		#cooperation-farmers .link-stores .items img{
+			border-radius: 50%;
+			width: 120px;
+		}
+		#cooperation-farmers .link-stores .items .farmer-name{
+			padding: 10px 0px;
+			color: #000;
+			font-size: 18px;
+		}

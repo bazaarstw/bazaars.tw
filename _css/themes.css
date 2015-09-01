@@ -1,0 +1,153 @@
+@charset "utf-8";
+	
+/**update the bootstrap config**/
+.col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding: 0;
+}
+
+.navbar-inverse{
+	background: none;
+	border-bottom: none;
+}
+
+
+/* The themens Config
+ * --------------------------------------- */
+.themes .form_login{
+	width: 500px;
+	margin: 0 auto;
+}
+	.themes .form-header{
+		font-size: 36px;
+		font-weight: 200;
+		padding: 70px 0;
+		text-align: center;
+	}
+	.themes .form-control{
+		border: 2px solid #5cb85c;
+		border-radius: 15px;
+		padding: 25px;
+		font-size: 18px;
+	}
+	.themes .control-label{
+		padding: 10px;
+		font-size: 23px;
+		color: #000;
+		font-weight: 200;
+	}
+
+.themes .user-block{
+	padding: 25px 2px 2px 2px;
+	margin: 5px 0;
+}
+ 
+.themes .navbar{
+	border-top: 1px solid #5cb85c;
+	font-weight: 200px;
+}
+	.themes .navbar .navbar-nav>li>a{
+		color: #5cb85c;
+	}
+	.themes .navbar .navbar-nav>li>a:hover{
+		color: #CCC;
+	}
+
+.themes .btn{
+	border-radius: 4px;
+	border: 1px solid #CCC;
+	background: #EEE;
+	color: #FFF;
+	padding: 3px 5px;
+	min-width: 80px;
+}
+.themes .btn:hover{
+	background: #CCC;
+}
+	.themes .btn.btn-normal{
+		background-color: #5cb85c;
+		border-color: #4cae4c;
+	}
+
+	.themes .btn.btn-normal:hover{
+		background-color: #449d44;
+		border-color: #398439;
+	}
+	
+	.themes .btn.btn-check{
+		background-color: #F00;
+		border-color: #E11;
+	}
+		.themes .btn.btn-check:hover{
+			background-color: #D00;
+		}
+	.themes .btn.btn-uncheck{
+		background-color: #333;
+		border-color: #000;
+	}
+		.themes .btn.btn-uncheck:hover{
+			background-color: #000;
+		}
+	
+	.themes .btn.btn-login{
+		padding: 3px 5px 3px 25px;
+		
+		background-image: url('../_images/99_themes_icons.png');
+		background-repeat:  no-repeat;
+		background-position: 6px top;
+		
+		
+	}
+	.themes .btn.btn-login:hover{
+		
+		border-color: #398439;
+	}
+	.themes .btn.btn-icon-facebook{
+		background-color:#06c;
+	}
+	.themes .btn.btn-icon-google{
+		background-color:#F55;
+	}
+
+
+
+	.themes .navbar-inverse .navbar-toggle {
+		background-color: #449d44;
+		border-color: #398439;
+	}
+		.themes .navbar-inverse .navbar-toggle:focus, 
+		.themes .navbar-inverse .navbar-toggle:hover {
+			background-color: #449d44;
+		}
+		
+	.themes .navbar-inverse .navbar-brand{
+		color: #5cb85c;
+	}
+	
+@media (max-width: 767px){
+	.themes .logo{
+		text-align: center;
+	}
+	.themes .navbar-inverse{
+		border: 1px solid #5cb85c;
+		background: #FFF;
+		font-size: 15px;
+	}
+	.themes .navbar-inverse .navbar-collapse, 
+	.themes .navbar-inverse .navbar-form{
+		border-top: 1px solid #5cb85c;
+		background: #FFF;
+	}
+}
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

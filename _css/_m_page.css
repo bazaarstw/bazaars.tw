@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+._m_pages{
+	text-align: center;
+	padding-top: 5px;
+	clear: left;
+	background-color: #EBEBEB;
+	padding-bottom: 5px;
+}
+._m_pages .pCheck{
+	font-weight: bold;
+}
+._m_pages .pNum a{
+	padding: 0 5px;
+	cursor: pointer;
+}
+._m_pages.back{
+	border-top: 1px dotted #CCC;
+	background-color: #FFF;
+}
