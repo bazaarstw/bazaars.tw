@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+._m_wordblock{
+	padding: 10px 30px;
+}
+._m_wordblock .col_header {
+	border-bottom: 1px solid #CCC;
+	padding: 0px 5px;
+}
+._m_wordblock .col_header .dCols.date{
+	float: left;
+	padding-top: 2px;
+}
+._m_wordblock .col_header .dCols.title{
+	float: left;
+	padding-right:10px;
+	color: #f58c24;
+	font-size: 17px;
+}
+
+._m_wordblock .col_body{
+	padding: 10px 5px;
+}
+._m_wordblock .col_body{
+	padding: 10px 5px;
+}
+

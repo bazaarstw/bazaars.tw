@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+._m_wordframelist{
+	padding: 10px 30px;
+}
+._m_wordframelist .col_header {
+	border-bottom: 1px solid #CCC;
+	padding: 0px 5px;
+}
+._m_wordframelist .col_header .dCols.date{
+	float: left;
+	padding-top: 2px;
+}
+._m_wordframelist .col_header .dCols.title{
+	float: left;
+	padding-right:10px;
+	color: #f58c24;
+	font-size: 17px;
+}
+
+._m_wordframelist .col_body{
+	padding: 10px 0;
+	font-size: 15px;
+}
+._m_wordframelist .col_body  .content{
+	margin: 5px;
+}
+._m_wordframelist .col_body .dCols.cover{
+	float: left;
+	width: 150px;
+	padding: 2px;
+	height: 250px;
+}
+._m_wordframelist .col_body .cover img{
+	border: 1px solid #CCC;
+}
+._m_wordframelist .col_body .dCols.cover img{ 
+	width: 130px;
+}
+._m_wordframelist .col_body .dCols.title{
+	float: left;
+	width: 88px;
+	padding: 2px;
+	background: #999;
+	color: #FFF;
+	text-align: center;
+}
+._m_wordframelist .col_body .dCols.data{
+	float: left;
+	width: 258px;
+	padding: 2px 5px;
+	clear: right;
+	border-bottom: 1px dotted #CCC;
+}
+
+._m_wordframelist .col_body .dCols.data.subject{
+	
+	border:none;
+}

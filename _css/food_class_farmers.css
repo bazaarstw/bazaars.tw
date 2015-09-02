@@ -1,0 +1,77 @@
+@CHARSET "ISO-8859-1";
+
+@import url("_commsubpages.css");
+
+#form-farmer-search .title{
+	font-size: 21px;
+	padding: 5px;
+	font-weight: 600;
+	text-align: right;
+}
+
+#form-farmer-search select{
+	padding: 3px;
+	font-size: 18px;
+}
+#form-farmer-search input{
+	padding: 3px;
+	font-size: 18px;
+}
+#farmers-list .items a{
+	text-align: center;
+	background-color:#FFF;
+	margin: 30px;
+	padding: 15px;
+	display: block;
+	color: #000;
+	-moz-box-shadow: 5px 6px 5px -2px rgba(20%,20%,20%,0.3);
+    -webkit-box-shadow: 5px 6px 5px -2px rgba(20%,20%,20%,0.3);
+    box-shadow: 5px 6px 5px -2px rgba(20%,20%,20%,0.3);
+	border: 1px solid #CCC;
+}
+#farmers-list .items a:hover{
+	margin: 25px 30px 35px 30px;
+	-moz-box-shadow: 0px 0px 0px 0px rgba(20%,20%,20%,0.3);
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(20%,20%,20%,0.3);
+    box-shadow: 0px 0px 0px 0px rgba(20%,20%,20%,0.3);
+	border: 1px solid #CCC;
+}
+#farmers-list .items a .cover{
+	overflow: hidden;
+	max-height: 220px;
+}
+	#farmers-list .items a .cover .produce-type{
+		z-index: 99;
+		position: relative;
+		top: 200px;
+		color: #FFF;
+		font-size: 17px;
+	}
+	#farmers-list .items a .cover img{
+		z-index: 1;
+		position: relative;
+		min-height: 220px;
+		width: 300px;
+		top: -20px;
+	}
+
+#farmers-list .items a .name{
+	color: #000;
+	font-size: 25px;
+	padding: 15px 0;
+}
+#farmers-list .items a .article{
+	color: #666;
+	font-size: 17px;
+	padding: 0;
+}
+.view_parentFoodClassName{
+	padding: 10px;
+	font-size: 18px;
+	color: #06c;
+}
+.col_title {
+	font-size: 38px;
+	text-align: center;
+	padding: 20px;
+}

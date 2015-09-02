@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+.Wd_Gray_01{
+	color: #666;	
+}
+.Wd_Blue_01{
+	color: #06C;	
+}
+.Wd_Brown_01 {
+	color: #603813;
+}
+.Wd_White_01 {
+	font-size: 13px;
+	color: #FFF;
+}
+.Wd_Pink_01 {
+	font-size: 13px;
+	color: #EA5551;
+}
+.Wd_Red_01 {
+	font-size: 13px;
+	color: #F00;
+}
+.Wd_Intro_01{
+	color: #666;
+}
+.Wd_Intro_02{
+	color: #000;
+}

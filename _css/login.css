@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+@import url("_commsubpages.css");
+
+
+	
+/* The themens Config
+ * --------------------------------------- */
+.themes .form-group {
+    margin-bottom: 20px;
+}
+.themes .btn.btn-uncheck,
+.themes .btn.btn-check{
+	font-size: 21px;
+}
