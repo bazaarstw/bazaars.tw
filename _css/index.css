@@ -20,6 +20,7 @@
 #mainFrame{
 	background-color:#CCC;
 	background:url('../_images/00_comm_bg.png') no-repeat bottom center;
+	display: none;
 }
 
 #centerFrame .intro{
@@ -52,8 +53,8 @@
 		height: 168px;
 	}
 	#section0 .intro a#link-0{
-		top: 25%;
-		right: 25%;
+		top: 23%;
+		right: 25.5%;
 		height: 30px;
 	}
 	#section0 .intro a#link-1{

@@ -71,7 +71,7 @@
             <input name="photo" type="hidden" value="<?php echo $fbPhoto;?>" />
             <input name="registerType" type="hidden" value="Facebook" />
         </form>
-        <script src="../../_library/jquery-1.9.1.min.js"></script>
+        <script src="../../_library/jquery.min.js"></script>
         
         <script>
             var formObj = $(".form_login");
