@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>DEMO-我的菜市場 開發版20150721</title>
+		<meta name="keywords" content="(定義關鍵字)A, B, C"/>
+		<meta name="description" content="(定義描述)" />
+		<meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
+        <meta name="fragment" content="!">
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../_css/login.css" />
+        <link rel="stylesheet" href="_css/chosen.css" />
+        
+		<script src="../_library/require.min.js" defer async="true"></script>
+		<script src="../_library/require.min.js" data-main="_js/admfarmerdetail"></script>
+	</head>
+<body>
+	<div id="mainFrame" class="themes">
+		<br/>
+		<br/>
+		<div id="centerFrame">
+			<form class="form_saveFarmer form-horizontal">
+				<input class="bind_act" type='hidden' name='act' value='farmer_prcAdd'/>
+				<input class="bind_foodItem" type='hidden' name='foodItem' value=''/>
+				<input class="bind_storeItem" type='hidden' name='storeItem' value=''/>
+				<input class="bind_farmerId" type='hidden' name='farmerId' value=''/>
+				
+				姓名：<input type="text" name="farmerName" class="bind_farmerName">
+				<br/>
+				
+				手機：
+				<div class="bind_phoneList">
+					<!-- basic phone template -->
+					<div class="bind_phone_base">
+						<input type="text" class="bind_phone" />
+						<input type="button" class="bind_phone_add" value="+" />
+						<input type="button" class="bind_phone_del" value="-" />
+						<br/>
+					</div>
+				</div>
+				<br/>
+				
+				Email：
+				<div class="bind_emailList">
+					<!-- basic email template -->
+					<div class="bind_email_base">
+						<input type="text" class="bind_email" />
+						<input type="button" class="bind_email_add" value="+" />
+						<input type="button" class="bind_email_del" value="-" />
+						<br/>
+					</div>
+				</div>
+				<br/>
+				
+				個人網頁連結：
+				<div class="bind_linkList">
+					<!-- basic email template -->
+					<div class="bind_link_base">
+						<input type="text" class="bind_link" />
+						<input placeholder="可於此欄填寫網頁說明" type="text" class="bind_linkDesc" />
+						<input type="button" class="bind_link_add" value="+" />
+						<input type="button" class="bind_link_del" value="-" />
+						<br/>
+					</div>
+				</div>
+				<br/>
+				
+				食品品項：<select data-placeholder="請選擇農友食品品項" class="foodItem" multiple tabindex="6"></select>
+				<br/>
+				
+				說明：<textarea name="content" row="3" cols="80" class="bind_content"></textarea>
+				<br/>
+				
+				Facebook RSS：<input type="text" name="fbRss" class="bind_fbRss" />
+				<br/>
+				
+				店家：<select data-placeholder="請選擇店家" class="storeItem" multiple tabindex="6"></select>
+				<br/>
+				
+				<input type="button" class="aj_saveFarmer btn" value="儲存農友資料">
+			</form>
+		</div>
+		
+		
+	</div>
+	<div id="footerFrame">
+		<p id="copyright" title="Copyright © 2015 All Rights Reserved">Copyright © 2015 All Rights Reserved</p>
+	</div>
+</body>
+</html>
