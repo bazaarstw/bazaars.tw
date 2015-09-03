@@ -103,6 +103,38 @@ class Store extends Base {
 		$farmer = $sth->fetchAll();
 		return json_encode(array("info"=>$data, "farmer"=>$farmer));
 	}
+	
+	public function getItemChosen($params){
+		$farmerId = $params["farmerId"];
+		$storeId = $params["storeId"];
+		
+		if ($farmerId != "") {
+			$searchSql = 
+				"select s.*, ".
+				"  case when (select count(sf.storeFarmerId) from storefarmer sf where sf.farmerId = '$farmerId' and sf.storeId = s.storeId) > 0 then '1' else '0' end as selected ".
+				"from store s";
+			$sth = $this->dbh->prepare($searchSql);
+			$sth->execute();
+			$storeItem = $sth->fetchAll();
+		} else if ($storeId != "") {
+			$searchSql = 
+				"select s.*, ".
+				"  case when (select count(sf.storeFarmerId) from storefarmer sf where sf.storeId = '$storeId' and sf.storeId = s.storeId) > 0 then '1' else '0' end as selected ".
+				"from store s";
+			$sth = $this->dbh->prepare($searchSql);
+			$sth->execute();
+			$storeItem = $sth->fetchAll();
+		} else {
+			$searchSql = 
+				"select s.*, '0' as selected ".
+				"from store s";
+			$sth = $this->dbh->prepare($searchSql);
+			$sth->execute();
+			$storeItem = $sth->fetchAll();
+		}
+		
+		echo json_encode(array("storeItem"=>$storeItem));
+	}
 
 }
 ?>
