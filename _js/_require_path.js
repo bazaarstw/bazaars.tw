@@ -15,6 +15,7 @@ function getRootPath(){
 	var pos = strFullPath.indexOf(strPath);
 	var prePath = strFullPath.substring(0, pos);
 	var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+	if (postPath == '/member') postPath = '';
 	var returnPath = prePath + postPath + '/'
 	return(returnPath);
 }
