@@ -23,6 +23,12 @@ class Base {
 		
 		return array("row"=>$row, "count"=>$count);
 	}
+	
+	public function execSQL($sth, $execParam) {
+		$sth->execute($execParam);
+		$arr = $sth->errorInfo();
+		if ($arr[0] != "0000") throw new Exception($arr[2]);
+	}
 
 }
 ?>
