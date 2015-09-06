@@ -24,10 +24,10 @@ $(document).ready(function(){
 	xif (pageLocation.indexOf("active-detail.html") > -1) {
 		includeRequireJS(["modelJs/newsDetail.js"]);
 	}
-	xif (pageLocation.indexOf("work-search.html") > -1) {
+	xif (pageLocation.indexOf("work_search.html") > -1) {
 		includeRequireJS(["modelJs/work.js"]);
 	}
-	xif (pageLocation.indexOf("work-detail.html") > -1) {
+	xif (pageLocation.indexOf("work_detail.html") > -1) {
 		includeRequireJS(["modelJs/workDetail.js"]);
 	}
 	xif (pageLocation.indexOf("food.html") > -1) {
@@ -42,7 +42,7 @@ $(document).ready(function(){
 	xif (pageLocation.indexOf("farmer.html") > -1) {
 		includeRequireJS(["modelJs/farmer.js"]);
 	}
-	xif (pageLocation.indexOf("store-search.html") > -1) {
+	xif (pageLocation.indexOf("store_search.html") > -1) {
 		includeRequireJS(["modelJs/store.js"]);
 	}
 	xif (pageLocation.indexOf("store.html") > -1) {

@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+
+@import url("_commsubpages.css");
+
+
+
+	
+/* Update the fullcalendar.min.css
+ * --------------------------------------- */
+.fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td {
+    cursor: pointer;
+}
