@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>DEMO-我的菜市場 開發版20150721</title>
+        <meta name="keywords" content="(定義關鍵字)A, B, C"/>
+        <meta name="description" content="(定義描述)" />
+        <meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
+        <meta name="fragment" content="!">
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="_css/farmer.css" />
+
+        <script src="_library/require.min.js" defer async="true"></script>
+		<script src="_library/require.min.js" data-main="_js/farmer"></script>	
+    </head>
+<body>
+		
+<div id="mainFrame" class="themes">
+	<div id="headerFrame">
+		<ul class="row">
+			<li class="col-md-7 col-xs-12 logo">
+				<a href="index.html" title="返回首頁"><img src="_images/00_logo.png" alt="" /></a>
+			</li>
+			<li class="col-md-5 col-xs-12">
+				<!---------------- UserInfor ---------------->
+				<ul class="user-block view_loging row">
+					<li class="col-md-3 col-xs-12"><a href="javascript: void(0);" class="list aj_logout btn btn-normal" title="登出">登出</a></li>
+					<li class="view_loginInfo col-md-9 col-xs-12">訪客 您好，歡迎來到「我的菜市埸」！</li>
+				</ul>
+				<ul class="user-block view_notLogin row">
+					<li class="col-md-3 col-xs-3"><a href="login.html" class="list btn btn-normal btn-login" title="登入">登入</a></li>
+					<li class="col-md-9 col-xs-9">訪客 您好，歡迎來到「我的菜市埸」！</li>
+				</ul>
+				<!---------------- UserInfor ---------------->
+				
+				<!---------------- MenuBar ---------------->
+				<nav id="MenuBar" class="navbar navbar-inverse navbar-static-top">
+				  <div class="navbar-header">
+					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </button>
+					  <a class="navbar-brand visible-xs" href="#" title="我的菜市場 MENU">我的菜市場 MENU</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+					  <ul class="nav navbar-nav">
+						<li><a href="index.html" title="首頁">首頁</a></li>
+						<li><a href="food.html" title="找在地好食材">找在地好食材</a></li>
+						<li><a href="#" title="安心店家">安心店家</a></li>
+						<li><a href="#" title="訊息即時通">訊息即時通</a></li>
+					  </ul>
+					</div>
+				</nav>
+				<!---------------- MenuBar ---------------->
+			</li>
+		</ul>
+
+	</div>
+	
+	<div id="centerFrame">
+		<div class="row">
+			<div class="Cols col-md-4" id="farmer-personal">
+				<div class="cover"><img src="_files/farmers/farmer_00.jpg" /></div>
+				<h1 class="name">王美華</h1>
+				<!--<div class="editor"><input type="button" value="編輯"></div>-->
+				
+				<div class="phone"><p>聯絡電話<span>091-779-8793</span></p></div>
+				<div class="addrs"><p>台北市大安區仁愛路四段151巷36號B1</p></div>
+				<div class="atricle">
+					<p>我是宜蘭在地種植xxx的農民，宜蘭的好山好水好環境讓我能安心委植作業，並提供更好的作物給台灣人安心食用</p>
+				</div>
+				
+			</div>
+			
+			<div class="Cols col-md-8" id="farmer-information">
+				<h2 class="title">本農提供之食材</h2>
+				<ul class="list-offerfoods">
+					<li class="items btn"><span class="view_itemName">甘薯</span></li>
+				</ul>
+				
+				<h2 class="title">選用本農食材之合作店家</h2>
+				<ul class="link-stores">
+					<li class="items col-md-3">
+						<a href="#">
+							<img src="_files/stores/logo_03.jpg" width="100" title="合作店家" />
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>
+<div id="footerFrame">
+	<p class="system-msg"></p>
+	<p id="copyright" title="Copyright © 2015 All Rights Reserved">Copyright © 2015 All Rights Reserved</p>
+</div>
+</body>
+</html>

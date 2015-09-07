@@ -1,56 +1,9 @@
-@CHARSET "ISO-8859-1";
+@charset "utf-8";
 
 @import url("_commsubpages.css");
 
-#form-store-search .title{
-	font-size: 21px;
-	padding: 5px;
-	font-weight: 600;
-	text-align: right;
-}
 
-#form-store-search select{
-	padding: 3px;
-	font-size: 18px;
-}
-#form-store-search input{
-	padding: 3px;
-	font-size: 18px;
-}
-#form-store-search .cols-search li{
-	padding: 5px 0;
-}
 
-.Cols .title{
-	padding: 20px 20px 0px 20px;
-	text-align: center;
-}
-.Cols h1.title{
-	font-size: 31px;
-}
- .Cols h2.title{
-	padding: 10px;
-	color: #337ab7;
-}
-#stores-list{
-	text-align: center;
-}
-#stores-list .col-title .item-list{
-	padding: 8px;
-	margin: 10px 0;
-	border-bottom: 1px solid #000;
-	border-top: 1px solid #000;
-	color: #5cb85c;
-	font-size: 17px;
 
-}
-#stores-list .cols-body .item-list{
-	color: #000;
-	padding: 3px 8px;
-	font-size: 15px;
-}
-#stores-list .cols-body .item-list:hover{
-	color: #CCC;
-	background-color:#EEE;
-}
+
 

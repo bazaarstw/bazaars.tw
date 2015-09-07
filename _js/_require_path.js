@@ -45,9 +45,15 @@ require.config({
 		'bootstrap': getRootPath() + '_library/bootstrap.min',
 		// jqPaginator (2015/09/03)
 		'jqPaginator': getRootPath() + '_library/jqPaginator',
-		// fullcalendar (2015/09/03)
-		'fullcalendar_moment': getRootPath() + 'plugin/Calendar/lib/moment.min',
+		// momentJS 2.9.0 - fullcalendar Require (2015/09/06)
+		'moment': getRootPath() + 'plugin/Calendar/lib/moment.min',
+		// fullcalendar 2.4.0 (2015/09/06)
 		'fullcalendar': getRootPath() + 'plugin/Calendar/fullcalendar.min',
+		// SB Admin2 2015-06-23 (2015/09/04)
+		'dataTables': getRootPath() + 'plugin/sb-admin2/bower_components/datatables/media/js/jquery.dataTables.min',	// DataTables Plugin
+		'dataTables_bootstrap': getRootPath() + 'plugin/sb-admin2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min',	// DataTables Plugin
+		'metisMenu': getRootPath() + 'plugin/sb-admin2/bower_components/metisMenu/dist/metisMenu.min',	// Metis Menu Plugin
+		'sb-admin2': getRootPath() + 'plugin/sb-admin2/dist/js/sb-admin-2',	// Custom Theme JavaScript
 		// Chosen 1.4.2 (2015/09/03)
 		'chosen': getRootPath() + '_library/chosen'
 	},
@@ -61,10 +67,13 @@ require.config({
 		'jquery_slimscroll': ['jquery'],
 		'bootstrap': ['jquery_slimscroll'],
 		'jqPaginator': ['jquery'],
-		'fullcalendar': ['fullcalendar_moment', 'jquery'],
+		'fullcalendar': ['jquery', 'moment'],
 		'chosen': ['jquery'],
+		'dataTables_bootstrap': ['dataTables', 'bootstrap'],
+		'metisMenu': ['jquery'],
+		'sb-admin2': ['metisMenu', 'bootstrap', 'jquery'],
 		'conn': ['bootstrap', 'html5', 'json2', 'jquery_ui', 'jquery_warning', 'jqPaginator'],
-		'admconn': ['bootstrap', 'html5', 'json2']
+		'admconn': ['sb-admin2', 'bootstrap', 'html5', 'json2']
 	},
 	waitSeconds: 30
 });

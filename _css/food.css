@@ -2,22 +2,6 @@
 
 @import url("_commsubpages.css");
 
-#form-food-search .title{
-	font-size: 21px;
-	padding: 5px;
-	font-weight: 600;
-	text-align: right;
-}
-
-#form-food-search select{
-	padding: 3px;
-	font-size: 18px;
-}
-#form-food-search input{
-	padding: 3px;
-	font-size: 18px;
-}
-
 
 .col_title {
 	font-size: 38px;

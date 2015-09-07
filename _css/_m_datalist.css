@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Data List module
+ * 'cols-header' is 
+ * 'cols-title' is 
+ * --------------------------------------- */
+.mDataList{
+	text-align: center;
+}
+
+	.mDataList .cols-header .title{
+		padding: 20px 20px 0px 20px;
+		text-align: center;
+	}
+		.mDataList .cols-header h1.title{
+			font-size: 31px;
+		}
+		.mDataList .cols-header h2.title{
+			padding: 10px;
+			color: #337ab7;
+		}
+
+	.mDataList .cols-title .item-list{
+		padding: 8px;
+		margin: 10px 0;
+		border-bottom: 1px solid #000;
+		border-top: 1px solid #000;
+		color: #5cb85c;
+		font-size: 17px;
+
+	}
+	.mDataList .cols-body .item-list{
+		color: #000;
+		padding: 5px;
+		font-size: 15px;
+	}
+		.mDataList .cols-body .item-list:hover{
+			color: #CCC;
+			background-color:#EEE;
+		}
