@@ -1,20 +1,36 @@
 @charset "utf-8";
 /* CSS Document */
-._m_pages{
+
+/* Page module
+ * 'page-msg' is show data's any msg ex: no date 
+ * 'page-count' is show data's count number by page links ex:  123  
+ * --------------------------------------- */
+.mPage .page-msg,
+.mPage .page-count{
+	display: none;
 	text-align: center;
+}
+.mPage .page-msg{
+	width: 50%;
+	margin: 0 auto;
+}
+.mPage .page-msg.error{
+	width: 100%;
+}
+.mPage  .page-count{
 	padding-top: 5px;
 	clear: left;
 	background-color: #EBEBEB;
 	padding-bottom: 5px;
 }
-._m_pages .pCheck{
+.mPage .pCheck{
 	font-weight: bold;
 }
-._m_pages .pNum a{
+.mPage .pNum a{
 	padding: 0 5px;
 	cursor: pointer;
 }
-._m_pages.back{
+.mPage .back{
 	border-top: 1px dotted #CCC;
 	background-color: #FFF;
 }
