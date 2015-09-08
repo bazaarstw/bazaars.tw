@@ -1,26 +1,7 @@
 <?php
 
 class Farmer extends Base {
-	
-	public function getListData($params){
-		$isSuc = true;
-		$msg = "農友資料查詢成功！";
-		
-		try {
-			$usr = $_SESSION["website_login_session"];
-			$memberId = $usr["memberId"];
-			$searchSql = 
-				"select fm.* ".
-				"from farmer fm ".
-				"where fm.memberId = $memberId";
-			$data = $this->processPageSQL($params, $searchSql);
-		} catch (Exception $e) {
-			$isSuc = false;
-			$msg = "農友資料查詢失敗：". $e->getMessage();
-		}
-		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "list"=>$data['row'], "listCnt"=>$data['count']));
-	}
-	
+
 	public function getDetail($params){
 		$isSuc = true;
 		$msg = "農友資料查詢成功！";
@@ -69,6 +50,10 @@ class Farmer extends Base {
 		
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, "desc"=>$desc, "item"=>$item, "store"=>$store));
 	}
+	
+	/********************************************************************************************************************************************
+	Admin Function
+	*/
 
 	public function prcUpd($params){
 		$this->dbh->beginTransaction();
@@ -286,16 +271,23 @@ class Farmer extends Base {
 		$this->execSQL($sth, array($farmerId, "link"));
 		$curLink = $sth->fetchAll();
 		
-		//刪除
+		//刪除,修改
 		for ($i = 0 ; $i < count($curLink) ; $i++) {
 			if (!in_array($curLink[$i]["descValue"], $link)) {
 				$sth = $this->dbh->prepare(
 				     "delete from farmerdesc ".
 				     "where farmerDescId = ?");
 		        $this->execSQL($sth, array($curLink[$i]["farmerDescId"]));
+			} else {
+				$existIdx = array_search($curLink[$i]["descValue"], $link);
+				$sth = $this->dbh->prepare(
+				     "update farmerdesc set descContent = ?, updateDT = now() ".
+				     "where farmerDescId = ?");
+		        $this->execSQL($sth, array($linkDesc[$existIdx], $curLink[$i]["farmerDescId"]));
 			}
 			array_push($existLink, $curLink[$i]["descValue"]);
 		}
+		
 		//新增
 		for ($i = 0 ; $i < count($link) ; $i++) {
 			if (!in_array($link[$i], $existLink)) {
@@ -305,6 +297,27 @@ class Farmer extends Base {
 		        $this->execSQL($sth, array($farmerId, "link", $link[$i], $linkDesc[$i]));
 			}
 		}
+	}
+	
+	public function getAllData($params){
+		$isSuc = true;
+		$msg = "農友資料查詢成功！";
+		
+		try {
+			$usr = $_SESSION["website_login_session"];
+			$memberId = $usr["memberId"];
+			$searchSql = 
+				"select fm.* ".
+				"from farmer fm ".
+				"where fm.memberId = $memberId";
+			$sth = $this->dbh->prepare($searchSql);
+			$sth->execute(array($usr["memberId"]));
+			$data = $sth->fetchAll();
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "農友資料查詢失敗：". $e->getMessage();
+		}
+		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "list"=>$data));
 	}
 	
 }
