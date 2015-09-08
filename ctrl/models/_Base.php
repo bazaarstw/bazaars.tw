@@ -5,7 +5,7 @@ class Base {
 	public $dbh;
 	
 	public function __construct()	{		
-		$this->dbh = new PDO("mysql:host=localhost;dbname=test","test","test",array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));	
+		$this->dbh = new PDO("mysql:host=localhost;dbname=test","test","test",array(PDO::ATTR_PERSISTENT => TRUE, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));	
 	}
 	
 	public function processPageSQL($params, $searchSQL) {
