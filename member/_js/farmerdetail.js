@@ -8,18 +8,10 @@ require(['../../_js/_require_path'], function() {
 			$(document).ready(function(){
 				var farmerId = "";
 				
-				$(".bind_phone_base").hide();
-				$(".bind_email_base").hide();
-				$(".bind_link_base").hide();
-				
 				if (getUrlParam("farmerId") != null) farmerId = getUrlParam("farmerId");
 				if (farmerId != "") {
 					$(".bind_act").attr("value", "farmer_prcUpd");
 					initFarmerData();
-				} else {
-					addPhone("");
-					addEmail("");
-					addLink("", "");
 				}
 				initFoodItemChosen(farmerId);
 				initStoreItemChosen(farmerId, "");
@@ -41,19 +33,42 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_content").attr("value", info["content"]);
 							$(".bind_fbRss").attr("value", info["fbRss"]);
 							
+							var bool_phone = 0;
+							var bool_email = 0;
+							var bool_link = 0;
 							var desc = result.desc;
 							for (var idx = 0 ; idx < desc.length ; idx++) {
 								var descKey = desc[idx]["descKey"];
-								if (descKey == "phone") addPhone(desc[idx]["descValue"]);
-								if (descKey == "email") addEmail(desc[idx]["descValue"]);
+								if (descKey == "phone") {
+									if ($('.phone-field').size() == 1 && bool_phone == 0) {
+										bool_phone = 1;
+										$('#phone-field1').attr('value', desc[idx]["descValue"]);
+									} else {
+										addInputField('phone', '', '', desc[idx]["descValue"]);
+									}
+								}
+								if (descKey == "email") {
+									if ($('.email-field').size() == 1 && bool_email == 0) {
+										bool_email = 1;
+										$('#email-field1').attr('value', desc[idx]["descValue"]);
+									} else {
+										addInputField('email', '', '', desc[idx]["descValue"]);
+									}
+								}
 								if (descKey == "link") {
-									addLink(desc[idx]["descValue"], desc[idx]["descContent"]);
+									console.log($('.link-field').size());
+									if ($('.link-field').size() == 1 && bool_link == 0) {
+										bool_link = 1;
+										$('#link-field1').attr('value', desc[idx]["descValue"]);
+										$('#linkDesc-field1').attr('value', desc[idx]["descContent"]);
+									} else {
+										var settingVal = [];
+										settingVal.push(desc[idx]["descValue"]);
+										settingVal.push(desc[idx]["descContent"]);
+										addInputField('link', '', '', settingVal);
+									}
 								}
 							}
-							
-							if ($(".bind_phone").size() == 1) addPhone("");
-							if ($(".bind_email").size() == 1) addEmail("");
-							if ($(".bind_link").size() == 1) addLink("", "");
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
@@ -61,39 +76,79 @@ require(['../../_js/_require_path'], function() {
 						}
 					});
 				}
-
-				function addPhone(settingVal) {
-					var phoneSize = $(".bind_phone").size() - 1;
-					var template = $("<span>").append($(".bind_phone_base").html());
-					$(template).find(".bind_phone").attr("name", "phone[]");
-					$(template).find(".bind_phone").attr("value", settingVal);
-					if (phoneSize == 0) $(template).find(".bind_phone_del").remove();
-					else $(template).find(".bind_phone_add").remove();
-					$(".bind_phoneList").append($(template));
+				
+				// Writting By Richard (20150907)
+				function addInputField(FieldName, settingPlaceholder, settingTabindex, settingVal) {
+					switch (FieldName) {
+						case 'phone':
+							if (settingPlaceholder == '') settingPlaceholder = '請輸入手機號碼...';
+							if (settingTabindex == '') settingTabindex = 2;
+							break;
+						case 'email':
+							if (settingPlaceholder == '') settingPlaceholder = 'email@example.com';
+							if (settingTabindex == '') settingTabindex = 3;
+							break;
+						case 'link':
+							if (settingPlaceholder == '') {
+								settingPlaceholder = [];
+								settingPlaceholder[0] = 'http://www.facebook.com/example';
+								settingPlaceholder[1] = '請填寫網頁說明...';
+							}
+							if (settingTabindex == '') {
+								settingTabindex = [];
+								settingTabindex[0] = 4;
+								settingTabindex[1] = 4;
+							}
+							if (settingVal == '') {
+								settingVal = [];
+								settingVal[0] = '';
+								settingVal[1] = '';
+							}
+							break;
+					}
+					
+					next = parseInt($("#" + FieldName + "-field-count").text());
+					var addto = "#" + FieldName + "-field" + next;
+					var addRemove = "#" + FieldName + "-field" + (next);
+					next += 1;
+					$("#" + FieldName + "-field-count").text(next);
+					var newIn = '';
+					newIn = '<div id="field" class="' + FieldName + '-field">';
+					if (FieldName == 'link') {
+						newIn += '<div class="col-lg-6"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder[0] + '" tabindex="' + settingTabindex[0] + '"  value="' + settingVal[0] + '" /></div>';
+						newIn += '<div class="col-lg-5"><input autocomplete="off" class="form-control input bind_' + FieldName + 'Desc" id="' + FieldName + 'Desc-field' + next + '" name="' + FieldName + 'Desc[]" type="text" placeholder="' + settingPlaceholder[1] + '" tabindex="' + settingTabindex[1] + '"  value="' + settingVal[1] + '" /></div>';
+					} else {
+						newIn += '<div class="col-lg-11"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder + '" tabindex="' + settingTabindex + '"  value="' + settingVal + '" /></div>';
+					}
+					
+					newIn += '<div class="col-lg-1"><button id="' + FieldName + '-remove' + (next - 1) + '" class="btn btn-danger ' + FieldName + '-remove-me" >-</button></div>';
+					newIn += '</div>';
+					
+					var newInput = $(newIn);
+					$('.' + FieldName + '-field:last').after(newInput);
+					$("#" + FieldName + "-field" + next).attr('data-source',$(addto).attr('data-source'));
+					$("#count").val(next);
+					
+						$('.' + FieldName + '-remove-me').click(function(e){
+							var fieldNum = this.id.substr(this.id.lastIndexOf("e")+1);
+							// var fieldID = "#" + FieldName + "-field" + fieldNum;
+							$(this).parent().parent().remove();
+							// $(fieldID).parent().remove();
+						});
 				}
-
-				function addEmail(settingVal) {
-					var emailSize = $(".bind_email").size() - 1;
-					var template = $("<span>").append($(".bind_email_base").html());
-					$(template).find(".bind_email").attr("name", "email[]");
-					$(template).find(".bind_email").attr("value", settingVal);
-					if (emailSize == 0) $(template).find(".bind_email_del").remove();
-					else $(template).find(".bind_email_add").remove();
-					$(".bind_emailList").append($(template));
-				}
-
-				function addLink(settingVal, settingDesc) {
-					var linkSize = $(".bind_link").size() - 1;
-					var template = $("<span>").append($(".bind_link_base").html());
-					$(template).find(".bind_link").attr("name", "link[]");
-					$(template).find(".bind_link").attr("value", settingVal);
-					$(template).find(".bind_linkDesc").attr("name", "linkDesc[]");
-					$(template).find(".bind_linkDesc").attr("value", settingDesc);
-					if (linkSize == 0) $(template).find(".bind_link_del").remove();
-					else $(template).find(".bind_link_add").remove();
-					$(".bind_linkList").append($(template));
-				}
-
+				
+				$(".phone-add-more").click(function(e){
+					addInputField('phone', '', '', '');
+				});
+				
+				$(".email-add-more").click(function(e){
+					addInputField('email', '', '', '');
+				});
+				
+				$(".link-add-more").click(function(e){
+					addInputField('link', '', '', '');
+				});
+				
 				function initBtn() {
 					$(document).on("click", ".aj_saveFarmer", function() {
 						$(".bind_foodItem").attr("value", $('.foodItem').val());
@@ -113,33 +168,14 @@ require(['../../_js/_require_path'], function() {
 								if (result.isSuc) {
 									farmerId = result.farmerId;
 								}
+								window.location.replace("farmer.html");
 							},
 							error : function(jqXHR, textProject, errorThrown) {
 								alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
 								alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
 							}
 						});
-					});
-					
-					$(document).on("click", ".bind_phone_add", function() {
-						addPhone("");
-					});
-					$(document).on("click", ".bind_phone_del", function() {
-						$(this).parent().remove();
-					});
-					
-					$(document).on("click", ".bind_email_add", function() {
-						addEmail("");
-					});
-					$(document).on("click", ".bind_email_del", function() {
-						$(this).parent().remove();
-					});
-					
-					$(document).on("click", ".bind_link_add", function() {
-						addLink("", "");
-					});
-					$(document).on("click", ".bind_link_del", function() {
-						$(this).parent().remove();
+						return false;
 					});
 				}
 
@@ -151,7 +187,8 @@ require(['../../_js/_require_path'], function() {
 						data: {
 							act: 'store_getItemChosen',
 							farmerId: keyFarmerId,
-							storeId: keyStoreId
+							storeId: keyStoreId,
+							chosenPage: 'farmer'
 						},
 						dataType : "json", 
 						success : function(result) {  

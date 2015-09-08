@@ -33,7 +33,7 @@ require(['_require_path'], function() {
 							var storeHtml = $(".link-stores").html();
 							for (var idx = 0 ; idx < store.length ; idx++) {
 								$(".link-stores").append(storeHtml);
-								$(".link-stores li").last().find("a").attr("href", "store.html?storeId="+store[idx].storeId);
+								$(".link-stores li").last().find("a").attr("href", "store_detail.html?storeId="+store[idx].storeId);
 								$(".link-stores li").last().find("img").attr("src", store[idx].storeImg);
 								$(".link-stores li").last().find("img").attr("title", store[idx].storeName);
 							}

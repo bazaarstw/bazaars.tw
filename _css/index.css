@@ -52,10 +52,22 @@
 		width: 70px;
 		height: 168px;
 	}
-	#section0 .intro a#link-0{
+	#section0 .intro a#link-login{
 		top: 23%;
 		right: 25.5%;
 		height: 30px;
+	}
+	#section0 .intro a#link-logout{
+		top: 23%;
+		right: 28%;
+		height: 30px;
+		display: none;
+	}
+	#section0 .intro a#link-member{
+		top: 23%;
+		right: 24%;
+		height: 30px;
+		display: none;
 	}
 	#section0 .intro a#link-1{
 		top: 60%;
