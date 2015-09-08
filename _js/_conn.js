@@ -45,7 +45,7 @@ $(document).ready(function(){
 	xif (pageLocation.indexOf("store_search.html") > -1) {
 		includeRequireJS(["modelJs/store.js"]);
 	}
-	xif (pageLocation.indexOf("store.html") > -1) {
+	xif (pageLocation.indexOf("store_detail.html") > -1) {
 		includeRequireJS(["modelJs/storeDetail.js"]);
 	}
 	*/
@@ -77,20 +77,27 @@ $(document).ready(function(){
 				dataType : "json", 
 				success : function(result) {  
 					if (result.isLogin) {
+						
 						$(".view_loging").show();
 						$(".view_notLogin").hide();
 						var username = result.info.username;
 						if (username == '') username = "無名氏";
-						$(".view_loginInfo").text(username + " 您好，歡迎來到「我的菜市埸」！");
+						$(".view_loginInfo").find(".member-name").text(username);
 						
 						
-						/**首頁專用**/
-						$("#link-0").attr("href","logout.html").find("span").text("登出");
-						
+						//首頁專用
+						$("#link-logout").show();
+						$("#link-member").show();
+						$("#link-login").hide();
 						
 					} else {
 						$(".view_loging").hide();
 						$(".view_notLogin").show();
+						
+						//首頁專用
+						$("#link-login").show();
+						$("#link-logout").hide();
+						$("#link-member").hide();
 					}
 				},
 				error : function(jqXHR, textProject, errorThrown) {
@@ -114,7 +121,7 @@ $(document).ready(function(){
 					success : function(result) {  
 						if (result.isLogin) {
 							alert("登入成功");
-							location.href="food.html";
+							location.href="index.html";
 						}else{
 							alert("帳號或密碼錯誤");
 						}
@@ -140,6 +147,7 @@ $(document).ready(function(){
 						if (result.isLogout) {
 							$(".view_loging").hide();
 							$(".view_notLogin").show();
+							location.href="logout.html";
 						}else{
 						}
 					},

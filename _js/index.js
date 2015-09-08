@@ -27,8 +27,10 @@ require(['_require_path'], function() {
 						$(".view_limitNews marquee a").first().hide();
 					},
 					error : function(jqXHR, textProject, errorThrown) {
-						// alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
-						// alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+						var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
+							errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
+							
+						$("#footerFrame .system-msg").addClass("error").text(errorString).show();
 					}
 				});
 				

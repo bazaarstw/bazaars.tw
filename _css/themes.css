@@ -54,10 +54,15 @@
 		color: #000;
 		font-weight: 200;
 	}
-
+	
+/*user login infor*/
 .themes .user-block{
 	padding: 25px 2px 2px 2px;
 	margin: 5px 0;
+	min-height: 63px;
+}
+.themes .user-block ul{
+	display: none;
 }
  
 .themes .navbar{

@@ -25,14 +25,17 @@ require(['_require_path'], function() {
 							
 							if (result.isSuc) {
 								alert(result.msg);
-								location.href="login.html";
+								location.href="index.html";
 							}else{
 								alert("帳號或密碼錯誤");
 							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {
-							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
-							alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+							//錯誤回應字串
+							var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
+								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
+								
+							$("#footerFrame .system-msg").addClass("error").text(errorString).show();
 						}
 					});
 				});
