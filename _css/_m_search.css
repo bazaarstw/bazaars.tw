@@ -12,6 +12,10 @@
 		font-weight: 600;
 		text-align: right;
 	}
+	.mSearch div{
+		padding: 3px;
+		font-size: 18px;
+	}
 	.mSearch select{
 		padding: 3px;
 		font-size: 18px;

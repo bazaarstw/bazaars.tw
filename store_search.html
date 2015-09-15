@@ -9,9 +9,9 @@
         <meta http-equiv="pragma" content="no-cache" />
         <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
         <meta charset="utf-8">
-        <link rel="stylesheet" href="_css/food_class.css" />
+        <link rel="stylesheet" href="_css/store_search.css" />
 
-		<script src="_library/require.min.js" data-main="_js/food_class" defer async="true"></script>
+		<script src="_library/require.min.js" data-main="_js/store" defer async="true"></script>	
     </head>
 <body>
 		
@@ -64,26 +64,61 @@
 	</div>
 	
 	<div id="centerFrame">
-		<div class="Cols slider-wrapper hidden-xs">
-			<img src="_images/99_df_img_01.jpg" />
-		</div>
-		<div class="Cols">
-			<ul class="content mDataList">
-				<li class="cols-header">
-					<h1 class="title">台灣在地的好食材</h1>
-					<h2 class="title view_parentFoodClassName">location: none</h2>
-				</li>
+		<div class="Col">
+			<form action="" id="form-store-search" class="mSearch">
+				<ul class="cols-search row">
+					<li class="title col-md-2"><h3>店家型態</h3></li>
+					<li class="content col-md-10">
+						<div class="bind_storeTypeChkDiv">
+						</div>
+					</li>
+					<li class="clearfix"></li>
+					<li class="title col-md-2"><h3>店家地點</h3></li>
+					<li class="content col-md-2">
+						<select class="view_citySelectList">
+							<option value="">全部</option>
+						</select>
+						<select class="view_townSelectList">
+							<option value="" selected="selected">全部</option>
+						</select>
+					</li>
+					<li class="action col-md-8">
+						<input type="button" class="aj_nowLocationSearchStore" text="使用目前位置"  value="使用目前位置" />
+					</li>
+					<li class="clearfix"></li>
+					<li class="title col-md-2"><h3>關鍵字搜索</h3></li>
+					<li class="content col-md-4"><input type="text" class="input-keywords view_storeKey" size="30" /></li>
+					<li class="action col-md-6">
+						<input type="button" class="aj_storeSearch" text="搜索"  value="搜索" />
+					</li>
+				</ul>
+			</form>
+			<div class="content mDataList" id="stores-list">
+			
+				<div class="cols-header">
+					<h1 class="title"><span>選用台灣在地食材的店家</span></h1>
+					<h2 class="title">共搜索<span class="view_storeCnt">-</span>筆</h2>
+				</div>
 				
-				<li class="cols-body">
-					<ul id="foods-subtype-list" class="row">
-						<li class="items col-md-4 mSample">
-							<a href="food_class_farmers.html" class="items" title="蔬菜1">
-								<div class="cover"><img src="_files/food/f2_01.jpg"/></div>
-								<div class="title">蔬菜1</div>
-							</a>
-						</li>
+				<h3 class="cols-title">
+					<ul class="item-list row">
+						<li class="items col-md-3"><span>店家名稱</span></li>
+						<li class="items col-md-5"><span>店家地址</span></li>
+						<li class="items col-md-2"><span>合作農友數</span></li>
+						<li class="items col-md-2"><span>與我的距離</span></li>
 					</ul>
-				</li>
+				</h3>
+				
+				<div class="cols-body">
+					<a href="store_detail.html" class="mSample">
+						<ul class="item-list row">
+							<li class="items col-md-3"><span>---</span></li>
+							<li class="items col-md-5"><span>---</span></li>
+							<li class="items col-md-2"><span>---</span></li>
+							<li class="items col-md-2"><span>---</span></li>
+						</ul>
+					</a>
+				</div>
 				
 				<div class="cols-footer">
 					<div class="mPage">
@@ -102,7 +137,8 @@
 						</div>
 					</div>					
 				</div>
-			</ul>
+				
+			</div>
 		</div>
 	</div>
 	

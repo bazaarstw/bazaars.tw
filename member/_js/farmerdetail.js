@@ -7,12 +7,14 @@ require(['../../_js/_require_path'], function() {
 		domReady(function () {
 			$(document).ready(function(){
 				var farmerId = "";
+				aj_listCity();
 				
 				if (getUrlParam("farmerId") != null) farmerId = getUrlParam("farmerId");
 				if (farmerId != "") {
+					$(".bind_pageActDesc").text("編輯 Modify");
 					$(".bind_act").attr("value", "farmer_prcUpd");
 					initFarmerData();
-				}
+				} else $(".bind_pageActDesc").text("新增 Add");
 				initFoodItemChosen(farmerId);
 				initStoreItemChosen(farmerId, "");
 				initBtn();
@@ -32,6 +34,9 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_farmerName").attr("value", info["name"]);
 							$(".bind_content").attr("value", info["content"]);
 							$(".bind_fbRss").attr("value", info["fbRss"]);
+							$(".view_citySelectList").val(info["city"]);
+							aj_listTown(info["town"]);
+							$(".bind_address").attr("value", info["address"]);
 							
 							var bool_phone = 0;
 							var bool_email = 0;
@@ -243,6 +248,64 @@ require(['../../_js/_require_path'], function() {
 					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 					var r = window.location.search.substr(1).match(reg);  //匹配目标参数
 					if (r != null) return unescape(r[2]); return null; //返回参数值
+				}
+				
+				function aj_listCity() {
+					$(".view_citySelectList option").remove();
+					$.ajax({
+						async : true,
+						url : "../ctrl/Controller.php",
+						type: 'POST',
+						data: {
+							act: 'area_getListCity'
+						},
+						dataType : "json", 
+						success : function(result) {  
+							for (idx = 0 ; idx < result.length ; idx++) {
+								$(".view_citySelectList").append('<option value="'+result[idx]["cityId"]+'">'+result[idx]["cityName"]+'</option>');
+							}
+							if (storeId == "") aj_listTown('');
+						},
+						error : function(jqXHR, textProject, errorThrown) {
+							// alert('HTTP project code: ' + jqXHR.project +
+							// '\n' + 'textProject: ' + textProject + '\n' +
+							// 'errorThrown: ' + errorThrown);
+							// alert('HTTP message body (jqXHR.responseText): '
+							// + '\n' + jqXHR.responseText);
+						}
+					});
+					
+					$(".view_citySelectList").on("change", function() {
+						aj_listTown('');
+					});
+				}
+				
+				function aj_listTown(townId) {
+					$(".view_townSelectList option").remove();
+					$.ajax({
+						async : true,
+						url : "../ctrl/Controller.php",
+						type: 'POST',
+						data: {
+							act: 'area_getListTown',
+							cityId: $(".view_citySelectList").val()
+						},
+						dataType : "json", 
+						success : function(result) {  
+							for (idx = 0 ; idx < result.length ; idx++) {
+								var selected = '';
+								if (townId == result[idx]["townId"]) selected = 'selected';
+								$(".view_townSelectList").append('<option value="'+result[idx]["townId"]+'" '+selected+'>'+result[idx]["townName"]+'</option>');
+							}
+						},
+						error : function(jqXHR, textProject, errorThrown) {
+							// alert('HTTP project code: ' + jqXHR.project +
+							// '\n' + 'textProject: ' + textProject + '\n' +
+							// 'errorThrown: ' + errorThrown);
+							// alert('HTTP message body (jqXHR.responseText): '
+							// + '\n' + jqXHR.responseText);
+						}
+					});
 				}
 				
 			});
