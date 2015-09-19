@@ -15,7 +15,7 @@ class Food extends Base {
 	
 	public function getListItem($params){
 		$classId = $params["classId"];
-		$sth = $this->dbh->prepare("select * from fooditem where foodClassId = ?");
+		$sth = $this->dbh->prepare("select * from fooditem where active = 1 AND foodClassId = ?");
 		$sth->execute(array($classId));
 		return json_encode($sth->fetchAll());
 	}
