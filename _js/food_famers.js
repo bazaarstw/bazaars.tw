@@ -84,6 +84,7 @@ require(['_require_path'], function() {
 									$("#farmers-list").append(farmer);
 									$("#farmers-list li").last().find("a").attr("href","farmer.html?farmerId="+result.list[idx]["farmerId"]);
 									$("#farmers-list li").last().find(".name").html(result.list[idx]["name"]);
+									$("#farmers-list li").last().find(".article").html(result.list[idx]["content"]);
 									$("#farmers-list li").last().fadeIn(300);
 								}
 								$.showPageer(10, result.listCnt);

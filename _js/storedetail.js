@@ -23,7 +23,8 @@ require(['_require_path'], function() {
 							var info = result.info[0];
 							$("#store-personal .cover img").attr("src", info["storeImg"]);
 							$("#store-personal .name").html(info["storeName"]);
-							$("#store-personal .atricle p").html(info["contact"]);
+							$("#store-personal .phone").html(info["contact"]);
+							$("#store-personal .addrs").html(info["address"]);
 							
 							//¦X§@¹A¤Ò
 							var farmer = result.farmer;

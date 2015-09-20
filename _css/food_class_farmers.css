@@ -50,9 +50,9 @@
 	#farmers-list .items a .cover img{
 		z-index: 1;
 		position: relative;
-		min-height: 220px;
-		width: 300px;
-		top: -20px;
+		/* min-height: 220px; */
+		/* width: 300px; */
+		/* top: -20px; */
 	}
 
 #farmers-list .items a .name{
