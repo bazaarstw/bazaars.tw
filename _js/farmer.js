@@ -18,7 +18,6 @@ require(['_require_path'], function() {
 						dataType : "json", 
 						success : function(result) {  
 							//viewJSON(result);
-                            console.log(result['info']);
 							var info = result.info[0];
 							$("#farmer-personal .name").html(info["name"]);
 							$("#farmer-personal .atricle").html(info["content"]);
