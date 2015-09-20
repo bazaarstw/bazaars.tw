@@ -17,10 +17,18 @@
 			width: 150px;
 			border-radius: 50%;
 		}
+
+	#farmer-personal .addrs,
 	#farmer-personal .phone,
-	#farmer-personal .addrs{	
-		font-size: 18px;
+	#farmer-personal .email,
+	#farmer-personal .link{
 		padding: 5px 10px;
+	}
+	#farmer-personal .addrs p,
+	#farmer-personal .phone p,
+	#farmer-personal .email p,
+	#farmer-personal .link p{
+		font-size: 18px;
 	}
 	#farmer-personal .atricle{
 		padding: 10px 10px;

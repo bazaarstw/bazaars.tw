@@ -18,9 +18,26 @@ require(['_require_path'], function() {
 						dataType : "json", 
 						success : function(result) {  
 							//viewJSON(result);
+                            console.log(result['info']);
 							var info = result.info[0];
 							$("#farmer-personal .name").html(info["name"]);
-							
+							$("#farmer-personal .atricle").html(info["content"]);
+
+                            $.each(result['desc'], function( index, value ) {
+                                switch(value[2]) {
+                                    case 'phone':
+                                        $(".phone ul").append("<li>" + value[3] + "</li>");
+                                        break;
+                                    case 'email':
+                                        $(".emails ul").append("<li>" + value[3] + "</li>");
+                                        break;
+                                    case 'link':
+                                        $(".link ul").append("<li><a href='" + value[3] + "' target='_blank'>" + value[4] + "</a></li>");
+                                        break;
+                                }
+                                console.log( index + ": " + value[2] );
+                            });
+
 							var item = result.item;
 							var itemHtml = $(".list-offerfoods").html();
 							for (var idx = 0 ; idx < item.length ; idx++) {
