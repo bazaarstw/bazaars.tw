@@ -1,19 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>我的菜市場</title>
-		<meta name="keywords" content="(定義關鍵字)A, B, C"/>
-		<meta name="description" content="(定義描述)" />
-		<meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
+    <head>
+        <title>我的菜市場</title>
+        <meta name="keywords" content="(定義關鍵字)A, B, C"/>
+        <meta name="description" content="(定義描述)" />
+        <meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
         <meta name="fragment" content="!">
         <meta http-equiv="pragma" content="no-cache" />
         <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
         <meta charset="utf-8">
-        <link rel="stylesheet" href="_css/login.css" />
+        <link rel="stylesheet" href="_css/active_detail.css" />
         
-		<script src="_library/require.min.js" data-main="_js/login" defer async="true"></script>	
-		
-	</head>
+		<script src="_library/require.min.js" data-main="_js/active_detail" defer async="true"></script>
+    </head>
 <body>
 <div id="mainFrame" class="themes">
 	<div id="headerFrame">
@@ -64,43 +63,35 @@
 	</div>
 	
 	<div id="centerFrame">
-		<form class="form_login form-horizontal">
-			<input class="form_login_act" type='hidden' name='act' value=''/>
-			<h1 class="form-header">請輸入/註冊您的帳密</h1>
-			<div class="form-group">
-				<label for="inputEmail3" class="col-sm-2 control-label">帳號</label>
-				<div class="col-sm-8">
-					<input type="email" name="account" class="form-control" id="inputEmail3" placeholder="Email">
-				</div>
+		<div class="content mDataList" id="active-content">
+			<div class="cols-header">
+				<h1 class="title">客庄紅棗小旅行，體驗紅棗採集</h1>
+			</div>
+			<div class="cols-body">
+				<ul class="rows">
+					<li class="title col-md-3"><h2>有效期間</h2></li>
+					<li class="content col-md-9"><p>2014/7/1</p></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					<li class="title col-md-3 clearfix"><h2>地　　點</h2></li>
+					<li class="content col-md-9"><p>苗栗縣龍山區中明六四段　苗頭國小</p></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					<li class="title col-md-3 clearfix"><h2>其他備註</h2></li>
+					<li class="content col-md-9"><p>歡迎體驗本活動</p></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					<li class="clearfix"></li>
+				</ul>
+			</div>
+			<div class="cols-footer clearfix">
+				<div><input type="button" class="btn btn-back" value="Back" OnClick="javascript:history.go(-1);" /></div>
 			</div>
 			
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">密碼</label>
-				<div class="col-sm-8">
-					<input type="password" name="passwd" class="form-control" id="inputPassword3" placeholder="Password">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<input class="aj_login btn btn-check" type="button" value="登入">
-					<input class="aj_register btn btn-uncheck" type="button" value="註冊">
-				</div>
-			</div>
-			
-			<h1 class="form-header"><span class="font-color-blue">更多登入方式</span></h1>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<input type="button" class="aj_fbLogin btn btn-icon-facebook" value="facebook" />
-					<input type="button" class="aj_googleLogin btn btn-icon-google" value="google" />
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 	
 	
 </div>
 <div id="footerFrame">
-	<p class="system-msg"></p>
+	<p class="jsmsg"></p>
 	<p id="copyright" title="Copyright © 2015 All Rights Reserved">Copyright © 2015 All Rights Reserved</p>
 </div>
 </body>

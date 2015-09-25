@@ -9,12 +9,13 @@
         <meta http-equiv="pragma" content="no-cache" />
         <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
         <meta charset="utf-8">
-        <link rel="stylesheet" href="_css/store_search.css" />
-
-		<script src="_library/require.min.js" data-main="_js/store" defer async="true"></script>	
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="_css/active_list.css" />
+		
+        
+		<script src="_library/require.min.js" data-main="_js/active_list" defer async="true"></script>
     </head>
 <body>
-		
 <div id="mainFrame" class="themes">
 	<div id="headerFrame">
 		<ul class="row">
@@ -64,57 +65,55 @@
 	</div>
 	
 	<div id="centerFrame">
-		<div class="Col">
-			<form action="" id="form-store-search" class="mSearch">
+		<div class="Cols">
+			<form action="" id="form-active-search" class="mSearch">
 				<ul class="cols-search row">
-					<li class="title col-md-2"><h3>店家型態</h3></li>
-					<li class="content col-md-10">
-						<div class="bind_storeTypeChkDiv">
-						</div>
+					<li class="title col-md-2"><h3>活動地點</h3></li>
+					<li class="content col-md-2">
+						<select class="view_citySelectList">
+							<option value="">全部</option>
+						</select>
+						<select class="view_townSelectList">
+							<option value="" selected="selected">全部</option>
+						</select>
 					</li>
-					<!-- <li class="clearfix"></li> -->
-					<!-- <li class="title col-md-2"><h3>店家地點</h3></li> -->
-					<!-- <li class="content col-md-2"> -->
-					<!-- 	<select class="view_citySelectList"> -->
-					<!-- 		<option value="">全部</option> -->
-					<!-- 	</select> -->
-					<!-- 	<select class="view_townSelectList"> -->
-					<!-- 		<option value="" selected="selected">全部</option> -->
-					<!-- 	</select> -->
-					<!-- </li> -->
-					<!-- <li class="action col-md-8"> -->
-					<!-- 	<input type="button" class="aj_nowLocationSearchStore" text="使用目前位置"  value="使用目前位置" /> -->
-					<!-- </li> -->
 					<li class="title col-md-2"><h3>關鍵字搜索</h3></li>
-					<li class="content col-md-4"><input type="text" class="input-keywords view_storeKey" size="30" /></li>
-					<li class="action col-md-6">
-						<input type="button" class="aj_storeSearch" text="搜索"  value="搜索" />
+					<li class="content col-md-4">
+						<input type="text" class="input-keywords view_newsKey" size="30" />
+					</li>
+					<li class="action col-md-1">
+						<input type="button" class="aj_newsSearch" text="搜索"  value="搜索" />
 					</li>
 				</ul>
 			</form>
-			<div class="content mDataList" id="stores-list">
+			
+			
+			
+			<div class="content mDataList" id="actives-list">
 			
 				<div class="cols-header">
-					<h1 class="title"><span>選用台灣在地食材的店家</span></h1>
-					<h2 class="title">共搜索<span class="view_storeCnt">-</span>筆</h2>
+					<h1 class="title"><span>活動報報</span></h1>
+					<h2 class="title">共搜索<span class="view_newsCnt">2</span>筆</h2>
 				</div>
 				
 				<h3 class="cols-title">
 					<ul class="item-list row">
-						<li class="items col-md-3"><span>店家名稱</span></li>
-						<li class="items col-md-5"><span>店家地址</span></li>
-						<li class="items col-md-2"><span>合作農友數</span></li>
-						<li class="items col-md-2"><span>與我的距離</span></li>
+					<li class="items col-md-4"><span>活動名稱</span></li>
+					<li class="items col-md-3"><span>地　　點</span></li>
+					<li class="items col-md-2"><span>有效日期</span></li>
+					<li class="items col-md-2"><span>發佈日期</span></li>
+					<li class="items col-md-1"><span>詳細資訊</span></li>
 					</ul>
 				</h3>
 				
 				<div class="cols-body">
-					<a href="store_detail.html" class="mSample">
+					<a href="active_detail.html" class="mSample">
 						<ul class="item-list row">
-							<li class="items col-md-3"><span>---</span></li>
-							<li class="items col-md-5"><span>---</span></li>
-							<li class="items col-md-2"><span>---</span></li>
-							<li class="items col-md-2"><span>---</span></li>
+							<li class="items col-md-4"><span>客庄紅棗小旅行，體驗紅棗採集</span></li>
+							<li class="items col-md-3"><span>台北市中山路三段</span></li>
+							<li class="items col-md-2"><span>2013/3/5~2014/4/7</span></li>
+							<li class="items col-md-2"><span>2015/7/7</span></li>
+							<li class="items col-md-1"><span class="fa fa-search"></span></li>					
 						</ul>
 					</a>
 				</div>
@@ -136,7 +135,6 @@
 						</div>
 					</div>					
 				</div>
-				
 			</div>
 		</div>
 	</div>

@@ -25,7 +25,6 @@ require(['_require_path'], function() {
 							$("#store-personal .name").html(info["storeName"]);
 							$("#store-personal .phone").html(info["contact"]);
 							$("#store-personal .addrs").html(info["address"]);
-							
 							//¦X§@¹A¤Ò
 							var farmer = result.farmer;
 							console.log(result.farmer);
