@@ -9,9 +9,12 @@ class Farmer extends Base {
 		try {
 			$farmerId = $params["farmerId"];
 			$searchSql = 
-				"select fm.* ".
+				"select fm.*, CONCAT(c.cityName,t.townName,fm.address) as fullAddress ".
 				"from farmer fm ".
+				"left join city c on c.cityId = fm.city ".
+				"left join town t on t.cityId = fm.city and t.townId = fm.town ".
 				"where fm.farmerId = $farmerId";
+				
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$data = $sth->fetchAll();
@@ -65,8 +68,8 @@ class Farmer extends Base {
 			$farmerId = $params["farmerId"];
 
 			$sth = $this->dbh->prepare(
-			     "update farmer set name = ?, content = ?, fbRss = ?, updateDT = now() where farmerId = ?");
-			$this->execSQL($sth, array($params["farmerName"], $params["content"], $params["fbRss"], $farmerId));
+			     "update farmer set name = ?, content = ?, city = ?, town = ?, address = ?, fbRss = ?, updateDT = now() where farmerId = ?");
+			$this->execSQL($sth, array($params["farmerName"], $params["content"], $params["city"], $params["town"], $params["address"], $params["fbRss"], $farmerId));
 
 			$this->processPhoneData($farmerId, $params["phone"]);
 			$this->processEmailData($farmerId, $params["email"]);
@@ -98,9 +101,9 @@ class Farmer extends Base {
 			$usr = $_SESSION["website_login_session"];  
 		
 			$sth = $this->dbh->prepare(
-			     "insert into farmer(memberId, name, content, fbRss, createDT, updateDT) ".
-			     "values(?, ?, ?, ?, now(), now())");
-			$this->execSQL($sth, array($usr["memberId"], $params["farmerName"], $params["content"], $params["fbRss"]));
+			     "insert into farmer(memberId, name, content, city, town, address, fbRss, createDT, updateDT) ".
+			     "values(?, ?, ?, ?, ?, ?, ?, now(), now())");
+			$this->execSQL($sth, array($usr["memberId"], $params["farmerName"], $params["content"], $params["city"], $params["town"], $params["address"], $params["fbRss"]));
 	        // $sth->execute(array($usr["memberId"], $params["farmerName"], $params["content"], $params["fbRss"]));
 			$farmerId = $this->dbh->lastInsertId();
 			
@@ -307,8 +310,10 @@ class Farmer extends Base {
 			$usr = $_SESSION["website_login_session"];
 			$memberId = $usr["memberId"];
 			$searchSql = 
-				"select fm.* ".
+				"select fm.*, CONCAT(c.cityName,t.townName,fm.address) as fullAddress ".
 				"from farmer fm ".
+				"left join city c on c.cityId = fm.city ".
+				"left join town t on t.cityId = fm.city and t.townId = fm.town ".
 				"where fm.memberId = $memberId";
 			$sth = $this->dbh->prepare($searchSql);
 			$sth->execute(array($usr["memberId"]));

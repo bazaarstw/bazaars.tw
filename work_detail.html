@@ -1,19 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>我的菜市場</title>
-		<meta name="keywords" content="(定義關鍵字)A, B, C"/>
-		<meta name="description" content="(定義描述)" />
-		<meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
+    <head>
+        <title>我的菜市場</title>
+        <meta name="keywords" content="(定義關鍵字)A, B, C"/>
+        <meta name="description" content="(定義描述)" />
+        <meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
         <meta name="fragment" content="!">
         <meta http-equiv="pragma" content="no-cache" />
         <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
         <meta charset="utf-8">
-        <link rel="stylesheet" href="_css/login.css" />
+        <link rel="stylesheet" href="_css/workdetail.css" />
         
-		<script src="_library/require.min.js" data-main="_js/login" defer async="true"></script>	
-		
-	</head>
+		<script src="_library/require.min.js" data-main="_js/workdetail" defer async="true"></script>	
+    </head>
 <body>
 <div id="mainFrame" class="themes">
 	<div id="headerFrame">
@@ -64,37 +63,60 @@
 	</div>
 	
 	<div id="centerFrame">
-		<form class="form_login form-horizontal">
-			<input class="form_login_act" type='hidden' name='act' value=''/>
-			<h1 class="form-header">請輸入/註冊您的帳密</h1>
-			<div class="form-group">
-				<label for="inputEmail3" class="col-sm-2 control-label">帳號</label>
-				<div class="col-sm-8">
-					<input type="email" name="account" class="form-control" id="inputEmail3" placeholder="Email">
-				</div>
+		<div class="content mDataList">
+			
+			<div class="cols-header">
+				<div class="cover"><img src="_files/farmers/farmer_00.jpg" width="100" class="view_memberPhoto" /></div>
+				<h1 class="name view_memberName">王美華　<span>發佈</span></h1>
+			</div>
+			<div class="cols-body">
+				<ul class="rows">
+					<li class="title col-md-3"><h2>打工標題</h2></li>
+					<li class="content"><span>手收割</span></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>工作時間</h2></li>
+					<li class="content col-md-9"><span>2014/7/1~2014/7/2 06:00~15:00</span></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>預計工作天數</h2></li>
+					<li class="content col-md-9"><span>30 / 天</span></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>需求人數</h2></li>
+					<li class="content col-md-9"><div>2/人</div></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>工作地點</h2></li>
+					<li class="content col-md-9"><div>宜蘭鄉冬天路四段六號頭城國小旁</div></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>其他備註</h2></li>
+					<li class="content col-md-9"><div>集合地點：國小旁涼亭</div></li>
+					<li class="hr col-md-12">&nbsp;</li>
+					
+					<li class="title col-md-3"><h2>打工報名</h2></li>
+					<li class="content col-md-9">
+						<form action="" id="work-register" class="form_workSign">
+							<div class="name"><span>報名姓名</span><input name="farmer-name" type="text" /></div>
+							<div class="phone"><span>聯絡電話</span><input name="farmer-phone" type="text" /></div>
+							<div class="action">
+								<input type="button" text="報名確認"  value="報名確認" class="aj_workSignUp" />
+								<input type="button" text="清除重填"  value="清除重填" class="aj_workSignClear" />
+							</div>
+						</form>
+						
+					</li>
+					<li class="hr clearfix">&nbsp;</li>
+				</ul>
+			</div>
+			<div class="cols-footer clearfix">
+				<div><input type="button" class="btn btn-back" value="Back" OnClick="javascript:history.go(-1);" /></div>
 			</div>
 			
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">密碼</label>
-				<div class="col-sm-8">
-					<input type="password" name="passwd" class="form-control" id="inputPassword3" placeholder="Password">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<input class="aj_login btn btn-check" type="button" value="登入">
-					<input class="aj_register btn btn-uncheck" type="button" value="註冊">
-				</div>
-			</div>
 			
-			<h1 class="form-header"><span class="font-color-blue">更多登入方式</span></h1>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<input type="button" class="aj_fbLogin btn btn-icon-facebook" value="facebook" />
-					<input type="button" class="aj_googleLogin btn btn-icon-google" value="google" />
-				</div>
-			</div>
-		</form>
+
+		</div>
 	</div>
 	
 	

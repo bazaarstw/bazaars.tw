@@ -9,7 +9,7 @@
 	
 	$fullUrl = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 	$endUrlIdx = stripos($fullUrl, '/'.$conf["webName"].'/');
-	$endUrlIdx = $endUrlIdx + strlen($conf["webName"]) + 2;
+	$endUrlIdx = $endUrlIdx + strlen($conf["webName"]) + 1;
 	$baseUrl = 'http://'. substr($fullUrl, 0, $endUrlIdx);
     $utilUrl = $baseUrl.'plugin/Facebook/util.php';
 	
