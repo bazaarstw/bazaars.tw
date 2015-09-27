@@ -124,16 +124,16 @@ require(['_require_path'], function() {
 							storeType: storeType
 						},
 						dataType : "json", 
-						success : function(result) {  
+						success : function(result) {
+							//viewJSON(result);	 
+							var idx = 0;
+							$(".cols-body a").each(function() {
+								if (idx > 0) $(this).remove();
+								idx++;
+							});
+								 
 							//資料顯示判斷
-							if (result.list.length > 0) {
-								//viewJSON(result);
-								var idx = 0;
-								$(".cols-body a").each(function() {
-									if (idx > 0) $(this).remove();
-									idx++;
-								});
-								
+							if (result.list.length > 0) {			
 								$(".view_storeCnt").html(result.listCnt);
 								var news = $(".cols-body").html();
 								

@@ -13,6 +13,13 @@ require(['_require_path'], function() {
 				$(".aj_register").on("click", function() {
 					$(".form_login_act").attr("value", "member_register");
 					var formObj = $(".form_login");   
+					var account = $(formObj).find("input[name='account']").val();
+					
+					if (!$.isEmail(account)) {
+						//alert("帳號格式錯誤(需為Email)！");
+						//return false;
+					}
+					
 					//$(formObj).append("<input type='hidden' name='act' value='member_register'/>");
 					//alert($(formObj).serialize());
 					$.ajax({
@@ -22,12 +29,9 @@ require(['_require_path'], function() {
 						dataType : "json", 
 						data : $(formObj).serialize(),
 						success : function(result) {  
-							
+							alert(result.msg);
 							if (result.isSuc) {
-								alert(result.msg);
 								location.href="index.html";
-							}else{
-								alert("帳號或密碼錯誤");
 							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {

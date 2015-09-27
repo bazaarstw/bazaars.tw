@@ -21,6 +21,7 @@ require(['_require_path'], function() {
 							var info = result.info[0];
 							$("#farmer-personal .name").html(info["name"]);
 							$("#farmer-personal .atricle").html(info["content"]);
+							$("#farmer-personal .addrs").html(info["fullAddress"]);
 
                             $.each(result['desc'], function( index, value ) {
                                 switch(value[2]) {
@@ -28,7 +29,7 @@ require(['_require_path'], function() {
                                         $(".phone ul").append("<li>" + value[3] + "</li>");
                                         break;
                                     case 'email':
-                                        $(".emails ul").append("<li>" + value[3] + "</li>");
+                                        $(".email ul").append("<li>" + value[3] + "</li>");
                                         break;
                                     case 'link':
                                         $(".link ul").append("<li><a href='" + value[3] + "' target='_blank'>" + value[4] + "</a></li>");
@@ -56,7 +57,7 @@ require(['_require_path'], function() {
 							$(".link-stores li").first().hide();
 						},
 						error : function(jqXHR, textProject, errorThrown) {
-							//¿ù»~¦^À³¦r¦ê
+							//ï¿½ï¿½~ï¿½^ï¿½ï¿½ï¿½rï¿½ï¿½
 							var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
 								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
 								

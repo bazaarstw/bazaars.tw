@@ -7,10 +7,7 @@
 	$config = new Config();
 	$conf = $config->getConfig();
 	
-	$fullUrl = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-	$endUrlIdx = stripos($fullUrl, '/'.$conf["webName"].'/');
-	$endUrlIdx = $endUrlIdx + strlen($conf["webName"]) + 1;
-	$baseUrl = 'http://'. substr($fullUrl, 0, $endUrlIdx);
+	$baseUrl = 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"];
     $utilUrl = $baseUrl.'plugin/Facebook/util.php';
 	
     define('FACEBOOK_SDK_V4_SRC_DIR', 'src/');

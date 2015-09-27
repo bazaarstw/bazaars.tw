@@ -397,9 +397,13 @@ $(document).ready(function(){
 			$(".pagelist.pageProcess").eq(0).hide();
 			$(".nowpage.pageProcess").text(parseInt(page));
 			$(".totalpage.pageProcess").text(parseInt(pageCount));
+		},
+		isEmail:function (strEmail){
+			if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1)
+				return true;
+			return false;
 		}
 	});
-	
 	
 	$.getLoginInfo();
 	$.execLoging();
