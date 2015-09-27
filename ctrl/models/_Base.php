@@ -30,5 +30,12 @@ class Base {
 		if ($arr[0] != "0000") throw new Exception($arr[2]);
 	}
 
+	public function isEmail($email) {
+		if(preg_match("/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/", $email)) {
+			return true;
+		} 
+		return false;
+	}
+
 }
 ?>

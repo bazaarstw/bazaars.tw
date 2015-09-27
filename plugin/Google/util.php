@@ -6,12 +6,10 @@
 	require dirname(dirname(dirname(__FILE__))).'/ctrl/models/Config.php';
 	$config = new Config();
 	$conf = $config->getConfig();
+
+	$baseUrl = 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"].'/';
+    $utilUrl = $baseUrl.'plugin/Facebook/util.php';
 	
-	$fullUrl = $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-	$endUrlIdx = stripos($fullUrl, '/'.$conf["webName"].'/');
-	$endUrlIdx = $endUrlIdx + strlen($conf["webName"]) + 1;
-	$baseUrl = 'http://'. substr($fullUrl, 0, $endUrlIdx);
-    $utilUrl = $baseUrl.'plugin/Google/util.php';
     
     require_once 'src/Google_Client.php';
     require_once 'src/contrib/Google_Oauth2Service.php';
