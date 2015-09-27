@@ -32,7 +32,7 @@ $apiConfig = array(
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => $conf["googleClientId"],
     'oauth2_client_secret' => $conf["googleClientSecret"],
-    'oauth2_redirect_uri' => $conf["googleRedirectUri"],
+    'oauth2_redirect_uri' => 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"].$conf["googleRedirectUri"],
 
     // The developer key, you get this at https://code.google.com/apis/console
     'developer_key' => 'https://code.google.com/apis/console',

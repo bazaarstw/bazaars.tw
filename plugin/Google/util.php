@@ -7,7 +7,7 @@
 	$config = new Config();
 	$conf = $config->getConfig();
 
-	$baseUrl = 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"].'/';
+	$baseUrl = 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"];
     $utilUrl = $baseUrl.'plugin/Facebook/util.php';
 	
     
