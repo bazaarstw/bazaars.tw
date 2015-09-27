@@ -16,8 +16,6 @@ require(['_require_path'], function() {
 			});
 			
 			function getListData() {
-				alert($(".view_foodKey").val());
-				
 				$.ajax({
 					async : false,
 					url : "ctrl/Controller.php",
@@ -39,9 +37,15 @@ require(['_require_path'], function() {
 							idx++;
 						});
 						
-						//�����ܧP�_
+						//資料顯示判斷
 						if (result.list.length > 0) {
 							//viewJSON(result);
+							var idx = 0;
+							$("#foods-type-list li").each(function() {
+								if (idx > 0) $(this).remove();
+								idx++;
+							});
+							
 							var food = $("#foods-type-list").html();
 							for (idx = 0 ; idx < result.list.length ; idx++) {
 								$("#foods-type-list").append(food);
@@ -54,13 +58,13 @@ require(['_require_path'], function() {
 							$.showPageer(10, result.listCnt);
 						
 						}else{
-							//�L�����ܦ^��
+							//無資料顯示回應
 							$(".mPage .page-msg").text("sorry!! no data...").show();
 						}
 						
 					},
 					error : function(jqXHR, textProject, errorThrown) {
-						//��~�^���r��
+						//錯誤回應字串
 						var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
 								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
 								
