@@ -17,18 +17,85 @@ class Work extends Base {
 	}
 	
 	public function getDetail($params){
-		$workId = $params["workId"];
-		$searchSql = 
+		$isSuc = true;
+		$msg = "";
+		
+		$isWorkAuth = false;
+		$signList = array();
+		$isSign = false;
+		$signInfo = array();
+		
+		try {
+			$workId = $params["workId"];
+			$searchSql = 
                 "select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress, m.username, m.email, m.phone, m.photo ".
                 "from work w ".
                 "join city c on c.cityId = w.city ".
                 "join town t on t.cityId = w.city and t.townId = w.town ".
                 "join member m on m.memberId = w.memberId ".
                 "where workId = ?";
-        $sth = $this->dbh->prepare($searchSql);
-		$sth->execute(array($workId));
-		return json_encode($sth->fetchAll());
+            $sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array($workId));
+			$data = $sth->fetchAll();
+			
+			if(isset($_SESSION["website_login_session"])){
+				$usr = $_SESSION["website_login_session"];
+				$memberId = $data[0]["memberId"];
+				if ($usr["memberId"] == $memberId) {
+					//小農應援團擁有者，查詢報名清單
+					$isWorkAuth = true;
+					$signList = $this->getSignList($workId);
+				} else {
+					$searchSql = 
+			            "select ws.* ".
+			            "from worksign ws ".
+			            "where ws.memberId = ?";
+			        $sth = $this->dbh->prepare($searchSql);
+					$this->execSQL($sth, array($usr["memberId"]));
+					$signList = $sth->fetchAll();
+					if (count($signList) > 0) {
+						$isSign = true;
+						$signInfo = array("name"=>$signList[0]["name"], "phone"=>$signList[0]["phone"]);
+					} else {
+						// echo $usr["username"];
+						$signInfo = array("name"=>$usr["username"], "phone"=>$usr["phone"]);
+					}
+				}
+			}
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "查詢失敗：". $e->getMessage();
+		}
+		return json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, 
+			"isWorkAuth"=>$isWorkAuth, "signList"=>$signList, 
+			"isSign"=>$isSign, "signInfo"=>$signInfo));
 	}
+
+	public function getSignList($workId) {
+		$searchSql = 
+            "select ws.* ".
+            "from worksign ws ".
+            "where ws.workId = ?";
+        $sth = $this->dbh->prepare($searchSql);
+		$this->execSQL($sth, array($workId));
+		$data = $sth->fetchAll();
+		return $data;
+	}
+	
+	public function signCancel($params){
+	    $isSuc = true;
+	    $msg = "";
+        
+		$usr = $_SESSION["website_login_session"];
+        $workId = $params["workId"];
+        $memberId = $usr["memberId"];
+        
+        $sth = $this->dbh->prepare("delete from worksign where workId = ? and memberId = ?");
+        $sth->execute(array($workId, $memberId));
+        $msg = "已取消報名！";
+
+        return json_encode(array("isSuc"=>$isSuc, "msg"=>$msg));
+    }
 	
 	public function signUp($params){
 	    $isSuc = false;
@@ -48,10 +115,15 @@ class Work extends Base {
             } else {
                 $name = $params["farmer-name"];
                 $phone = $params["farmer-phone"];
-                $sth = $this->dbh->prepare("insert into worksign(workId, memberId, name, phone) values(?, ?, ?, ?)");
-                $sth->execute(array($workId, $memberId, $name, $phone));
-                $isSuc = true;
-                $msg = "報名成功！";
+				if ($name == "") $msg = "請輸入姓名！";
+				else if ($phone == "") $msg = "請輸入聯絡電話！";
+				
+				if ($msg == "") {
+					$sth = $this->dbh->prepare("insert into worksign(workId, memberId, name, phone) values(?, ?, ?, ?)");
+		            $sth->execute(array($workId, $memberId, $name, $phone));
+		            $isSuc = true;
+		            $msg = "報名成功！";
+				}
             }
         }
         return json_encode(array("isSuc"=>$isSuc, "msg"=>$msg));

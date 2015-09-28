@@ -53,6 +53,22 @@ class Farmer extends Base {
 		
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, "desc"=>$desc, "item"=>$item, "store"=>$store));
 	}
+
+	public function getListData($params){
+		$searchSql = 
+			"select distinct f.*, CONCAT(c.cityName,t.townName,f.address) as fullAddress ".
+			"from fooditem fi ".
+			"join farmeritem fmi on fmi.foodItemId = fi.foodItemId ".
+			"join farmer f on fmi.farmerId = f.farmerId ".
+			"left join city c on c.cityId = f.city ".
+			"left join town t on t.cityId = f.city and t.townId = f.town ".
+			"where fi.itemName like '%". $params["keyword"]. "%' ".
+			"and ifnull(f.city,'') like '%". $params["city"]. "%' ".
+			"and ifnull(f.town,'') like '%". $params["town"]. "%'";
+		// echo $searchSql;
+		$data = $this->processPageSQL($params, $searchSql);
+		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
+	}
 	
 	/********************************************************************************************************************************************
 	Admin Function
@@ -61,9 +77,13 @@ class Farmer extends Base {
 	public function prcUpd($params){
 		$this->dbh->beginTransaction();
 		$isSuc = true;
+		$farmerId = "";
 		$msg = "農友資料編輯成功！";
 		
 		try {
+			$chkValid = $this->chkValidFunc($params);
+			if ($chkValid != "") throw new Exception($chkValid);
+			
 			$usr = $_SESSION["website_login_session"];
 			$farmerId = $params["farmerId"];
 
@@ -95,11 +115,13 @@ class Farmer extends Base {
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "農友資料新增成功！";
+		$farmerId = "";
 		
 		try {
-			$farmerId = "";
+			$chkValid = $this->chkValidFunc($params);
+			if ($chkValid != "") throw new Exception($chkValid);
+			
 			$usr = $_SESSION["website_login_session"];  
-		
 			$sth = $this->dbh->prepare(
 			     "insert into farmer(memberId, name, content, city, town, address, fbRss, createDT, updateDT) ".
 			     "values(?, ?, ?, ?, ?, ?, ?, now(), now())");
@@ -125,6 +147,33 @@ class Farmer extends Base {
 			$this->dbh->rollBack();
 		}
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "farmerId"=>$farmerId));
+	}
+
+	public function chkValidFunc($params) {
+		$msg = "";
+		if ($params["farmerName"] == "") $msg .= "\n請輸入農友姓名！";
+		if ($params["foodItem"] == "") $msg .= "\n請選擇至少一項農友品項！";
+
+		$phone = $params["phone"];
+		for ($i = 0 ; $i < count($phone) ; $i++) {
+			$curIdx = $i + 1;
+			if ($phone[$i] == "") $msg .= "\n請輸入手機項目[$curIdx]資料！";
+			else if (!$this->isPhone($phone[$i])) $msg .= "\n手機項目[$curIdx]資料格式錯誤！";
+		}
+		
+		$email = $params["email"];
+		for ($i = 0 ; $i < count($email) ; $i++) {
+			$curIdx = $i + 1;
+			if ($email[$i] == "") $msg .= "\n請輸入電子信箱項目[$curIdx]資料！";
+			else if (!$this->isEmail($email[$i])) $msg .= "\n電子信箱項目[$curIdx]資料格式錯誤！";
+		}
+		
+		$link = $params["link"];
+		for ($i = 0 ; $i < count($link) ; $i++) {
+			$curIdx = $i + 1;
+			if ($link[$i] == "") $msg .= "\n請輸入個人網頁項目[$curIdx]資料！";
+		}
+		return $msg;
 	}
 
 	public function processFoodItemData($farmerId, $foodItems) {

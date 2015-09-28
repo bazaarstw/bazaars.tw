@@ -30,13 +30,14 @@ require(['_require_path'], function() {
 						},
 						dataType : "json", 
 						success : function(result) {
+							$(".mPage .page-msg").text("sorry!! no data...").hide();
 							var idx = 0;
 								$(".cols-body a").each(function() {
 									if (idx > 0) $(this).remove();
 									idx++;
 								});
 							
-							//�����ܧP�_
+							//資料顯示判斷
 							if (result.list.length > 0) {
 								//viewJSON(result);
 								$(".mPage .page-msg").text("sorry!! no data...").hide();
@@ -55,7 +56,6 @@ require(['_require_path'], function() {
 								}
 								$.showPageer(10, result.listCnt);
 							}else{
-								//�L�����ܦ^��
 								$(".mPage .page-msg").text("sorry!! no data...").show();
 							}
 							

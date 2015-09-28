@@ -8,7 +8,7 @@
 	$conf = $config->getConfig();
 
 	$baseUrl = 'http://'. $_SERVER['HTTP_HOST'].'/'.$conf["webName"];
-    $utilUrl = $baseUrl.'plugin/Facebook/util.php';
+    $utilUrl = $baseUrl.'plugin/Google/util.php';
 	
     
     require_once 'src/Google_Client.php';
@@ -38,8 +38,9 @@
         if (isset($_GET['code'])) {
             $client -> authenticate($_GET['code']);
             $_SESSION['token'] = $client -> getAccessToken();
-            $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-            header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL).'?act=getUserData');
+			header('Location: ' . $utilUrl.'?act=getUserData');
+            // $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+            // header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL).'?act=getUserData');
             return;
         }
         

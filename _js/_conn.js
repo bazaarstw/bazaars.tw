@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	var page = 1;
+	var selCity = "";
+	var selTown = "";
 	var hostLocation = getRootPath();
 	var pageLocation = window.location.toString();
 	/*
@@ -66,6 +68,12 @@ $(document).ready(function(){
 	}
 	*/
 	$.extend({
+		setSelCity:function (str){
+			selCity = str;
+		},
+		setSelTown:function (str){
+			selTown = str;
+		},
 		getLoginInfo:function (){
 			$.ajax({
 				async : true,
@@ -247,7 +255,9 @@ $(document).ready(function(){
 				dataType : "json", 
 				success : function(result) {  
 					for (idx = 0 ; idx < result.length ; idx++) {
-						$(".view_citySelectList").append('<option value="'+result[idx]["cityId"]+'">'+result[idx]["cityName"]+'</option>');
+						var selected = "";
+						if (selCity != "" && selCity == result[idx]["cityId"]) selected = "selected";
+						$(".view_citySelectList").append('<option value="'+result[idx]["cityId"]+'" '+selected+'>'+result[idx]["cityName"]+'</option>');
 					}
 				},
 				error : function(jqXHR, textProject, errorThrown) {
@@ -267,6 +277,9 @@ $(document).ready(function(){
 			});
 		},
 		aj_listTown:function (){
+			var searchCityId = $(".view_citySelectList").val();
+			if (searchCityId == "" && selCity != "") searchCityId = selCity;
+			
 			$(".view_townSelectList option").remove();
 			$(".view_townSelectList").append('<option value="">全部</option>');
 			$.ajax({
@@ -275,12 +288,14 @@ $(document).ready(function(){
 				type: 'POST',
 				data: {
 					act: 'area_getListTown',
-					cityId: $(".view_citySelectList").val()
+					cityId: searchCityId
 				},
 				dataType : "json", 
 				success : function(result) {  
 					for (idx = 0 ; idx < result.length ; idx++) {
-						$(".view_townSelectList").append('<option value="'+result[idx]["townId"]+'">'+result[idx]["townName"]+'</option>');
+						var selected = "";
+						if (selTown != "" && selTown == result[idx]["townId"]) selected = "selected";
+						$(".view_townSelectList").append('<option value="'+result[idx]["townId"]+'" '+selected+'>'+result[idx]["townName"]+'</option>');
 					}
 				},
 				error : function(jqXHR, textProject, errorThrown) {
@@ -397,11 +412,6 @@ $(document).ready(function(){
 			$(".pagelist.pageProcess").eq(0).hide();
 			$(".nowpage.pageProcess").text(parseInt(page));
 			$(".totalpage.pageProcess").text(parseInt(pageCount));
-		},
-		isEmail:function (strEmail){
-			if (strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1)
-				return true;
-			return false;
 		}
 	});
 	

@@ -11,7 +11,7 @@ class Member extends Base {
 			$account = $params["account"];
 			$passwd = $params["passwd"];
 			if ($account == "") $chkValid .= "\n請輸入帳號！";
-			else if (!$this->isEmail($account)) $chkValid .= "\n帳號格式錯誤(需為Email)！";
+			else if (!$this->isEmail($account) && !$this->isPhone($account)) $chkValid .= "\n帳號格式錯誤(需為Email或手機格式)！";
 			if ($passwd == "") $chkValid .= "\n請輸入密碼！";
 			if ($chkValid != "") throw new Exception($chkValid);
 	

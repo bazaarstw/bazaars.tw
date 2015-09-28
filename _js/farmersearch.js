@@ -5,8 +5,16 @@ require(['_require_path'], function() {
 			], function(domReady) {
 		domReady(function () {
 			$(document).ready(function(){
+				selCity = $.getUrlParam("city");
+				selTown = $.getUrlParam("town");
+				var keyword = decodeURI(decodeURI($.getUrlParam("keyword")));
+				$(".view_foodKey").val(keyword);
+				$.setSelCity(selCity);
+				$.setSelTown(selTown);
+				
 				page = 1;
 				$.aj_listCity();
+				$.aj_listTown();
 				getListData();
 				$(".pageProcess").on("click", function() {
 					pageProcess(this);
@@ -25,58 +33,54 @@ require(['_require_path'], function() {
 						url : "ctrl/Controller.php",
 						type: 'POST',
 						data: {
-							act: 'food_getClassList',
+							act: 'farmer_getListData',
 							page: page,
 							pageNumber: 10,
-							parentId: 0,
-							title: $(".view_foodKey").val(),
-							city: $(".view_citySelectList").val(),
-							town: $(".view_townSelectList").val()
+							keyword: keyword,
+							city: selCity,
+							town: selTown
 						},
 						dataType : "json", 
 						success : function(result) {  
+							//清除前次搜尋資料
+							$(".mPage .page-msg").text("sorry!! no data...").hide();
 							var idx = 0;
-							$("#foods-type-list li").each(function() {
+							$("#farmers-list li").each(function() {
 								if (idx > 0) $(this).remove();
 								idx++;
 							});
 							
 							//資料顯示判斷
 							if (result.list.length > 0) {
-								//viewJSON(result);
-								var idx = 0;
-								$("#foods-type-list li").each(function() {
-									if (idx > 0) $(this).remove();
-									idx++;
-								});
-								
-								var food = $("#foods-type-list").html();
+								var farmer = $("#farmers-list").html();
 								for (idx = 0 ; idx < result.list.length ; idx++) {
-									$("#foods-type-list").append(food);
-									$("#foods-type-list li").last().find("a").attr("href","food_class.html?parentId="+result.list[idx]["foodClassId"]);
-									$("#foods-type-list li").last().find(".cover img").attr("src", result.list[idx]["classImg"]);
-									$("#foods-type-list li").last().find(".title").html(result.list[idx]["className"]);
-									$("#foods-type-list li").last().fadeIn(300);
+									$("#farmers-list").append(farmer);
+									$("#farmers-list li").last().find("a").attr("href","farmer.html?farmerId="+result.list[idx]["farmerId"]);
+									$("#farmers-list li").last().find(".name").html(result.list[idx]["name"]);
+									$("#farmers-list li").last().find(".article").html(result.list[idx]["content"]);
+									$("#farmers-list li").last().fadeIn(300);
 								}
-								
 								$.showPageer(10, result.listCnt);
-							
+								
+								
 							}else{
 								//無資料顯示回應
 								$(".mPage .page-msg").text("sorry!! no data...").show();
 							}
 							
+							
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							//錯誤回應字串
 							var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
-									errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
-									
-								$("#footerFrame .system-msg").addClass("error").text(errorString).show();
+								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
+								
+							$("#footerFrame .system-msg").addClass("error").text(errorString).show();
 						}
 					});
 				}
-			});	
+				
+			});
 		});
 	});
 });

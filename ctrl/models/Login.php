@@ -20,6 +20,7 @@ class Login extends Base {
 		$sth = $this->dbh->prepare("SELECT * FROM member WHERE account = ? AND registerType = ?");
 		$sth->execute(array($params["account"], $params["registerType"]));
 		$rows = $sth->fetchAll();
+		// echo "acc => ". $params["account"]. ", rt => ". $params["registerType"];
 		if(count($rows) > "0" ){
 			$loginData = $rows[0];
 			$_SESSION["website_login_session"] = $loginData;   
