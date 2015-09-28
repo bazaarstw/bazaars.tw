@@ -1,18 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>我的菜市場</title>
-        <meta name="keywords" content="(定義關鍵字)A, B, C"/>
-        <meta name="description" content="(定義描述)" />
-        <meta name="revised" content="(定義最新版本)Richard WU., 2013/3/5" />
-        <meta name="fragment" content="!">
-        <meta http-equiv="pragma" content="no-cache" />
-        <meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="_css/food_class_farmers.css" />
+<head>
+	<title>我的菜市場 Bazaars</title>
+	<meta name="keywords" content="我的菜市場, bazaars, 宜蘭"/>
+	<meta name="description" content="Bazaars" />
+	<meta name="revised" content="KingOcean(ko-tw.com), 2015/09/28" />
+	<meta name="author" content="KingOcean(ko-tw.com)" />
+	<meta name="fragment" content="!">
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="expires" content="Sunday 26 October 2008 01:00 GMT" />
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="_css/food_class_farmers.css" />
 
-		<script src="_library/require.min.js" data-main="_js/food_famers" defer async="true"></script>	
-    </head>
+	<script src="_library/require.min.js" data-main="_js/food_famers" defer async="true"></script>	
+</head>
 <body>
 		
 <div id="mainFrame" class="themes">
@@ -67,25 +68,36 @@
 		<div class="Cols">
 			<form action="" id="form-farmer-search">
 				<ul class="row">
-					<li class="title col-md-2"><h3>食材分類</h3></li>
+					<li class="title col-md-1"><h3>地點</h3></li>
 					<li class="content col-md-2">
+						<select class="view_citySelectList">
+							<option value="">全部</option>
+						</select>
+						<select class="view_townSelectList">
+							<option value="" selected="selected">全部</option>
+						</select>
+					</li>
+					<li class="title col-md-2"><h3>食材分類</h3></li>
+					<li class="content col-md-4">
 						<select class="view_itemSelectList">
 							<option value="">全部</option>
 						</select>
 					</li>
+					<!--
 					<li class="title col-md-2"><h3>關鍵字搜索</h3></li>
 					<li class="content col-md-4">
 						<input type="text" class="input-keywords view_itemKey" size="30" />
 					</li>
+					-->
 					<li class="action col-md-1">
-						<input type="button" class="aj_itemSearch" text="搜索"  value="搜索" />
+						<input type="button" class="aj_itemSearch" text="搜索" value="搜索" />
 					</li>
 				</ul>
 			</form>
 			<ul class="content mDataList">
 				<li class="cols-header">
 					<h1 class="title">台灣在地的好食材</h1>
-					<h2 class="title view_parentFoodClassName">location: 農產物/蔬菜</h2>
+					<h2 class="title view_parentFoodClassName">location: ---</h2>
 				</li>
 				
 				<li class="cols-body">
@@ -97,7 +109,7 @@
 									<img src="_files/farmers/farmer_00.jpg" />
 									
 								</div>
-								<div class="name">--</div>
+								<div class="name">---</div>
 								<div class="article">----</div>
 							</a>
 						</li>
@@ -106,15 +118,15 @@
 				
 				<div class="cols-footer">
 					<div class="mPage">
-						<h1 class="page-msg">loading...</h1>
+						<h1 class="page-msg">Loading...</h1>
 						<div class="page-count">
 							<span class="top pageProcess">首頁</span>
 							<span class="prev pageProcess">上一頁</span>
-							<span class="pagelist pageProcess">1</span>
+							<span class="pagelist pageProcess">-</span>
 							<span>共</span>
-							<span class="nowpage pageProcess">0</span>
+							<span class="nowpage pageProcess">-</span>
 							<span>/</span>
-							<span class="totalpage pageProcess">0</span>
+							<span class="totalpage pageProcess">-</span>
 							<span>頁</span>
 							<span class="next pageProcess">下一頁</span>
 							<span class="last pageProcess">尾頁</span>

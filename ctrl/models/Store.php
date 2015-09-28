@@ -96,26 +96,43 @@ class Store extends Base {
 	}
 
 	public function getDetail($params){
-		$storeId = $params["storeId"];
-		$searchSql = 
-			"select s.* ".
-			"from store s ".
-			"where s.storeId = $storeId";
-		//print_r($searchSql);
-		$sth = $this->dbh->prepare($searchSql);
-		$sth->execute();
-		$data = $sth->fetchAll();
+		$isSuc = true;
+		$msg = "店家資料查詢成功！";
 		
-		$searchSql = 
-			"select f.* ".
-			"from storefarmer sf ".
-			"join farmer f on f.farmerId = sf.farmerId ".
-			"where sf.storeId = $storeId";
-		//print_r($searchSql);
-		$sth = $this->dbh->prepare($searchSql);
-		$sth->execute();
-		$farmer = $sth->fetchAll();
-		return json_encode(array("info"=>$data, "farmer"=>$farmer));
+		try {
+			$storeId = $params["storeId"];
+			$searchSql = 
+				"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress ".
+				"from store s ".
+				"left join city c on c.cityId = s.city ".
+				"left join town t on t.cityId = s.city and t.townId = s.town ".
+				"where s.storeId = $storeId";
+			$sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array());
+			$data = $sth->fetchAll();
+			
+			$searchSql = 
+				"select sd.* ".
+				"from storedesc sd ".
+				"where sd.storeId = $storeId";
+			$sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array());
+			$desc = $sth->fetchAll();
+			
+			$searchSql = 
+				"select f.* ".
+				"from storefarmer sf ".
+				"join farmer f on f.farmerId = sf.farmerId ".
+				"where sf.storeId = $storeId";
+			$sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array());
+			$farmer = $sth->fetchAll();
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "店家資料查詢失敗：". $e->getMessage();
+		}
+		
+		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, "desc"=>$desc, "farmer"=>$farmer));
 	}
 	
 	public function getItemChosen($params){
@@ -191,8 +208,12 @@ class Store extends Base {
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "店家資料編輯成功！";
+		$storeId = "";
 		
 		try {
+			$chkValid = $this->chkValidFunc($params);
+			if ($chkValid != "") throw new Exception($chkValid);
+			
 			$usr = $_SESSION["website_login_session"];
 			$storeId = $params["storeId"];
 
@@ -202,6 +223,9 @@ class Store extends Base {
 				$params["storeName"], $params["contact"], 
 				$params["city"], $params["town"], $params["address"], 
 				$params["latitude"], $params["longitude"], $storeId));
+				
+			$this->processPhoneData($storeId, $params["phone"]);
+			$this->processEmailData($storeId, $params["email"]);
 
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
@@ -223,9 +247,12 @@ class Store extends Base {
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "店家資料新增成功！";
+		$storeId = "";
 		
 		try {
-			$storeId = "";
+			$chkValid = $this->chkValidFunc($params);
+			if ($chkValid != "") throw new Exception($chkValid);
+			
 			$usr = $_SESSION["website_login_session"];  
 			
 			$sth = $this->dbh->prepare(
@@ -236,6 +263,9 @@ class Store extends Base {
 				$params["city"], $params["town"], $params["address"], 
 				$params["latitude"], $params["longitude"]));
 			$storeId = $this->dbh->lastInsertId();
+			
+			$this->processPhoneData($storeId, $params["phone"]);
+			$this->processEmailData($storeId, $params["email"]);
 			
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
@@ -251,6 +281,96 @@ class Store extends Base {
 			$this->dbh->rollBack();
 		}
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "storeId"=>$storeId));
+	}
+
+	public function chkValidFunc($params) {
+		$msg = "";
+		if ($params["storeName"] == "") $msg .= "\n請輸入店家姓名！";
+		if ($params["storeTypeItem"] == "") $msg .= "\n請選擇至少一項店家型態！";
+		
+		$phone = $params["phone"];
+		for ($i = 0 ; $i < count($phone) ; $i++) {
+			$curIdx = $i + 1;
+			if ($phone[$i] == "") $msg .= "\n請輸入手機項目[$curIdx]資料！";
+			else if (!$this->isPhone($phone[$i])) $msg .= "\n手機項目[$curIdx]資料格式錯誤！";
+		}
+		
+		$email = $params["email"];
+		for ($i = 0 ; $i < count($email) ; $i++) {
+			$curIdx = $i + 1;
+			if ($email[$i] == "") $msg .= "\n請輸入電子信箱項目[$curIdx]資料！";
+			else if (!$this->isEmail($email[$i])) $msg .= "\n電子信箱項目[$curIdx]資料格式錯誤！";
+		}
+		
+		return $msg;
+	}
+	
+	public function processPhoneData($storeId, $phone) {
+		$curPhone = array();
+		$existPhone = array();
+		
+		$searchSql = 
+			"select sd.* ".
+			"from storedesc sd ".
+			"where sd.storeId = ? ".
+			"and sd.descKey = ?";
+		$sth = $this->dbh->prepare($searchSql);
+		$this->execSQL($sth, array($storeId, "phone"));
+		$curPhone = $sth->fetchAll();
+		
+		//刪除
+		for ($i = 0 ; $i < count($curPhone) ; $i++) {
+			if (!in_array($curPhone[$i]["descValue"], $phone)) {
+				$sth = $this->dbh->prepare(
+				     "delete from storedesc ".
+				     "where storeDescId = ?");
+		        $this->execSQL($sth, array($curPhone[$i]["storeDescId"]));
+			}
+			array_push($existPhone, $curPhone[$i]["descValue"]);
+		}
+		//新增
+		for ($i = 0 ; $i < count($phone) ; $i++) {
+			if (!in_array($phone[$i], $existPhone)) {
+				$sth = $this->dbh->prepare(
+				     "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
+				     "values(?, ?, ?, ?, now(), now())");
+		        $this->execSQL($sth, array($storeId, "phone", $phone[$i], ""));
+			}
+		}
+	}
+
+	public function processEmailData($storeId, $email) {
+		$curEmail = array();
+		$existEmail = array();
+		
+		$searchSql = 
+			"select sd.* ".
+			"from storedesc sd ".
+			"where sd.storeId = ? ".
+			"and sd.descKey = ?";
+		$sth = $this->dbh->prepare($searchSql);
+		$this->execSQL($sth, array($storeId, "email"));
+		$curEmail = $sth->fetchAll();
+		
+		//刪除
+		for ($i = 0 ; $i < count($curEmail) ; $i++) {
+			if (!in_array($curEmail[$i]["descValue"], $email)) {
+				$sth = $this->dbh->prepare(
+				     "delete from storedesc ".
+				     "where storeDescId = ?");
+		        $this->execSQL($sth, array($curEmail[$i]["storeDescId"]));
+			}
+			array_push($existEmail, $curEmail[$i]["descValue"]);
+		}
+		//新增
+		for ($i = 0 ; $i < count($email) ; $i++) {
+			if (!in_array($email[$i], $existEmail)) {
+				$sth = $this->dbh->prepare(
+				     "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
+				     "values(?, ?, ?, ?, now(), now())");
+		        $this->execSQL($sth, array($storeId, "email", $email[$i], ""));
+			}
+		}
 	}
 	
 	public function processFarmerItemData($storeId, $farmerItems) {
@@ -320,17 +440,28 @@ class Store extends Base {
 	}
 	
 	public function getAllData($params){
-		$searchSql = 
-			"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress, ".
-			"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
-			"from store s ".
-			"join city c on c.cityId = s.city ".
-			"join town t on t.cityId = s.city and t.townId = s.town ".
-			"where 1 = 1 ".
-			"order by s.createDT desc";
-		$sth = $this->dbh->prepare($searchSql);
-		$sth->execute();
-		return json_encode(array("list"=>$sth->fetchAll()));
+		$isSuc = true;
+		$msg = "店家資料查詢成功！";
+		
+		try {
+			$usr = $_SESSION["website_login_session"];
+			$memberId = $usr["memberId"];
+			$searchSql = 
+				"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress, ".
+				"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
+				"from store s ".
+				"join city c on c.cityId = s.city ".
+				"join town t on t.cityId = s.city and t.townId = s.town ".
+				"where s.memberId = $memberId ".
+				"order by s.createDT desc";
+			$sth = $this->dbh->prepare($searchSql);
+			$sth->execute();
+			$data = $sth->fetchAll();
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "店家資料查詢失敗：". $e->getMessage();
+		}
+		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "list"=>$data));
 	}
 }
 ?>

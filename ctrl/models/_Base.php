@@ -30,11 +30,23 @@ class Base {
 		if ($arr[0] != "0000") throw new Exception($arr[2]);
 	}
 
-	public function isEmail($email) {
-		if(preg_match("/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/", $email)) {
+	public function isEmail($str) {
+		if(preg_match("/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/", $str)) {
 			return true;
 		} 
 		return false;
+	}
+	
+	public function isPhone($str) {
+		// if (preg_match("/09[0-9]{2}-[0-9]{3}-[0-9]{3}/", $str)) {
+	        // return true;    // 09xx-xxx-xxx
+	    // } else if(preg_match("/09[0-9]{2}-[0-9]{6}/", $str)) {
+	        // return true;    // 09xx-xxxxxx
+	    // } 
+	    if(preg_match("/09[0-9]{8}/", $str)) {
+	        return true;    // 09xxxxxxxx
+	    }
+	    return false;
 	}
 
 }

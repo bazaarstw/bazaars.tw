@@ -12,3 +12,29 @@
 .themes .btn.btn-check{
 	font-size: 21px;
 }
+.themes .form-header{
+	padding: 100px 0 20px 0;
+	text-align: center;
+}
+.themes .btn.btn-icon-facebook{
+	background-color:#06c;
+	border-radius: 100px;
+	width: 80px;
+	height: 80px;
+	text-indent: -9999px;
+	background-image: url('../_images/99_login_icons_facebook');
+	background-repeat:  no-repeat;
+	background-position: center center;
+	background-size: 100%;
+}
+.themes .btn.btn-icon-google{
+	background-color:#F55;
+	border-radius: 100px;
+	width: 80px;
+	height: 80px;
+	text-indent: -9999px;
+	background-image: url('../_images/99_login_icons_google');
+	background-repeat:  no-repeat;
+	background-position: center center;
+	background-size: 100%;
+}

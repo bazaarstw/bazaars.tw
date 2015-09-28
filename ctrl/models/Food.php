@@ -23,7 +23,7 @@ class Food extends Base {
 	public function getFarmerList($params){
 		$classId = $params["classId"];
 		$itemId = $params["itemId"];
-		$keyword = '%'.$params["keyword"].'%';
+		// $keyword = '%'.$params["keyword"].'%';
 		$searchSql = "";
 		if ($itemId == "") {
 			$searchSql = 
@@ -31,7 +31,10 @@ class Food extends Base {
 			"(select classPath from foodclass where foodClassId = $classId) as parentClassPath ".
 			"from farmer fm ".
 			"join farmeritem fi on fi.farmerId = fm.farmerId ".
-			"where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId and itemName like '$keyword')";
+			"where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId)";
+			"and fm.city like '%". $params["city"]. "%' ".
+			"and fm.town like '%". $params["town"]. "%'";
+			// "where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId and itemName like '$keyword')";
 		} else {
 			$searchSql = 
 			"select distinct fm.*, ".
@@ -39,8 +42,12 @@ class Food extends Base {
 			"from farmer fm ".
 			"join farmeritem fi on fi.farmerId = fm.farmerId ".
 			"where fi.foodItemId = $itemId ".
-			"and itemName like '$keyword'";
+			"and fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId) ".
+			"and fm.city like '%". $params["city"]. "%' ".
+			"and fm.town like '%". $params["town"]. "%'";
+			// "and fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId and itemName like '$keyword')";
 		}
+		// echo $searchSql;
 		$data = $this->processPageSQL($params, $searchSql);
 		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
 	}

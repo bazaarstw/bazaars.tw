@@ -19,13 +19,26 @@ require(['_require_path'], function() {
 						success : function(result) {  
 							
 							//viewJSON(result);
-							//©±®a¸ê®Æ
+							//ï¿½ï¿½ï¿½aï¿½ï¿½ï¿½
 							var info = result.info[0];
 							$("#store-personal .cover img").attr("src", info["storeImg"]);
 							$("#store-personal .name").html(info["storeName"]);
-							$("#store-personal .phone").html(info["contact"]);
-							$("#store-personal .addrs").html(info["address"]);
-							//¦X§@¹A¤Ò
+							$("#store-personal .atricle").html(info["contact"]);
+							$("#store-personal .addrs").html(info["fullAddress"]);
+							
+							$.each(result['desc'], function( index, value ) {
+                                switch(value[2]) {
+                                    case 'phone':
+                                        $(".phone ul").append("<li>" + value[3] + "</li>");
+                                        break;
+                                    case 'email':
+                                        $(".email ul").append("<li>" + value[3] + "</li>");
+                                        break;
+                                }
+                                console.log( index + ": " + value[2] );
+                            });
+                            
+							//ï¿½Xï¿½@ï¿½Aï¿½ï¿½
 							var farmer = result.farmer;
 							console.log(result.farmer);
 							var farmerHtml = $(".link-farmers").html();

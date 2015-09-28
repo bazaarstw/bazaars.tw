@@ -9,6 +9,7 @@ require(['_require_path'], function() {
 				
 				page = 1;
 				classId = $.getUrlParam("classId");
+				$.aj_listCity();
 				aj_listItem();
 				getListData();
 				$(".pageProcess").on("click", function() {
@@ -45,7 +46,7 @@ require(['_require_path'], function() {
 					});
 					
 					$(".view_itemSelectList").on("change", function() {
-						getListData(1);
+						//getListData(1);
 					});
 				}
 				
@@ -60,19 +61,22 @@ require(['_require_path'], function() {
 							pageNumber: 10,
 							classId: classId,
 							itemId: $(".view_itemSelectList").val(),
-							keyword: $(".view_itemKey").val()
+							city: $(".view_citySelectList").val(),
+							town: $(".view_townSelectList").val()
+							// keyword: $(".view_itemKey").val()
 						},
 						dataType : "json", 
 						success : function(result) {  
+							//清除前次搜尋資料
+							$(".mPage .page-msg").text("sorry!! no data...").hide();
+							var idx = 0;
+							$("#farmers-list li").each(function() {
+								if (idx > 0) $(this).remove();
+								idx++;
+							});
+							
 							//資料顯示判斷
 							if (result.list.length > 0) {
-								//viewJSON(result);
-								var idx = 0;
-								$("#farmers-list li").each(function() {
-									if (idx > 0) $(this).remove();
-									idx++;
-								});
-								
 								if (result.list.length > 0) {
 									$(".view_parentFoodClassName").html("location: " + result.list[0]["parentClassPath"]);
 								} else {
