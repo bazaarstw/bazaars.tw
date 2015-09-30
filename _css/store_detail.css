@@ -13,7 +13,8 @@
 		padding: 10px;
 	}
 	#store-personal .phone,
-	#store-personal .addrs{	
+	#store-personal .addrs,
+	#store-personal .email{	
 		font-size: 18px;
 		padding: 5px 10px;
 	}
@@ -30,7 +31,6 @@
 		font-size: 21px;
 		padding: 10px 0px;
 	}
-	
 	#cooperation-farmers .link-farmers .items{
 		text-align: center;
 	}

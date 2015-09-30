@@ -31,6 +31,11 @@
 }
 
 
+.mSearch .title *{
+	color: #5B5;
+}
+	
+
 .themes .form_login{
 	width: 500px;
 	margin: 0 auto;
@@ -76,6 +81,13 @@
 		color: #CCC;
 	}
 
+.themes .subtitle{	
+	color: #5B5;
+	font-weight: bold;
+}
+
+/***themes .btn
+*******************/
 .themes .btn{
 	border-radius: 4px;
 	border: 1px solid #CCC;
@@ -137,7 +149,8 @@
 		background-color: #494;
 	}
 
-
+/***.themes .navbar-inverse
+*******************/
 	.themes .navbar-inverse .navbar-toggle {
 		background-color: #494;
 		border-color: #383;
@@ -149,6 +162,20 @@
 		
 	.themes .navbar-inverse .navbar-brand{
 		color: #5B5;
+	}
+	
+/***.themes form .action
+*******************/	
+	.themes form .action input[type=button]{
+		background-color:#5B5;
+		color: #FFF;
+		border: none;
+		padding: 5px;
+		border-radius: 5px;
+	}
+	.themes form .action input[type=button]:hover{
+		background-color:#CCC;
+		color: #FFF;
 	}
 	
 @media (max-width: 767px){
@@ -164,6 +191,13 @@
 	.themes .navbar-inverse .navbar-form{
 		border-top: 1px solid #5B5;
 		background: #FFF;
+	}
+	
+	.themes .mSearch .content{
+		text-align: center;
+	}
+	.themes .mSearch .action{
+		text-align: center;
 	}
 }
 

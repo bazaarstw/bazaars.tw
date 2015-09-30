@@ -47,7 +47,9 @@ require(['_require_path'], function() {
 									$(".cols-body").append(news);
 									$(".cols-body a").last().attr("href","work_detail.html?workId="+result.list[idx]["workId"]);
 									$(".cols-body a").last().find(".items").eq(0).text(result.list[idx]["title"]);
-									$(".cols-body a").last().find(".items").eq(1).text(result.list[idx]["fullAddress"]);
+									var fullAddr = result.list[idx]["fullAddress"];
+									if (fullAddr == null) fullAddr = "";
+									$(".cols-body a").last().find(".items").eq(1).text(fullAddr);
 									$(".cols-body a").last().find(".items").eq(2).text(result.list[idx]["workCnt"]);
 									$(".cols-body a").last().find(".items").eq(3).text(result.list[idx]["salary"]);
 									$(".cols-body a").last().find(".items").eq(4).text("約"+result.list[idx]["workDay"]+"天");

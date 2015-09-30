@@ -6,11 +6,11 @@ class Work extends Base {
 		$searchSql = 
 			"select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress ".
 			"from work w ".
-			"join city c on c.cityId = w.city ".
-			"join town t on t.cityId = w.city and t.townId = w.town ".
+			"left join city c on c.cityId = w.city ".
+			"left join town t on t.cityId = w.city and t.townId = w.town ".
 			"where w.title like '%". $params["title"]. "%' ".
-			"and w.city like '%". $params["city"]. "%' ".
-			"and w.town like '%". $params["town"]. "%' ".
+			"and ifnull(w.city,'') like '%". $params["city"]. "%' ".
+			"and ifnull(w.town,'') like '%". $params["town"]. "%' ".
 			"order by w.startDT desc";
 		$data = $this->processPageSQL($params, $searchSql);
 		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
@@ -30,8 +30,8 @@ class Work extends Base {
 			$searchSql = 
                 "select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress, m.username, m.email, m.phone, m.photo ".
                 "from work w ".
-                "join city c on c.cityId = w.city ".
-                "join town t on t.cityId = w.city and t.townId = w.town ".
+                "left join city c on c.cityId = w.city ".
+                "left join town t on t.cityId = w.city and t.townId = w.town ".
                 "join member m on m.memberId = w.memberId ".
                 "where workId = ?";
             $sth = $this->dbh->prepare($searchSql);
@@ -206,8 +206,8 @@ class Work extends Base {
 		$searchSql = 
 			"select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress ".
 			"from work w ".
-			"join city c on c.cityId = w.city ".
-			"join town t on t.cityId = w.city and t.townId = w.town ".
+			"left join city c on c.cityId = w.city ".
+			"left join town t on t.cityId = w.city and t.townId = w.town ".
 			"where memberId = ? ".
 			"order by w.startDT desc";
 		$sth = $this->dbh->prepare($searchSql);

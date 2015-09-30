@@ -248,6 +248,7 @@ class Store extends Base {
 		$isSuc = true;
 		$msg = "店家資料新增成功！";
 		$storeId = "";
+		$storeImg = $this->getDefaultImgPath("store");
 		
 		try {
 			$chkValid = $this->chkValidFunc($params);
@@ -256,12 +257,12 @@ class Store extends Base {
 			$usr = $_SESSION["website_login_session"];  
 			
 			$sth = $this->dbh->prepare(
-			     "insert into store(memberId, storeName, contact, city, town, address, latitude, longitude, createDT, updateDT) ".
-				 "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
+			     "insert into store(memberId, storeName, contact, city, town, address, storeImg, latitude, longitude, createDT, updateDT) ".
+				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"], 
 				$params["storeName"], $params["contact"], 
 				$params["city"], $params["town"], $params["address"], 
-				$params["latitude"], $params["longitude"]));
+				$storeImg, $params["latitude"], $params["longitude"]));
 			$storeId = $this->dbh->lastInsertId();
 			
 			$this->processPhoneData($storeId, $params["phone"]);

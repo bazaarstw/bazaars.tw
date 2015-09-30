@@ -4,13 +4,21 @@ class Food extends Base {
 	
 	public function getClassList($params){
 		$searchSql = 
+			"select fc.* ".
+			"from foodclass fc ".
+			"where fc.foodClassId = ". $params["parentId"];
+		$sth = $this->dbh->prepare($searchSql);
+		$sth->execute();
+		$clsRows = $sth->fetchAll();
+		
+		$searchSql = 
 			"select fc.*, pfc.classPath as parentClassPath, ".
 			"(select count(foodClassId) from foodclass where classParentId = fc.foodClassId) as subClassCnt ".
 			"from foodclass fc ".
 			"left join foodclass pfc on pfc.foodClassId = fc.classParentId ".
 			"where fc.classParentId = ". $params["parentId"];
 		$data = $this->processPageSQL($params, $searchSql);
-		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
+		return json_encode(array("info"=>$clsRows, "list"=>$data['row'], "listCnt"=>$data['count']));
 	}
 	
 	public function getListItem($params){
@@ -24,6 +32,15 @@ class Food extends Base {
 		$classId = $params["classId"];
 		$itemId = $params["itemId"];
 		// $keyword = '%'.$params["keyword"].'%';
+		
+		$searchSql = 
+			"select fc.* ".
+			"from foodclass fc ".
+			"where fc.foodClassId = ". $classId;
+		$sth = $this->dbh->prepare($searchSql);
+		$sth->execute();
+		$clsRows = $sth->fetchAll();
+		
 		$searchSql = "";
 		if ($itemId == "") {
 			$searchSql = 
@@ -31,7 +48,7 @@ class Food extends Base {
 			"(select classPath from foodclass where foodClassId = $classId) as parentClassPath ".
 			"from farmer fm ".
 			"join farmeritem fi on fi.farmerId = fm.farmerId ".
-			"where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId)";
+			"where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId) ".
 			"and fm.city like '%". $params["city"]. "%' ".
 			"and fm.town like '%". $params["town"]. "%'";
 			// "where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId and itemName like '$keyword')";
@@ -49,7 +66,7 @@ class Food extends Base {
 		}
 		// echo $searchSql;
 		$data = $this->processPageSQL($params, $searchSql);
-		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
+		return json_encode(array("info"=>$clsRows, "list"=>$data['row'], "listCnt"=>$data['count']));
 	}
 	
 	public function getItemChosen($params){

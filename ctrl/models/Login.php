@@ -27,6 +27,9 @@ class Login extends Base {
 			$isLogin = true;
 		} else {
 			// register
+			$photo = $this->getDefaultImgPath("member");
+			if ($params["photo"] != "") $photo = $params["photo"];
+			
 			$sth = $this->dbh->prepare(
 			     "insert into member(account, username, email, photo, registerType, createDT, updateDT) ".
 			     "values(?, ?, ?, ?, ?, now(), now())");
@@ -34,7 +37,7 @@ class Login extends Base {
                 $params["account"], 
                 $params["username"], 
                 $params["email"], 
-                $params["photo"], 
+                $photo, 
                 $params["registerType"]));
                 
             $sth = $this->dbh->prepare("SELECT * FROM member WHERE account = ? AND registerType = ?");

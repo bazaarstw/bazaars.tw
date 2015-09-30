@@ -4,13 +4,16 @@
 /* Search module
  * --------------------------------------- */
 .mSearch{
-	padding: 5px 0;
+	padding: 20px;
 }
 	.mSearch .title{
 		font-size: 21px;
 		padding: 5px;
 		font-weight: 600;
-		text-align: right;
+		text-align: center;
+	}
+	.mSearch .content{
+		text-align: left;
 	}
 	.mSearch div{
 		padding: 3px;
@@ -25,5 +28,5 @@
 		font-size: 18px;
 	}
 	.mSearch .cols-search li{
-		padding: 5px 0;
+		margin: 5px 0;
 	}
