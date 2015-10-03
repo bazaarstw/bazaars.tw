@@ -15,6 +15,7 @@ require(['_require_path'], function() {
 						center: 'title',
 						right: 'prev,next today'
 					},
+					firstDay: 1,
 					editable: false,
 					eventLimit: true, // allow "more" link when too many events
 					events: {

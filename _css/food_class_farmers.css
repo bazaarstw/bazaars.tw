@@ -47,6 +47,8 @@
 	color: #666;
 	font-size: 17px;
 	padding: 0;
+	height: 100px;
+	overflow: hidden;
 }
 .view_parentFoodClassName{
 	padding: 10px;

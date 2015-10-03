@@ -32,10 +32,33 @@ require(['../../_js/_require_path'], function() {
 						success : function(result) {  
 							var info = result.info[0];
 							$(".bind_storeName").attr("value", info["storeName"]);
-							$(".bind_contact").attr("value", info["contact"]);
+							$(".bind_content").text(info["content"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
 							$(".view_citySelectList").val(info["city"]);
 							aj_listTown(info["town"]);
 							$(".bind_address").attr("value", info["address"]);
+							
+							var bool_phone = 0;
+							var bool_email = 0;
+							var desc = result.desc;
+							for (var idx = 0 ; idx < desc.length ; idx++) {
+								var descKey = desc[idx]["descKey"];
+								if (descKey == "phone") {
+									if ($('.phone-field').size() == 1 && bool_phone == 0) {
+										bool_phone = 1;
+										$('#phone-field1').attr('value', desc[idx]["descValue"]);
+									} else {
+										addInputField('phone', '', '', desc[idx]["descValue"]);
+									}
+								}
+								if (descKey == "email") {
+									if ($('.email-field').size() == 1 && bool_email == 0) {
+										bool_email = 1;
+										$('#email-field1').attr('value', desc[idx]["descValue"]);
+									} else {
+										addInputField('email', '', '', desc[idx]["descValue"]);
+									}
+								}
+							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
@@ -43,6 +66,51 @@ require(['../../_js/_require_path'], function() {
 						}
 					});
 				}
+				
+				// Writting By Richard (20150907)
+				function addInputField(FieldName, settingPlaceholder, settingTabindex, settingVal) {
+					switch (FieldName) {
+						case 'phone':
+							if (settingPlaceholder == '') settingPlaceholder = '請輸入手機號碼...';
+							if (settingTabindex == '') settingTabindex = 2;
+							break;
+						case 'email':
+							if (settingPlaceholder == '') settingPlaceholder = 'email@example.com';
+							if (settingTabindex == '') settingTabindex = 3;
+							break;
+					}
+					
+					next = parseInt($("#" + FieldName + "-field-count").text());
+					var addto = "#" + FieldName + "-field" + next;
+					var addRemove = "#" + FieldName + "-field" + (next);
+					next += 1;
+					$("#" + FieldName + "-field-count").text(next);
+					var newIn = '';
+					newIn = '<div id="field" class="' + FieldName + '-field">';
+					newIn += '<div class="col-lg-11"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder + '" tabindex="' + settingTabindex + '"  value="' + settingVal + '" /></div>';					
+					newIn += '<div class="col-lg-1"><button id="' + FieldName + '-remove' + (next - 1) + '" class="btn btn-danger ' + FieldName + '-remove-me" >-</button></div>';
+					newIn += '</div>';
+					
+					var newInput = $(newIn);
+					$('.' + FieldName + '-field:last').after(newInput);
+					$("#" + FieldName + "-field" + next).attr('data-source',$(addto).attr('data-source'));
+					$("#count").val(next);
+					
+						$('.' + FieldName + '-remove-me').click(function(e){
+							var fieldNum = this.id.substr(this.id.lastIndexOf("e")+1);
+							// var fieldID = "#" + FieldName + "-field" + fieldNum;
+							$(this).parent().parent().remove();
+							// $(fieldID).parent().remove();
+						});
+				}
+				
+				$(".phone-add-more").click(function(e){
+					addInputField('phone', '', '', '');
+				});
+				
+				$(".email-add-more").click(function(e){
+					addInputField('email', '', '', '');
+				});
 				
 				function initBtn() {
 					$(document).on("click", ".aj_saveStore", function() {
@@ -70,8 +138,8 @@ require(['../../_js/_require_path'], function() {
 							alert(result.msg);
 							if (result.isSuc) {
 								storeId = result.storeId;
+								window.location.replace("store.html");
 							}
-							window.location.replace("store.html");
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);

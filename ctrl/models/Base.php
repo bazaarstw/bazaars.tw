@@ -1,12 +1,6 @@
 <?php
 
-class Base {
-	
-	public $dbh;
-	
-	public function __construct()	{		
-		$this->dbh = new PDO("mysql:host=localhost;dbname=mymarket","root","123456",array(PDO::ATTR_PERSISTENT => TRUE, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));	
-	}
+class Base extends DBConn {
 	
 	public function processPageSQL($params, $searchSQL) {
 		$page = $params["page"] - 1;
@@ -55,6 +49,10 @@ class Base {
 		else if ($type == "farmer") $imgPath = "_files/farmers/farmer_default.jpg";
 		else if ($type == "store") $imgPath = "_files/stores/stores_default.jpg";
 	    return $imgPath;
+	}
+	
+	public function passMD5($str) {
+		return md5($str);
 	}
 
 }

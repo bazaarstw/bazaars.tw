@@ -44,7 +44,7 @@ class Work extends Base {
 				if ($usr["memberId"] == $memberId) {
 					//小農應援團擁有者，查詢報名清單
 					$isWorkAuth = true;
-					$signList = $this->getSignList($workId);
+					$signList = $this->getSignList($params);
 				} else {
 					$searchSql = 
 			            "select ws.* ".
@@ -61,6 +61,8 @@ class Work extends Base {
 						$signInfo = array("name"=>$usr["username"], "phone"=>$usr["phone"]);
 					}
 				}
+			} else {
+				$signInfo = null;
 			}
 		} catch (Exception $e) {
 			$isSuc = false;
@@ -70,8 +72,34 @@ class Work extends Base {
 			"isWorkAuth"=>$isWorkAuth, "signList"=>$signList, 
 			"isSign"=>$isSign, "signInfo"=>$signInfo));
 	}
+	
+	public function getAdmDetail($params){
+		$isSuc = true;
+		$msg = "";
+		$signList = array();
+		
+		try {
+			$workId = $params["workId"];
+			$searchSql = 
+                "select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress, m.username, m.email, m.phone, m.photo ".
+                "from work w ".
+                "left join city c on c.cityId = w.city ".
+                "left join town t on t.cityId = w.city and t.townId = w.town ".
+                "join member m on m.memberId = w.memberId ".
+                "where workId = ?";
+            $sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array($workId));
+			$data = $sth->fetchAll();
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "查詢失敗：". $e->getMessage();
+		}
+		return json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data));
+	}
 
-	public function getSignList($workId) {
+	public function getSignList($params) {
+		$workId = $params["workId"];
+		
 		$searchSql = 
             "select ws.* ".
             "from worksign ws ".
@@ -204,7 +232,8 @@ class Work extends Base {
 		$usr = $_SESSION["website_login_session"];  
 
 		$searchSql = 
-			"select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress ".
+			"select w.*, CONCAT(c.cityName,t.townName,w.address) as fullAddress, ".
+			"(select count(ws.workSignId) from worksign ws where ws.workId = w.workId) as signCnt ".
 			"from work w ".
 			"left join city c on c.cityId = w.city ".
 			"left join town t on t.cityId = w.city and t.townId = w.town ".
@@ -212,6 +241,18 @@ class Work extends Base {
 			"order by w.startDT desc";
 		$sth = $this->dbh->prepare($searchSql);
 		$sth->execute(array($usr["memberId"]));
+		return json_encode(array("list"=>$sth->fetchAll()));
+	}
+	
+	public function getAdmSignList($params) {
+		$workId = $params["workId"];
+		
+		$searchSql = 
+            "select ws.* ".
+            "from worksign ws ".
+            "where ws.workId = ?";
+        $sth = $this->dbh->prepare($searchSql);
+		$this->execSQL($sth, array($workId));
 		return json_encode(array("list"=>$sth->fetchAll()));
 	}
 

@@ -81,10 +81,10 @@
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> 即時通<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">小農應援團</a>
+                                    <a href="work.html">小農應援團</a>
                                 </li>
                                 <li>
-                                    <a href="#">活動報報</a>
+                                    <a href="news.html">活動報報</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -129,8 +129,32 @@
 											<input class="form-control bind_storeName" name="storeName" placeholder="請輸入店家名稱..." tabindex="1">
 										</div>
 										<div class="form-group">
-											<label>聯絡方式 Contact</label>
-											<input class="form-control bind_contact" name="contact" placeholder="請輸入聯絡方式..." tabindex="5">
+											<label>手機 Mobile</label>
+											<span id="phone-field-count" class="hidden">1</span>
+											<div id="field" class="phone-field">
+												<div class="col-lg-11">
+													<input autocomplete="off" class="form-control input bind_phone" id="phone-field1" name="phone[]" type="text" placeholder="請輸入手機號碼..." tabindex="2" value="" />
+												</div>
+												<div class="col-lg-1">
+													<button id="b1" class="btn phone-add-more" type="button">+</button>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>電子信箱 E-mail</label>
+											<span id="email-field-count" class="hidden">1</span>
+											<div id="field" class="email-field">
+												<div class="col-lg-11">
+													<input autocomplete="off" class="form-control input bind_email" id="email-field1" name="email[]" type="text" placeholder="email@example.com" tabindex="3" value="" />
+												</div>
+												<div class="col-lg-1">
+													<button id="b1" class="btn email-add-more" type="button">+</button>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>說明 Content</label>
+											<textarea class="form-control bind_content" name="content" rows="6" placeholder="請輸入說明內文..." tabindex="5"></textarea>
 										</div>
 										<div class="form-group">
 											<label>店家地址 Address</label>

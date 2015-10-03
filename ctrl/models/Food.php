@@ -49,8 +49,8 @@ class Food extends Base {
 			"from farmer fm ".
 			"join farmeritem fi on fi.farmerId = fm.farmerId ".
 			"where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId) ".
-			"and fm.city like '%". $params["city"]. "%' ".
-			"and fm.town like '%". $params["town"]. "%'";
+			"and ifnull(fm.city,'') like '%". $params["city"]. "%' ".
+			"and ifnull(fm.town,'') like '%". $params["town"]. "%'";
 			// "where fi.foodItemId in (select foodItemId from fooditem where foodClassId = $classId and itemName like '$keyword')";
 		} else {
 			$searchSql = 

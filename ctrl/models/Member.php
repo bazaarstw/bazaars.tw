@@ -27,7 +27,7 @@ class Member extends Base {
 				$sth = $this->dbh->prepare(
 				     "insert into member(account, passwd, username, photo, registerType, createDT, updateDT) ".
 			     "values(?, ?, '$defaultUserName', ?, 'Web', now(), now())");
-		        $this->execSQL($sth, array($params["account"], $params["passwd"], $photo));
+		        $this->execSQL($sth, array($params["account"], $this->passMD5($params["passwd"]), $photo));
 				$isSuc = true;
 			}
 		} catch (Exception $e) {
