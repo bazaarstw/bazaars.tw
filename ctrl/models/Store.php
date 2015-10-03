@@ -218,9 +218,9 @@ class Store extends Base {
 			$storeId = $params["storeId"];
 
 			$sth = $this->dbh->prepare(
-			     "update store set storeName = ?, contact = ?, city = ?, town = ?, address = ?, latitude = ?, longitude = ?, updateDT = now() where storeId = ?");
+			     "update store set storeName = ?, content = ?, city = ?, town = ?, address = ?, latitude = ?, longitude = ?, updateDT = now() where storeId = ?");
 			$this->execSQL($sth, array(
-				$params["storeName"], $params["contact"], 
+				$params["storeName"], nl2br($params["content"]), 
 				$params["city"], $params["town"], $params["address"], 
 				$params["latitude"], $params["longitude"], $storeId));
 				
@@ -248,6 +248,7 @@ class Store extends Base {
 		$isSuc = true;
 		$msg = "店家資料新增成功！";
 		$storeId = "";
+		$storeImg = $this->getDefaultImgPath("store");
 		
 		try {
 			$chkValid = $this->chkValidFunc($params);
@@ -256,12 +257,12 @@ class Store extends Base {
 			$usr = $_SESSION["website_login_session"];  
 			
 			$sth = $this->dbh->prepare(
-			     "insert into store(memberId, storeName, contact, city, town, address, latitude, longitude, createDT, updateDT) ".
-				 "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
+			     "insert into store(memberId, storeName, content, city, town, address, storeImg, latitude, longitude, createDT, updateDT) ".
+				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"], 
-				$params["storeName"], $params["contact"], 
+				$params["storeName"], nl2br($params["content"]), 
 				$params["city"], $params["town"], $params["address"], 
-				$params["latitude"], $params["longitude"]));
+				$storeImg, $params["latitude"], $params["longitude"]));
 			$storeId = $this->dbh->lastInsertId();
 			
 			$this->processPhoneData($storeId, $params["phone"]);
@@ -398,10 +399,12 @@ class Store extends Base {
 		//新增
 		for ($i = 0 ; $i < count($farmerItems) ; $i++) {
 			if (!in_array($farmerItems[$i], $existFarmerItem)) {
-				$sth = $this->dbh->prepare(
-				     "insert into storefarmer(storeId, farmerId) ".
-				     "values(?, ?)");
-				$this->execSQL($sth, array($storeId, $farmerItems[$i]));
+				if ($farmerItems[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storefarmer(storeId, farmerId) ".
+						 "values(?, ?)");
+					$this->execSQL($sth, array($storeId, $farmerItems[$i]));
+				}
 			}
 		}
 	}

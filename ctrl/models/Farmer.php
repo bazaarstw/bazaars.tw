@@ -89,7 +89,7 @@ class Farmer extends Base {
 
 			$sth = $this->dbh->prepare(
 			     "update farmer set name = ?, content = ?, city = ?, town = ?, address = ?, fbRss = ?, updateDT = now() where farmerId = ?");
-			$this->execSQL($sth, array($params["farmerName"], $params["content"], $params["city"], $params["town"], $params["address"], $params["fbRss"], $farmerId));
+			$this->execSQL($sth, array($params["farmerName"], nl2br($params["content"]), $params["city"], $params["town"], $params["address"], $params["fbRss"], $farmerId));
 
 			$this->processPhoneData($farmerId, $params["phone"]);
 			$this->processEmailData($farmerId, $params["email"]);
@@ -116,6 +116,7 @@ class Farmer extends Base {
 		$isSuc = true;
 		$msg = "農友資料新增成功！";
 		$farmerId = "";
+		$farmerImg = $this->getDefaultImgPath("farmer");
 		
 		try {
 			$chkValid = $this->chkValidFunc($params);
@@ -123,9 +124,12 @@ class Farmer extends Base {
 			
 			$usr = $_SESSION["website_login_session"];  
 			$sth = $this->dbh->prepare(
-			     "insert into farmer(memberId, name, content, city, town, address, fbRss, createDT, updateDT) ".
-			     "values(?, ?, ?, ?, ?, ?, ?, now(), now())");
-			$this->execSQL($sth, array($usr["memberId"], $params["farmerName"], $params["content"], $params["city"], $params["town"], $params["address"], $params["fbRss"]));
+			     "insert into farmer(memberId, name, content, city, town, address, fbRss, farmerImg, createDT, updateDT) ".
+			     "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
+			$this->execSQL($sth, array(
+				$usr["memberId"], $params["farmerName"], nl2br($params["content"]), 
+				$params["city"], $params["town"], $params["address"], 
+				$farmerImg, $params["fbRss"]));
 	        // $sth->execute(array($usr["memberId"], $params["farmerName"], $params["content"], $params["fbRss"]));
 			$farmerId = $this->dbh->lastInsertId();
 			

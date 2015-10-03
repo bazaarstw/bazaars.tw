@@ -12,8 +12,8 @@ class News extends Base {
 		$searchSql = 
 			"select n.*, CONCAT(c.cityName,t.townName,n.address) as fullAddress ".
 			"from news n ".
-			"join city c on c.cityId = n.city ".
-			"join town t on t.cityId = n.city and t.townId = n.town ".
+			"left join city c on c.cityId = n.city ".
+			"left join town t on t.cityId = n.city and t.townId = n.town ".
 			"where n.title like '%". $params["title"]. "%' ".
 			"and n.city like '%". $params["city"]. "%' ".
 			"and n.town like '%". $params["town"]. "%' ".
@@ -27,8 +27,8 @@ class News extends Base {
 		$searchSql = 
 			"select n.*, CONCAT(c.cityName,t.townName,n.address) as fullAddress ".
 			"from news n ".
-			"join city c on c.cityId = n.city ".
-			"join town t on t.cityId = n.city and t.townId = n.town ".
+			"left join city c on c.cityId = n.city ".
+			"left join town t on t.cityId = n.city and t.townId = n.town ".
 			"where newsId = ?";
         $sth = $this->dbh->prepare($searchSql);
 		$sth->execute(array($newsId));
@@ -98,8 +98,8 @@ class News extends Base {
 		$searchSql = 
 			"select n.*, CONCAT(c.cityName,t.townName,n.address) as fullAddress ".
 			"from news n ".
-			"join city c on c.cityId = n.city ".
-			"join town t on t.cityId = n.city and t.townId = n.town ".
+			"left join city c on c.cityId = n.city ".
+			"left join town t on t.cityId = n.city and t.townId = n.town ".
 			"where memberId = ? ".
 			"order by n.updateDT desc";
 		$sth = $this->dbh->prepare($searchSql);

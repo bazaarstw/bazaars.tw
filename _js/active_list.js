@@ -47,7 +47,9 @@ require(['_require_path'], function() {
 									$(".cols-body").append(news);
 									$(".cols-body a").last().attr("href","active_detail.html?newsId="+result.list[idx]["newsId"]);
 									$(".cols-body a").last().find(".items").eq(0).text(result.list[idx]["title"]);
-									$(".cols-body a").last().find(".items").eq(1).text(result.list[idx]["fullAddress"]);
+									var fullAddr = result.list[idx]["fullAddress"];
+									if (fullAddr == null) fullAddr = "";
+									$(".cols-body a").last().find(".items").eq(1).text(fullAddr);
 									$(".cols-body a").last().find(".items").eq(2).text(result.list[idx]["startDT"].substr(0,10)+" ~ "+result.list[idx]["endDT"].substr(0,10));
 									$(".cols-body a").last().find(".items").eq(3).text(result.list[idx]["createDT"].substr(0,10));
 									$(".cols-body a").last().show();
@@ -57,12 +59,12 @@ require(['_require_path'], function() {
 								//$(".mPage .page-count").show();
 								
 							}else{
-								//µL¸ê®ÆÅã¥Ü¦^À³
+								//ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Ü¦^ï¿½ï¿½
 								$(".mPage .page-msg").text("sorry!! no data...").show();
 							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {
-							//¿ù»~¦^À³¦r¦ê
+							//ï¿½ï¿½~ï¿½^ï¿½ï¿½ï¿½rï¿½ï¿½
 							var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
 								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
 								

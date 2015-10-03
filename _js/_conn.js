@@ -420,4 +420,6 @@ $(document).ready(function(){
 	$.execLogout();
 	$.googleLogin();
 	$.fbLogin();
+	
+	$('body').fadeIn(300);
 });

@@ -22,11 +22,12 @@ class Member extends Base {
 			    throw new Exception("此帳號已存在！");
 			} else {
 				$defaultUserName="Member";
+				$photo = $this->getDefaultImgPath("member");
 				// register
 				$sth = $this->dbh->prepare(
-				     "insert into member(account, passwd, username, registerType, createDT, updateDT) ".
-			     "values(?, ?, '$defaultUserName', 'Web', now(), now())");
-		        $this->execSQL($sth, array($params["account"], $params["passwd"]));
+				     "insert into member(account, passwd, username, photo, registerType, createDT, updateDT) ".
+			     "values(?, ?, '$defaultUserName', ?, 'Web', now(), now())");
+		        $this->execSQL($sth, array($params["account"], $this->passMD5($params["passwd"]), $photo));
 				$isSuc = true;
 			}
 		} catch (Exception $e) {

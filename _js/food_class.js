@@ -27,16 +27,17 @@ require(['_require_path'], function() {
 						},
 						dataType : "json",
 						success : function(result) { 
+							//viewJSON(result);
+							$(".view_parentFoodClassName").html("location: " + result.info[0]["classPath"]);
+							$(".mPage .page-msg").text("sorry!! no data...").hide();
+							var idx = 0;
+							$("#foods-subtype-list li").each(function() {
+								if (idx > 0) $(this).remove();
+								idx++;
+							});
+								
 							//資料顯示判斷
 							if (result.list.length > 0) {
-								//viewJSON(result);
-								var idx = 0;
-								$("#foods-subtype-list li").each(function() {
-									if (idx > 0) $(this).remove();
-									idx++;
-								});
-								$(".view_parentFoodClassName").html("location: " + result.list[0]["parentClassPath"]);
-								
 								var food = $("#foods-subtype-list").html();
 								for (idx = 0 ; idx < result.list.length ; idx++) {
 									$("#foods-subtype-list").append(food);

@@ -25,7 +25,9 @@ require(['_require_path'], function() {
 							$(".work-content .content").eq(1).find("span").html(data["startDT"] + " ~ " + data["endDT"]);
 							$(".work-content .content").eq(2).find("span").html("約 " + data["workDay"] + " 天");
 							$(".work-content .content").eq(3).find("div").html(data["workCnt"] + "/人");
-							$(".work-content .content").eq(4).find("div").html(data["fullAddress"]);
+							var fullAddr = data["fullAddress"];
+							if (fullAddr == null) fullAddr = "";
+							$(".work-content .content").eq(4).find("div").html(fullAddr);
 							$(".work-content .content").eq(5).find("div").html(data["memo"]);
 							
 							if (result.isWorkAuth) {

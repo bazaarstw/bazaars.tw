@@ -32,7 +32,7 @@ require(['../../_js/_require_path'], function() {
 						success : function(result) {  
 							var info = result.info[0];
 							$(".bind_farmerName").attr("value", info["name"]);
-							$(".bind_content").attr("value", info["content"]);
+							$(".bind_content").text(info["content"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
 							$(".bind_fbRss").attr("value", info["fbRss"]);
 							$(".view_citySelectList").val(info["city"]);
 							aj_listTown(info["town"]);
@@ -172,15 +172,14 @@ require(['../../_js/_require_path'], function() {
 								alert(result.msg);
 								if (result.isSuc) {
 									farmerId = result.farmerId;
+									window.location.replace("farmer.html");
 								}
-								window.location.replace("farmer.html");
 							},
 							error : function(jqXHR, textProject, errorThrown) {
 								alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
 								alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
 							}
 						});
-						return false;
 					});
 				}
 
@@ -264,7 +263,7 @@ require(['../../_js/_require_path'], function() {
 							for (idx = 0 ; idx < result.length ; idx++) {
 								$(".view_citySelectList").append('<option value="'+result[idx]["cityId"]+'">'+result[idx]["cityName"]+'</option>');
 							}
-							if (storeId == "") aj_listTown('');
+							if (farmerId == "") aj_listTown('');
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							// alert('HTTP project code: ' + jqXHR.project +

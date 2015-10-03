@@ -2,21 +2,6 @@
 
 @import url("_commsubpages.css");
 
-#form-farmer-search .title{
-	font-size: 21px;
-	padding: 5px;
-	font-weight: 600;
-	text-align: right;
-}
-
-#form-farmer-search select{
-	padding: 3px;
-	font-size: 18px;
-}
-#form-farmer-search input{
-	padding: 3px;
-	font-size: 18px;
-}
 #farmers-list .items a{
 	text-align: center;
 	background-color:#FFF;
@@ -62,6 +47,8 @@
 	color: #666;
 	font-size: 17px;
 	padding: 0;
+	height: 100px;
+	overflow: hidden;
 }
 .view_parentFoodClassName{
 	padding: 10px;

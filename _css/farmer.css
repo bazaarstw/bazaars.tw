@@ -24,10 +24,10 @@
 	#farmer-personal .link{
 		padding: 5px 10px;
 	}
-	#farmer-personal .addrs p,
-	#farmer-personal .phone p,
-	#farmer-personal .email p,
-	#farmer-personal .link p{
+	#farmer-personal .addrs .subtitle,
+	#farmer-personal .phone .subtitle,
+	#farmer-personal .email .subtitle,
+	#farmer-personal .link .subtitle{
 		font-size: 18px;
 	}
 	#farmer-personal .atricle{
@@ -60,4 +60,9 @@
 		text-align: center;
 		display: block;
 		padding: 10px;
+	}
+	#farmer-information .link-stores .items .store-name{
+		padding: 10px 0px;
+		color: #000;
+		font-size: 18px;
 	}
