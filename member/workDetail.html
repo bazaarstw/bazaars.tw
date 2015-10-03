@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bazaars - Member Management</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../_css/plugcss/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../plugin/sb-admin2/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+	
+    <!-- Custom CSS -->
+    <link href="../plugin/sb-admin2/dist/css/sb-admin-2.css" rel="stylesheet">
+	<link href="_css/chosen.css" rel="stylesheet"/>
+	<!-- <link href="../_css/login.css" rel="stylesheet"/> -->
+	
+	<!-- Bootstrap DatetimePicker CSS -->
+    <link href="_css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../plugin/sb-admin2/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Bazaars 會員管理後台 (Member Management)</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="text-center">
+                            <span><h3><strong>選單列表 Menu List</strong></h3></span>
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 主頁 Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="farmer.html"><i class="fa fa-bar-chart-o fa-fw"></i> 農友 Farmer</a>
+                        </li>
+                        <li>
+                            <a href="store.html"><i class="fa fa-table fa-fw"></i> 店家 Store</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> 即時通<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="work.html">小農應援團</a>
+                                </li>
+                                <li>
+                                    <a href="news.html">活動報報</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="../"><i class="fa fa-eye fa-fw"></i> 前台檢視</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">小農應援團 Work</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="bind_pageActDesc"></span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+								<form role="form" class="form_saveWork">
+									<input class="bind_act" type='hidden' name='act' value='work_prcAdd'/>
+									<input class="bind_workId" type='hidden' name='workId' value=''/>
+									
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>標題 Title</label>
+											<input class="form-control bind_title" name="title" placeholder="請輸入標題..." tabindex="1">
+										</div>
+										<div class="form-group">
+											<label>工作地址 Address</label>
+											<br/><select name="city" class="bind_city view_citySelectList"></select>
+											<select name="town" class="bind_town view_townSelectList"></select>
+											<br/><input class="form-control bind_address" name="address" placeholder="請輸入地址..." tabindex="2">
+										</div>
+										<div class="form-group">
+											<label>薪資 Salary</label>
+											<input class="form-control bind_salary" name="salary" placeholder="請輸入薪資..." tabindex="3">
+										</div>
+										<div class="form-group">
+											<label>工作期間 </label>
+											<div class='input-group date startDT_Picker'>
+												<input type='text' class="form-control bind_startDT" name="startDT" />
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+											<div class='input-group date endDT_Picker'>
+												<input type='text' class="form-control bind_endDT" name="endDT" />
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>工作人數 </label>
+											<input class="form-control bind_workCnt" name="workCnt" tabindex="">
+										</div>
+										<div class="form-group">
+											<label>備註 Memo</label>
+											<input class="form-control bind_memo" name="memo" tabindex="">
+										</div>
+										
+										<button type="submit" class="btn btn-default aj_saveWork" tabindex="9">送出 Submit</button>
+										<button type="reset" class="btn btn-default" tabindex="10">清除 Reset</button>
+									</div>
+								</form>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- RequireJS -->
+	<script src="../_library/require.min.js" defer async="true"></script>
+	<script src="../_library/require.min.js" data-main="_js/workdetail"></script>
+	
+</body>
+
+</html>
