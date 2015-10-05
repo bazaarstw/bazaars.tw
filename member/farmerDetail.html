@@ -55,6 +55,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hi, Member<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+						<li>
+                            <a href="personal.html"><i class="fa fa-info fa-fw"></i> 個人資料編輯</a>
+                        </li>
                         <li>
                             <a href="../logout.html"><i class="fa fa-sign-out fa-fw"></i> 登出 Log Out</a>
                         </li>
@@ -154,17 +157,17 @@
 											<label>農友地址 Address</label>
 											<br/><select name="city" class="bind_city view_citySelectList"></select>
 											<select name="town" class="bind_town view_townSelectList"></select>
-											<br/><input class="form-control bind_address" name="address" placeholder="請輸入地址..." tabindex="5">
+											<br/><input class="form-control bind_address" name="address" placeholder="請輸入地址..." tabindex="4">
 										</div>
 										<div class="form-group">
 											<label>個人網頁 Personal Homepage</label>
 											<span id="link-field-count" class="hidden">1</span>
 											<div id="field" class="link-field">
 												<div class="col-lg-6">
-													<input autocomplete="off" class="form-control input bind_link" id="link-field1" name="link[]" type="text" placeholder="http://www.facebook.com/example" tabindex="4" value="" />
+													<input autocomplete="off" class="form-control input bind_link" id="link-field1" name="link[]" type="text" placeholder="http://www.facebook.com/example" tabindex="5" value="" />
 												</div>
 												<div class="col-lg-5">
-													<input autocomplete="off" class="form-control input bind_linkDesc" id="linkDesc-field1" name="linkDesc[]" type="text" placeholder="請填寫網頁說明..." tabindex="4" value="" />
+													<input autocomplete="off" class="form-control input bind_linkDesc" id="linkDesc-field1" name="linkDesc[]" type="text" placeholder="請填寫網頁說明..." tabindex="6" value="" />
 												</div>
 												<div class="col-lg-1">
 													<button id="b1" class="btn link-add-more" type="button">+</button>
@@ -173,11 +176,11 @@
 										</div>
 										<div class="form-group">
 											<label>說明 Content</label>
-											<textarea class="form-control bind_content" name="content" rows="6" placeholder="請輸入說明內文..." tabindex="5"></textarea>
+											<textarea class="form-control bind_content" name="content" rows="6" placeholder="請輸入說明內文..." tabindex="7"></textarea>
 										</div>
 										<div class="form-group">
 											<label>Facebook RSS</label>
-											<input class="form-control bind_fbRss" name="fbRss" placeholder="RSS..." tabindex="6" />
+											<input class="form-control bind_fbRss" name="fbRss" placeholder="RSS..." tabindex="8" />
 										</div>
 
 										<button type="button" class="btn btn-default aj_saveFarmer" tabindex="9">送出 Submit</button>

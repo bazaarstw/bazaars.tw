@@ -53,7 +53,7 @@ class News extends Base {
 			     "set title = ?, city = ?, town = ?, address = ?, startDT = ?, endDT = ?, content = ?, updateDT = now() where newsId = ?");
 			$this->execSQL($sth, array(
 				$params["title"], $params["city"], $params["town"], $params["address"], 
-				$params["startDT"], $params["endDT"], $params["content"], $newsId));
+				$params["startDT"], $params["endDT"], nl2br($params["content"]), $newsId));
 
 			$this->dbh->commit();
 		} catch (Exception $e) {
@@ -79,7 +79,7 @@ class News extends Base {
 				 "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"], 
 				$params["title"], $params["city"], $params["town"], $params["address"], 
-				$params["startDT"], $params["endDT"], $params["content"]));
+				$params["startDT"], $params["endDT"], nl2br($params["content"])));
 			$newsId = $this->dbh->lastInsertId();
 
 			$this->dbh->commit();

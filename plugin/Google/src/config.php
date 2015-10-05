@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
+require_once dirname(dirname(dirname(dirname(__FILE__)))).'/ctrl/models/DBConn.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))).'/ctrl/models/Base.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))).'/ctrl/models/Config.php';
 $config = new Config();

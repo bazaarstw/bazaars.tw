@@ -53,6 +53,20 @@
                 <a class="navbar-brand" href="index.html">Bazaars 會員管理後台 (Member Management)</a>
             </div>
             <!-- /.navbar-header -->
+			<ul class="nav navbar-right top-nav">
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hi, Member<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+						<li>
+                            <a href="personal.html"><i class="fa fa-info fa-fw"></i> 個人資料編輯</a>
+                        </li>
+                        <li>
+                            <a href="../logout.html"><i class="fa fa-sign-out fa-fw"></i> 登出 Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -147,7 +161,7 @@
 										</div>
 										<div class="form-group">
 											<label>備註 Memo</label>
-											<input class="form-control bind_memo" name="memo" tabindex="">
+											<textarea class="form-control bind_memo" name="memo" rows="6" placeholder="請輸入備註內文..." tabindex="7"></textarea>
 										</div>
 										
 										<button type="submit" class="btn btn-default aj_saveWork" tabindex="9">送出 Submit</button>

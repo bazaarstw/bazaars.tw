@@ -37,5 +37,33 @@ class Member extends Base {
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg));
 	}
 	
+	public function prcUpd($params){
+		$this->dbh->beginTransaction();
+		$isSuc = true;
+		$msg = "個人資料編輯成功！";
+		
+		try {
+			$usr = $_SESSION["website_login_session"];
+
+			$sth = $this->dbh->prepare(
+			     "update member ".
+			     "set username = ?, phone = ?, email = ?, updateDT = now() where memberId = ?");
+			$this->execSQL($sth, array(
+				$params["userName"], $params["phone"], $params["email"], $usr["memberId"]));
+
+			$this->dbh->commit();
+			
+			$_SESSION["website_login_session"]["username"] = $params["userName"];
+			$_SESSION["website_login_session"]["phone"] = $params["phone"];
+			$_SESSION["website_login_session"]["email"] = $params["email"];
+		} catch (Exception $e) {
+			//print_r($e);
+			$isSuc = false;
+			$msg = "個人資料編輯失敗：". $e->getMessage();
+			$this->dbh->rollBack();
+		}
+		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg));
+	}
+	
 }
 ?>

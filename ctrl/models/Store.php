@@ -73,7 +73,8 @@ class Store extends Base {
 			"from store s ".
 			"join city c on c.cityId = s.city ".
 			"join town t on t.cityId = s.city and t.townId = s.town ".
-			"where s.storeName like '%". $params["keyword"]. "%' ".
+			"where 1=1 ".
+			//"and s.storeName like '%". $params["keyword"]. "%' ".
 			"and s.city like '%". $params["city"]. "%' ".
 			"and s.town like '%". $params["town"]. "%' ";
 			
@@ -162,14 +163,14 @@ class Store extends Base {
 				$searchSql = 
 					"select f.*, ".
 					"  case when (select count(sf.storeFarmerId) from storefarmer sf where sf.storeId = '$storeId' and sf.farmerId = f.farmerId) > 0 then '1' else '0' end as selected ".
-					"from Farmer f";
+					"from farmer f";
 				$sth = $this->dbh->prepare($searchSql);
 				$sth->execute();
 				$storeItem = $sth->fetchAll();
 			} else {
 				$searchSql = 
 					"select f.*, '0' as selected ".
-					"from Farmer f";
+					"from farmer f";
 				$sth = $this->dbh->prepare($searchSql);
 				$sth->execute();
 				$storeItem = $sth->fetchAll();
@@ -226,6 +227,7 @@ class Store extends Base {
 				
 			$this->processPhoneData($storeId, $params["phone"]);
 			$this->processEmailData($storeId, $params["email"]);
+			$this->processLinkData($storeId, $params["link"], $params["linkDesc"]);
 
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
@@ -267,6 +269,7 @@ class Store extends Base {
 			
 			$this->processPhoneData($storeId, $params["phone"]);
 			$this->processEmailData($storeId, $params["email"]);
+			$this->processLinkData($storeId, $params["link"], $params["linkDesc"]);
 			
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
@@ -289,6 +292,7 @@ class Store extends Base {
 		if ($params["storeName"] == "") $msg .= "\n請輸入店家姓名！";
 		if ($params["storeTypeItem"] == "") $msg .= "\n請選擇至少一項店家型態！";
 		
+		/*
 		$phone = $params["phone"];
 		for ($i = 0 ; $i < count($phone) ; $i++) {
 			$curIdx = $i + 1;
@@ -302,6 +306,7 @@ class Store extends Base {
 			if ($email[$i] == "") $msg .= "\n請輸入電子信箱項目[$curIdx]資料！";
 			else if (!$this->isEmail($email[$i])) $msg .= "\n電子信箱項目[$curIdx]資料格式錯誤！";
 		}
+		*/
 		
 		return $msg;
 	}
@@ -332,10 +337,12 @@ class Store extends Base {
 		//新增
 		for ($i = 0 ; $i < count($phone) ; $i++) {
 			if (!in_array($phone[$i], $existPhone)) {
-				$sth = $this->dbh->prepare(
-				     "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
-				     "values(?, ?, ?, ?, now(), now())");
-		        $this->execSQL($sth, array($storeId, "phone", $phone[$i], ""));
+				if ($phone[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($storeId, "phone", $phone[$i], ""));
+				}
 			}
 		}
 	}
@@ -366,10 +373,55 @@ class Store extends Base {
 		//新增
 		for ($i = 0 ; $i < count($email) ; $i++) {
 			if (!in_array($email[$i], $existEmail)) {
+				if ($email[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($storeId, "email", $email[$i], ""));
+				}
+			}
+		}
+	}
+	
+	public function processLinkData($storeId, $link, $linkDesc) {
+		$curLink = array();
+		$existLink = array();
+		
+		$searchSql = 
+			"select sd.* ".
+			"from storedesc sd ".
+			"where sd.storeId = ? ".
+			"and sd.descKey = ?";
+		$sth = $this->dbh->prepare($searchSql);
+		$this->execSQL($sth, array($storeId, "link"));
+		$curLink = $sth->fetchAll();
+		
+		//刪除,修改
+		for ($i = 0 ; $i < count($curLink) ; $i++) {
+			if (!in_array($curLink[$i]["descValue"], $link)) {
 				$sth = $this->dbh->prepare(
-				     "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
-				     "values(?, ?, ?, ?, now(), now())");
-		        $this->execSQL($sth, array($storeId, "email", $email[$i], ""));
+				     "delete from storedesc ".
+				     "where storeDescId = ?");
+		        $this->execSQL($sth, array($curLink[$i]["storeDescId"]));
+			} else {
+				$existIdx = array_search($curLink[$i]["descValue"], $link);
+				$sth = $this->dbh->prepare(
+				     "update storedesc set descContent = ?, updateDT = now() ".
+				     "where storeDescId = ?");
+		        $this->execSQL($sth, array($linkDesc[$existIdx], $curLink[$i]["storeDescId"]));
+			}
+			array_push($existLink, $curLink[$i]["descValue"]);
+		}
+		
+		//新增
+		for ($i = 0 ; $i < count($link) ; $i++) {
+			if (!in_array($link[$i], $existLink)) {
+				if ($link[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storedesc(storeId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($storeId, "link", $link[$i], $linkDesc[$i]));
+				}
 			}
 		}
 	}
@@ -434,10 +486,12 @@ class Store extends Base {
 		//新增
 		for ($i = 0 ; $i < count($storeTypeItems) ; $i++) {
 			if (!in_array($storeTypeItems[$i], $existStoreTypeItem)) {
-				$sth = $this->dbh->prepare(
-				     "insert into storeauthtype(storeId, storeTypeId) ".
-				     "values(?, ?)");
-				$this->execSQL($sth, array($storeId, $storeTypeItems[$i]));
+				if ($storeTypeItems[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storeauthtype(storeId, storeTypeId) ".
+						 "values(?, ?)");
+					$this->execSQL($sth, array($storeId, $storeTypeItems[$i]));
+				}
 			}
 		}
 	}
@@ -450,11 +504,11 @@ class Store extends Base {
 			$usr = $_SESSION["website_login_session"];
 			$memberId = $usr["memberId"];
 			$searchSql = 
-				"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress, ".
+				"select s.*, CONCAT(ifnull(c.cityName,''),ifnull(t.townName,''),ifnull(s.address,'')) as fullAddress, ".
 				"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
 				"from store s ".
-				"join city c on c.cityId = s.city ".
-				"join town t on t.cityId = s.city and t.townId = s.town ".
+				"left join city c on c.cityId = s.city ".
+				"left join town t on t.cityId = s.city and t.townId = s.town ".
 				"where s.memberId = $memberId ".
 				"order by s.createDT desc";
 			$sth = $this->dbh->prepare($searchSql);
