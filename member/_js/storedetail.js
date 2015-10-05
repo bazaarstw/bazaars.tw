@@ -39,6 +39,7 @@ require(['../../_js/_require_path'], function() {
 							
 							var bool_phone = 0;
 							var bool_email = 0;
+							var bool_link = 0;
 							var desc = result.desc;
 							for (var idx = 0 ; idx < desc.length ; idx++) {
 								var descKey = desc[idx]["descKey"];
@@ -56,6 +57,19 @@ require(['../../_js/_require_path'], function() {
 										$('#email-field1').attr('value', desc[idx]["descValue"]);
 									} else {
 										addInputField('email', '', '', desc[idx]["descValue"]);
+									}
+								}
+								if (descKey == "link") {
+									console.log($('.link-field').size());
+									if ($('.link-field').size() == 1 && bool_link == 0) {
+										bool_link = 1;
+										$('#link-field1').attr('value', desc[idx]["descValue"]);
+										$('#linkDesc-field1').attr('value', desc[idx]["descContent"]);
+									} else {
+										var settingVal = [];
+										settingVal.push(desc[idx]["descValue"]);
+										settingVal.push(desc[idx]["descContent"]);
+										addInputField('link', '', '', settingVal);
 									}
 								}
 							}
@@ -78,6 +92,23 @@ require(['../../_js/_require_path'], function() {
 							if (settingPlaceholder == '') settingPlaceholder = 'email@example.com';
 							if (settingTabindex == '') settingTabindex = 3;
 							break;
+						case 'link':
+							if (settingPlaceholder == '') {
+								settingPlaceholder = [];
+								settingPlaceholder[0] = 'http://www.facebook.com/example';
+								settingPlaceholder[1] = '請填寫網頁說明...';
+							}
+							if (settingTabindex == '') {
+								settingTabindex = [];
+								settingTabindex[0] = 4;
+								settingTabindex[1] = 4;
+							}
+							if (settingVal == '') {
+								settingVal = [];
+								settingVal[0] = '';
+								settingVal[1] = '';
+							}
+							break;
 					}
 					
 					next = parseInt($("#" + FieldName + "-field-count").text());
@@ -87,7 +118,13 @@ require(['../../_js/_require_path'], function() {
 					$("#" + FieldName + "-field-count").text(next);
 					var newIn = '';
 					newIn = '<div id="field" class="' + FieldName + '-field">';
-					newIn += '<div class="col-lg-11"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder + '" tabindex="' + settingTabindex + '"  value="' + settingVal + '" /></div>';					
+					if (FieldName == 'link') {
+						newIn += '<div class="col-lg-6"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder[0] + '" tabindex="' + settingTabindex[0] + '"  value="' + settingVal[0] + '" /></div>';
+						newIn += '<div class="col-lg-5"><input autocomplete="off" class="form-control input bind_' + FieldName + 'Desc" id="' + FieldName + 'Desc-field' + next + '" name="' + FieldName + 'Desc[]" type="text" placeholder="' + settingPlaceholder[1] + '" tabindex="' + settingTabindex[1] + '"  value="' + settingVal[1] + '" /></div>';
+					} else {
+						newIn += '<div class="col-lg-11"><input autocomplete="off" class="form-control input bind_' + FieldName + '" id="' + FieldName + '-field' + next + '" name="' + FieldName + '[]" type="text" placeholder="' + settingPlaceholder + '" tabindex="' + settingTabindex + '"  value="' + settingVal + '" /></div>';
+					}
+					
 					newIn += '<div class="col-lg-1"><button id="' + FieldName + '-remove' + (next - 1) + '" class="btn btn-danger ' + FieldName + '-remove-me" >-</button></div>';
 					newIn += '</div>';
 					
@@ -110,6 +147,10 @@ require(['../../_js/_require_path'], function() {
 				
 				$(".email-add-more").click(function(e){
 					addInputField('email', '', '', '');
+				});
+				
+				$(".link-add-more").click(function(e){
+					addInputField('link', '', '', '');
 				});
 				
 				function initBtn() {

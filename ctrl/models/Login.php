@@ -67,6 +67,40 @@ class Login extends Base {
 		$_SESSION["website_login_session"] = null;
 		return json_encode(array("isLogout"=>true));
 	}
+	
+	public function getAdmInfo($params){
+		$isSuc = true;
+		$msg = "";
+		$farmerCnt = 0;
+		$storeCnt = 0;
+		$workCnt = 0;
+		$newsCnt = 0;
+		
+		try {
+			$usr = $_SESSION["website_login_session"];
+			$memberId = $usr["memberId"];
+			
+			$searchSql = 
+				"select ".
+				" (select count(*) from farmer where memberId = ?) as farmerCnt, ".
+				" (select count(*) from store where memberId = ?) as storeCnt, ".
+				" (select count(*) from work where memberId = ?) as workCnt, ".
+				" (select count(*) from news where memberId = ?) as newsCnt ".
+				"from dual";
+			$sth = $this->dbh->prepare($searchSql);
+			$this->execSQL($sth, array($memberId, $memberId, $memberId, $memberId));
+			$data = $sth->fetchAll();
+			
+			$farmerCnt = $data[0]["farmerCnt"];
+			$storeCnt = $data[0]["storeCnt"];
+			$workCnt = $data[0]["workCnt"];
+			$newsCnt = $data[0]["newsCnt"];
+		} catch (Exception $e) {
+			$isSuc = false;
+			$msg = "查詢失敗：". $e->getMessage();
+		}
+		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "farmerCnt"=>$farmerCnt, "storeCnt"=>$storeCnt, "workCnt"=>$workCnt, "newsCnt"=>$newsCnt));
+	}
 
 }
 ?>

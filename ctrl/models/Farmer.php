@@ -89,7 +89,9 @@ class Farmer extends Base {
 
 			$sth = $this->dbh->prepare(
 			     "update farmer set name = ?, content = ?, city = ?, town = ?, address = ?, fbRss = ?, updateDT = now() where farmerId = ?");
-			$this->execSQL($sth, array($params["farmerName"], nl2br($params["content"]), $params["city"], $params["town"], $params["address"], $params["fbRss"], $farmerId));
+			$this->execSQL($sth, 
+				array($params["farmerName"], nl2br($params["content"]), $params["city"], $params["town"], $params["address"], 
+				$params["fbRss"], $farmerId));
 
 			$this->processPhoneData($farmerId, $params["phone"]);
 			$this->processEmailData($farmerId, $params["email"]);
@@ -129,7 +131,7 @@ class Farmer extends Base {
 			$this->execSQL($sth, array(
 				$usr["memberId"], $params["farmerName"], nl2br($params["content"]), 
 				$params["city"], $params["town"], $params["address"], 
-				$farmerImg, $params["fbRss"]));
+				$params["fbRss"], $farmerImg));
 	        // $sth->execute(array($usr["memberId"], $params["farmerName"], $params["content"], $params["fbRss"]));
 			$farmerId = $this->dbh->lastInsertId();
 			
@@ -158,6 +160,7 @@ class Farmer extends Base {
 		if ($params["farmerName"] == "") $msg .= "\n請輸入農友姓名！";
 		if ($params["foodItem"] == "") $msg .= "\n請選擇至少一項農友品項！";
 
+		/*
 		$phone = $params["phone"];
 		for ($i = 0 ; $i < count($phone) ; $i++) {
 			$curIdx = $i + 1;
@@ -177,6 +180,8 @@ class Farmer extends Base {
 			$curIdx = $i + 1;
 			if ($link[$i] == "") $msg .= "\n請輸入個人網頁項目[$curIdx]資料！";
 		}
+		*/
+		
 		return $msg;
 	}
 
@@ -205,10 +210,12 @@ class Farmer extends Base {
 		//新增
 		for ($i = 0 ; $i < count($foodItems) ; $i++) {
 			if (!in_array($foodItems[$i], $existFoodItem)) {
-				$sth = $this->dbh->prepare(
-				     "insert into farmeritem(farmerId, foodItemId) ".
-				     "values(?, ?)");
-				$this->execSQL($sth, array($farmerId, $foodItems[$i]));
+				if ($foodItems[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into farmeritem(farmerId, foodItemId) ".
+						 "values(?, ?)");
+					$this->execSQL($sth, array($farmerId, $foodItems[$i]));
+				}
 			}
 		}
 	}
@@ -238,10 +245,12 @@ class Farmer extends Base {
 		//新增
 		for ($i = 0 ; $i < count($storeItems) ; $i++) {
 			if (!in_array($storeItems[$i], $existStoreItem)) {
-				$sth = $this->dbh->prepare(
-				     "insert into storefarmer(farmerId, storeId) ".
-				     "values(?, ?)");
-				$this->execSQL($sth, array($farmerId, $storeItems[$i]));
+				if ($storeItems[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into storefarmer(farmerId, storeId) ".
+						 "values(?, ?)");
+					$this->execSQL($sth, array($farmerId, $storeItems[$i]));
+				}
 			}
 		}
 	}
@@ -272,10 +281,12 @@ class Farmer extends Base {
 		//新增
 		for ($i = 0 ; $i < count($phone) ; $i++) {
 			if (!in_array($phone[$i], $existPhone)) {
-				$sth = $this->dbh->prepare(
-				     "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
-				     "values(?, ?, ?, ?, now(), now())");
-		        $this->execSQL($sth, array($farmerId, "phone", $phone[$i], ""));
+				if ($phone[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($farmerId, "phone", $phone[$i], ""));
+				}
 			}
 		}
 	}
@@ -306,10 +317,12 @@ class Farmer extends Base {
 		//新增
 		for ($i = 0 ; $i < count($email) ; $i++) {
 			if (!in_array($email[$i], $existEmail)) {
-				$sth = $this->dbh->prepare(
-				     "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
-				     "values(?, ?, ?, ?, now(), now())");
-		        $this->execSQL($sth, array($farmerId, "email", $email[$i], ""));
+				if ($email[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($farmerId, "email", $email[$i], ""));
+				}
 			}
 		}
 	}
@@ -347,10 +360,12 @@ class Farmer extends Base {
 		//新增
 		for ($i = 0 ; $i < count($link) ; $i++) {
 			if (!in_array($link[$i], $existLink)) {
-				$sth = $this->dbh->prepare(
-				     "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
-				     "values(?, ?, ?, ?, now(), now())");
-		        $this->execSQL($sth, array($farmerId, "link", $link[$i], $linkDesc[$i]));
+				if ($link[$i] != "") {
+					$sth = $this->dbh->prepare(
+						 "insert into farmerdesc(farmerId, descKey, descValue, descContent, createDT, updateDT) ".
+						 "values(?, ?, ?, ?, now(), now())");
+					$this->execSQL($sth, array($farmerId, "link", $link[$i], $linkDesc[$i]));
+				}
 			}
 		}
 	}

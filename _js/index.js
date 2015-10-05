@@ -20,7 +20,7 @@ require(['_require_path'], function() {
 						var newsMarquess = $(".view_limitNews marquee").html();
 						for (var idx = 0 ; idx < result.length ; idx++) {
 							$(".view_limitNews marquee").append(newsMarquess);
-							$(".view_limitNews marquee a").last().attr("href","active-detail.html?newsId="+result[idx]["newsId"]);
+							$(".view_limitNews marquee a").last().attr("href","active_detail.html?newsId="+result[idx]["newsId"]);
 							$(".view_limitNews marquee a").last().find("span").eq(0).text(result[idx]["title"]);
 							$(".view_limitNews marquee a").last().find("span").eq(1).text(result[idx]["createDT"].substr(0, 10));
 						}

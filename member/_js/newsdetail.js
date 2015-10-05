@@ -33,7 +33,8 @@ require(['../../_js/_require_path'], function() {
 							newsId: newsId
 						},
 						dataType : "json", 
-						success : function(result) {  
+						success : function(result) { 
+
 							var info = result[0];
 							$(".bind_title").attr("value", info["title"]);
 							$(".bind_city").val(info["city"]);
@@ -41,7 +42,8 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_address").attr("value", info["address"]);
 							$(".bind_startDT").attr("value", info["startDT"]);
 							$(".bind_endDT").attr("value", info["endDT"]);
-							$(".bind_content").attr("value", info["content"]);
+							$(".bind_content").text(info["content"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
+							
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);

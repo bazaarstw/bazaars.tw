@@ -43,7 +43,7 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_startDT").attr("value", info["startDT"]);
 							$(".bind_endDT").attr("value", info["endDT"]);
 							$(".bind_workCnt").attr("value", info["workCnt"]);
-							$(".bind_memo").attr("value", info["memo"]);
+							$(".bind_memo").text(info["memo"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);

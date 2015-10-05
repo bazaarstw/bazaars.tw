@@ -24,7 +24,7 @@ require(['_require_path'], function() {
 						success : function(result) {  
 							alert(result.msg);
 							if (result.isSuc) {
-								location.href="index.html";
+								location.href="login.html";
 							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {

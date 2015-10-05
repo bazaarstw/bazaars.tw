@@ -2,6 +2,7 @@
     header("Content-Type:text/html; charset=utf-8");
     if(!isset($_SESSION)) session_start(); 
 	
+	require dirname(dirname(dirname(__FILE__))).'/ctrl/models/DBConn.php';
 	require dirname(dirname(dirname(__FILE__))).'/ctrl/models/Base.php';
 	require dirname(dirname(dirname(__FILE__))).'/ctrl/models/Config.php';
 	$config = new Config();
