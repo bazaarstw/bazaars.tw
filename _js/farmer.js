@@ -51,7 +51,11 @@ require(['_require_path'], function() {
 							for (var idx = 0 ; idx < store.length ; idx++) {
 								$(".link-stores").append(storeHtml);
 								$(".link-stores li").last().find("a").attr("href", "store_detail.html?storeId="+store[idx].storeId);
-								$(".link-stores li").last().find("img").attr("src", store[idx].storeImg);
+								if(store[idx].storeImg != null && store[idx].storeImg != "") {
+									$(".link-stores li").last().find("img").attr("src", store[idx].storeImg);
+								} else {
+									$(".link-stores li").last().find("img").attr("src", "_files/stores/stores_default.jpg");
+								}
 								$(".link-stores li").last().find("img").attr("title", store[idx].storeName);
 								$(".link-stores li").last().find(".store-name").html(store[idx].storeName);
 							}

@@ -47,10 +47,12 @@ require(['_require_path'], function() {
 								
 								$(".link-farmers li").last().find("a").attr("href", "farmer.html?farmerId="+farmer[idx].farmerId);
 								$(".link-farmers li").last().find(".farmer-name").html(farmer[idx].name);
-								$(".link-farmers li").last().find("img").attr({
-									"title" : farmer[idx].name,
-									"src" : farmer[idx].farmerImg
-								});
+								$(".link-farmers li").last().find("img").attr("title", farmer[idx].name);
+								if(farmer[idx].farmerImg != null && farmer[idx].farmerImg != "") {
+									$(".link-farmers li").last().find("img").attr("src", farmer[idx].farmerImg);
+								} else {
+									$(".link-farmers li").last().find("img").attr("src", "_files/farmers/farmer_default.jpg");
+								}
 							}
 							$(".link-farmers li").first().hide();
 						},
