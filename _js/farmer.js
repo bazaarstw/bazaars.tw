@@ -53,6 +53,7 @@ require(['_require_path'], function() {
 								$(".link-stores li").last().find("a").attr("href", "store_detail.html?storeId="+store[idx].storeId);
 								$(".link-stores li").last().find("img").attr("src", store[idx].storeImg);
 								$(".link-stores li").last().find("img").attr("title", store[idx].storeName);
+								$(".link-stores li").last().find(".store-name").html(store[idx].storeName);
 							}
 							$(".link-stores li").first().hide();
 						},
