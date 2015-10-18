@@ -22,6 +22,7 @@
 	#farmer-personal .phone,
 	#farmer-personal .email,
 	#farmer-personal .link{
+		font-size: 18px;
 		padding: 5px 10px;
 	}
 	#farmer-personal .addrs .subtitle,
