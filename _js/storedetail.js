@@ -34,6 +34,9 @@ require(['_require_path'], function() {
                                     case 'email':
                                         $(".email ul").append("<li>" + value[3] + "</li>");
                                         break;
+                                    case 'link':
+                                        $(".link ul").append("<li><a href='" + value[3] + "' target='_blank'>" + value[4] + "</a></li>");
+                                        break;
                                 }
                                 console.log( index + ": " + value[2] );
                             });

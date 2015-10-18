@@ -14,7 +14,8 @@
 	}
 	#store-personal .phone,
 	#store-personal .addrs,
-	#store-personal .email{	
+	#store-personal .email,	
+	#store-personal .link{	
 		font-size: 18px;
 		padding: 5px 10px;
 	}
