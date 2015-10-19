@@ -158,7 +158,7 @@ class Farmer extends Base {
 	public function chkValidFunc($params) {
 		$msg = "";
 		if ($params["farmerName"] == "") $msg .= "\n請輸入農友姓名！";
-		if ($params["foodItem"] == "") $msg .= "\n請選擇至少一項農友品項！";
+		//if ($params["foodItem"] == "") $msg .= "\n請選擇至少一項農友品項！";
 
 		/*
 		$phone = $params["phone"];

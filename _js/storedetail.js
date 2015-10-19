@@ -19,11 +19,10 @@ require(['_require_path'], function() {
 						success : function(result) {  
 							
 							//viewJSON(result);
-							//���a���
 							var info = result.info[0];
 							$("#store-personal .cover img").attr("src", info["storeImg"]);
 							$("#store-personal .name").html(info["storeName"]);
-							$("#store-personal .atricle").html(info["content"]);
+							$("#store-personal .atricle").html(info["content"].replace("\n","<br/>"));
 							$("#store-personal .addrs").html(info["fullAddress"]);
 							
 							$.each(result['desc'], function( index, value ) {
@@ -34,14 +33,13 @@ require(['_require_path'], function() {
                                     case 'email':
                                         $(".email ul").append("<li>" + value[3] + "</li>");
                                         break;
-                                    case 'link':
+									case 'link':
                                         $(".link ul").append("<li><a href='" + value[3] + "' target='_blank'>" + value[4] + "</a></li>");
                                         break;
                                 }
                                 console.log( index + ": " + value[2] );
                             });
                             
-							//�X�@�A��
 							var farmer = result.farmer;
 							console.log(result.farmer);
 							var farmerHtml = $(".link-farmers").html();
@@ -50,12 +48,10 @@ require(['_require_path'], function() {
 								
 								$(".link-farmers li").last().find("a").attr("href", "farmer.html?farmerId="+farmer[idx].farmerId);
 								$(".link-farmers li").last().find(".farmer-name").html(farmer[idx].name);
-								$(".link-farmers li").last().find("img").attr("title", farmer[idx].name);
-								if(farmer[idx].farmerImg != null && farmer[idx].farmerImg != "") {
-									$(".link-farmers li").last().find("img").attr("src", farmer[idx].farmerImg);
-								} else {
-									$(".link-farmers li").last().find("img").attr("src", "_files/farmers/farmer_default.jpg");
-								}
+								$(".link-farmers li").last().find("img").attr({
+									"title" : farmer[idx].name,
+									"src" : farmer[idx].farmerImg
+								});
 							}
 							$(".link-farmers li").first().hide();
 						},

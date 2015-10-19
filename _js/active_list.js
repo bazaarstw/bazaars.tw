@@ -32,16 +32,16 @@ require(['_require_path'], function() {
 						},
 						dataType : "json", 
 						success : function(result) { 
+							//viewJSON(result);
+							var idx = 0;
+							$(".cols-body a").each(function() {
+								if (idx > 0) $(this).remove();
+								idx++;
+							});
+							
+							$(".view_newsCnt").html(result.listCnt);
+							
 							if (result.list.length > 0) {
-								
-								//viewJSON(result);
-								var idx = 0;
-								$(".cols-body a").each(function() {
-									if (idx > 0) $(this).remove();
-									idx++;
-								});
-								
-								$(".view_newsCnt").html(result.listCnt);
 								var news = $(".cols-body").html();
 								for (idx = 0 ; idx < result.list.length ; idx++) {
 									$(".cols-body").append(news);
@@ -59,12 +59,10 @@ require(['_require_path'], function() {
 								//$(".mPage .page-count").show();
 								
 							}else{
-								//�L�����ܦ^��
 								$(".mPage .page-msg").text("sorry!! no data...").show();
 							}
 						},
 						error : function(jqXHR, textProject, errorThrown) {
-							//��~�^���r��
 							var errorString= 'HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown;
 								errorString += 'HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText;
 								
