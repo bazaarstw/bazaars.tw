@@ -203,7 +203,9 @@ require(['../../_js/_require_path'], function() {
 								var item = "<option " + selected + " value='" + storeItem[idx]["storeId"] + "'>" + storeItem[idx]["storeName"]　+ "</option>"
 								$(".storeItem").append(item);
 							}
-							$(".storeItem").chosen();
+							$(".storeItem").chosen({
+								search_contains: true
+							});
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
@@ -234,7 +236,9 @@ require(['../../_js/_require_path'], function() {
 								}
 								$(".foodItem").append($(itemGroup));
 							}
-							$(".foodItem").chosen();
+							$(".foodItem").chosen({
+								search_contains: true
+							});
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);

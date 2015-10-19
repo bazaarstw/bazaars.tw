@@ -210,7 +210,9 @@ require(['../../_js/_require_path'], function() {
 								var item = "<option " + selected + " value='" + storeItem[idx]["farmerId"] + "'>" + storeItem[idx]["name"]　+ "</option>"
 								$(".farmerItem").append(item);
 							}
-							$(".farmerItem").chosen();
+							$(".farmerItem").chosen({
+								search_contains: true
+							});
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
@@ -237,7 +239,9 @@ require(['../../_js/_require_path'], function() {
 								var item = "<option " + selected + " value='" + storeTypeItem[idx]["typeId"] + "'>" + storeTypeItem[idx]["typeName"]　+ "</option>"
 								$(".storeTypeItem").append(item);
 							}
-							$(".storeTypeItem").chosen();
+							$(".storeTypeItem").chosen({
+								search_contains: true
+							});
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
