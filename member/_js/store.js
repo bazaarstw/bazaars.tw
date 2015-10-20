@@ -58,7 +58,7 @@ require(['../../_js/_require_path'], function() {
 								var listCell = [];
 								listCell.push("");
 								listCell.push(result.list[idx]["storeName"]);
-								listCell.push("<a href='storeDetail.html?storeId="+result.list[idx]["storeId"]+"'>編輯</a>");
+								listCell.push("<a href='storeDetail.html?storeId="+result.list[idx]["storeId"]+"'>編輯</a> <a href='/store_detail.html?storeId="+result.list[idx]["storeId"]+"' target='_blank'>檢視</a>");
 								rtnresult.push(listCell);
 							}
 							//alert(JSON.stringify(rtnresult));
