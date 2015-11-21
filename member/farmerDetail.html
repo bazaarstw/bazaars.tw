@@ -16,7 +16,7 @@
 
     <!-- MetisMenu CSS -->
     <link href="../plugin/sb-admin2/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-	
+
     <!-- Custom CSS -->
     <link href="../plugin/sb-admin2/dist/css/sb-admin-2.css" rel="stylesheet">
 	<link href="_css/chosen.css" rel="stylesheet"/>
@@ -31,6 +31,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="../_library/ckeditor/ckeditor.js"></script>
 
 </head>
 
@@ -51,7 +53,7 @@
             </div>
             <!-- /.navbar-header -->
 			<ul class="nav navbar-right top-nav">
-                
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hi, Member<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -117,13 +119,13 @@
                             <span class="bind_pageActDesc"></span>
                         </div>
                         <div class="panel-body">
+                            <form role="form" class="form_saveFarmer">
                             <div class="row">
-								<form role="form" class="form_saveFarmer">
 									<input class="bind_act" type='hidden' name='act' value='farmer_prcAdd' />
 									<input class="bind_foodItem" type='hidden' name='foodItem' value='' />
 									<input class="bind_storeItem" type='hidden' name='storeItem' value='' />
 									<input class="bind_farmerId" type='hidden' name='farmerId' value='' />
-									
+
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label>姓名 Name</label>
@@ -175,16 +177,13 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>說明 Content</label>
-											<textarea class="form-control bind_content" name="content" rows="6" placeholder="請輸入說明內文..." tabindex="7"></textarea>
+											<label>簡介 Introduction</label>
+											<textarea class="form-control bind_content" name="intro" rows="6" placeholder="請輸入說明內文..." tabindex="7"></textarea>
 										</div>
-										<div class="form-group">
-											<label>Facebook RSS</label>
-											<input class="form-control bind_fbRss" name="fbRss" placeholder="RSS..." tabindex="8" />
-										</div>
-
-										<button type="button" class="btn btn-default aj_saveFarmer" tabindex="9">送出 Submit</button>
-										<button type="reset" class="btn btn-default" tabindex="10">清除 Reset</button>
+										<!-- <div class="form&#45;group"> -->
+										<!-- 	<label>Facebook RSS</label> -->
+										<!-- 	<input class="form&#45;control bind_fbRss" name="fbRss" placeholder="RSS..." tabindex="8" /> -->
+										<!-- </div> -->
 									</div>
 									<!-- /.col-lg-6 (nested) -->
 									<div class="col-lg-6">
@@ -199,10 +198,20 @@
 											<select data-placeholder="請選擇店家" class="form-control storeItem" multiple tabindex="8"></select>
 										</div>
 									</div>
-								</form>
                                 <!-- /.col-lg-6 (nested) -->
                             </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>詳細內容 Detail</label>
+                                        <textarea name="detail" id="detail" class="bind_detail"></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-default aj_saveFarmer" tabindex="9">送出 Submit</button>
+                                    <button type="reset" class="btn btn-default" tabindex="10">清除 Reset</button>
+                                </div>
+                            </div>
                             <!-- /.row (nested) -->
+                            </form>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -220,7 +229,15 @@
 
     <!-- RequireJS -->
 	<script src="../_library/require.min.js" data-main="_js/farmerdetail" defer async="true"></script>
-	
+
+    <script>
+        CKEDITOR.replace('detail',{
+            // filebrowserBrowseUrl: '/browser/browse.php',
+            filebrowserUploadUrl: '/upload.php',
+            height: 500
+        });
+    </script>
+
 </body>
 
 </html>

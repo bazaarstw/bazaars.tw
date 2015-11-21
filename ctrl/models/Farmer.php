@@ -5,29 +5,29 @@ class Farmer extends Base {
 	public function getDetail($params){
 		$isSuc = true;
 		$msg = "農友資料查詢成功！";
-		
+
 		try {
 			$farmerId = $params["farmerId"];
-			$searchSql = 
+			$searchSql =
 				"select fm.*, CONCAT(c.cityName,t.townName,fm.address) as fullAddress ".
 				"from farmer fm ".
 				"left join city c on c.cityId = fm.city ".
 				"left join town t on t.cityId = fm.city and t.townId = fm.town ".
 				"where fm.farmerId = $farmerId";
-				
+
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$data = $sth->fetchAll();
-			
-			$searchSql = 
+
+			$searchSql =
 				"select fd.* ".
 				"from farmerdesc fd ".
 				"where fd.farmerId = $farmerId";
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$desc = $sth->fetchAll();
-			
-			$searchSql = 
+
+			$searchSql =
 				"select fi.itemName ".
 				"from farmeritem fmi ".
 				"join fooditem fi on fi.foodItemId = fmi.foodItemId ".
@@ -36,8 +36,8 @@ class Farmer extends Base {
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$item = $sth->fetchAll();
-			
-			$searchSql = 
+
+			$searchSql =
 				"select sf.*, s.storeImg, s.storeName ".
 				"from storefarmer sf ".
 				"join store s on s.storeId = sf.storeId ".
@@ -50,12 +50,12 @@ class Farmer extends Base {
 			$isSuc = false;
 			$msg = "農友資料查詢失敗：". $e->getMessage();
 		}
-		
+
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, "desc"=>$desc, "item"=>$item, "store"=>$store));
 	}
 
 	public function getListData($params){
-		$searchSql = 
+		$searchSql =
 			"select distinct f.*, CONCAT(c.cityName,t.townName,f.address) as fullAddress ".
 			"from fooditem fi ".
 			"join farmeritem fmi on fmi.foodItemId = fi.foodItemId ".
@@ -69,7 +69,7 @@ class Farmer extends Base {
 		$data = $this->processPageSQL($params, $searchSql);
 		return json_encode(array("list"=>$data['row'], "listCnt"=>$data['count']));
 	}
-	
+
 	/********************************************************************************************************************************************
 	Admin Function
 	*/
@@ -79,27 +79,27 @@ class Farmer extends Base {
 		$isSuc = true;
 		$farmerId = "";
 		$msg = "農友資料編輯成功！";
-		
+
 		try {
 			$chkValid = $this->chkValidFunc($params);
 			if ($chkValid != "") throw new Exception($chkValid);
-			
+
 			$usr = $_SESSION["website_login_session"];
 			$farmerId = $params["farmerId"];
 
 			$sth = $this->dbh->prepare(
-			     "update farmer set name = ?, content = ?, city = ?, town = ?, address = ?, fbRss = ?, updateDT = now() where farmerId = ?");
-			$this->execSQL($sth, 
-				array($params["farmerName"], nl2br($params["content"]), $params["city"], $params["town"], $params["address"], 
+			     "update farmer set name = ?, content = ?, detail = ?, city = ?, town = ?, address = ?, fbRss = ?, updateDT = now() where farmerId = ?");
+			$this->execSQL($sth,
+				array($params["farmerName"], nl2br($params["content"]), $params["detail"], $params["city"], $params["town"], $params["address"],
 				$params["fbRss"], $farmerId));
 
 			$this->processPhoneData($farmerId, $params["phone"]);
 			$this->processEmailData($farmerId, $params["email"]);
 			$this->processLinkData($farmerId, $params["link"], $params["linkDesc"]);
-			
+
 			$foodItems = preg_split("/[\,,]+/", $params["foodItem"]);
 			$this->processFoodItemData($farmerId, $foodItems);
-			
+
 			$storeItems = preg_split("/[\,,]+/", $params["storeItem"]);
 			$this->processStoreItemData($farmerId, $storeItems);
 
@@ -112,39 +112,39 @@ class Farmer extends Base {
 		}
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "farmerId"=>$farmerId));
 	}
-	
+
 	public function prcAdd($params){
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "農友資料新增成功！";
 		$farmerId = "";
 		$farmerImg = $this->getDefaultImgPath("farmer");
-		
+
 		try {
 			$chkValid = $this->chkValidFunc($params);
 			if ($chkValid != "") throw new Exception($chkValid);
-			
-			$usr = $_SESSION["website_login_session"];  
+
+			$usr = $_SESSION["website_login_session"];
 			$sth = $this->dbh->prepare(
-			     "insert into farmer(memberId, name, content, city, town, address, fbRss, farmerImg, createDT, updateDT) ".
-			     "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
+			     "insert into farmer(memberId, name, content, detail, city, town, address, fbRss, farmerImg, createDT, updateDT) ".
+			     "values(?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array(
-				$usr["memberId"], $params["farmerName"], nl2br($params["content"]), 
-				$params["city"], $params["town"], $params["address"], 
+				$usr["memberId"], $params["farmerName"], nl2br($params["content"]), $params["detail"],
+				$params["city"], $params["town"], $params["address"],
 				$params["fbRss"], $farmerImg));
 	        // $sth->execute(array($usr["memberId"], $params["farmerName"], $params["content"], $params["fbRss"]));
 			$farmerId = $this->dbh->lastInsertId();
-			
+
 			$this->processPhoneData($farmerId, $params["phone"]);
 			$this->processEmailData($farmerId, $params["email"]);
 			$this->processLinkData($farmerId, $params["link"], $params["linkDesc"]);
-			
+
 			$foodItems = preg_split("/[\,,]+/", $params["foodItem"]);
 			$this->processFoodItemData($farmerId, $foodItems);
-			
+
 			$storeItems = preg_split("/[\,,]+/", $params["storeItem"]);
 			$this->processStoreItemData($farmerId, $storeItems);
-			
+
 			$this->dbh->commit();
 		} catch (Exception $e) {
 			//print_r($e);
@@ -167,21 +167,21 @@ class Farmer extends Base {
 			if ($phone[$i] == "") $msg .= "\n請輸入手機項目[$curIdx]資料！";
 			else if (!$this->isPhone($phone[$i])) $msg .= "\n手機項目[$curIdx]資料格式錯誤！";
 		}
-		
+
 		$email = $params["email"];
 		for ($i = 0 ; $i < count($email) ; $i++) {
 			$curIdx = $i + 1;
 			if ($email[$i] == "") $msg .= "\n請輸入電子信箱項目[$curIdx]資料！";
 			else if (!$this->isEmail($email[$i])) $msg .= "\n電子信箱項目[$curIdx]資料格式錯誤！";
 		}
-		
+
 		$link = $params["link"];
 		for ($i = 0 ; $i < count($link) ; $i++) {
 			$curIdx = $i + 1;
 			if ($link[$i] == "") $msg .= "\n請輸入個人網頁項目[$curIdx]資料！";
 		}
 		*/
-		
+
 		return $msg;
 	}
 
@@ -189,7 +189,7 @@ class Farmer extends Base {
 		$curFoodItem = array();
 		$existFoodItem = array();
 
-		$searchSql = 
+		$searchSql =
 			"select fi.* ".
 			"from farmeritem fi ".
 			"where fi.farmerId = ?";
@@ -224,14 +224,14 @@ class Farmer extends Base {
 		$curStoreItem = array();
 		$existStoreItem = array();
 
-		$searchSql = 
+		$searchSql =
 			"select sf.* ".
 			"from storefarmer sf ".
 			"where sf.farmerId = ?";
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($farmerId));
 		$curStoreItem = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curStoreItem) ; $i++) {
 			if (!in_array($curStoreItem[$i]["storeId"], $storeItems)) {
@@ -258,8 +258,8 @@ class Farmer extends Base {
 	public function processPhoneData($farmerId, $phone) {
 		$curPhone = array();
 		$existPhone = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select fd.* ".
 			"from farmerdesc fd ".
 			"where fd.farmerId = ? ".
@@ -267,7 +267,7 @@ class Farmer extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($farmerId, "phone"));
 		$curPhone = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curPhone) ; $i++) {
 			if (!in_array($curPhone[$i]["descValue"], $phone)) {
@@ -294,8 +294,8 @@ class Farmer extends Base {
 	public function processEmailData($farmerId, $email) {
 		$curEmail = array();
 		$existEmail = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select fd.* ".
 			"from farmerdesc fd ".
 			"where fd.farmerId = ? ".
@@ -303,7 +303,7 @@ class Farmer extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($farmerId, "email"));
 		$curEmail = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curEmail) ; $i++) {
 			if (!in_array($curEmail[$i]["descValue"], $email)) {
@@ -330,8 +330,8 @@ class Farmer extends Base {
 	public function processLinkData($farmerId, $link, $linkDesc) {
 		$curLink = array();
 		$existLink = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select fd.* ".
 			"from farmerdesc fd ".
 			"where fd.farmerId = ? ".
@@ -339,7 +339,7 @@ class Farmer extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($farmerId, "link"));
 		$curLink = $sth->fetchAll();
-		
+
 		//刪除,修改
 		for ($i = 0 ; $i < count($curLink) ; $i++) {
 			if (!in_array($curLink[$i]["descValue"], $link)) {
@@ -356,7 +356,7 @@ class Farmer extends Base {
 			}
 			array_push($existLink, $curLink[$i]["descValue"]);
 		}
-		
+
 		//新增
 		for ($i = 0 ; $i < count($link) ; $i++) {
 			if (!in_array($link[$i], $existLink)) {
@@ -369,15 +369,15 @@ class Farmer extends Base {
 			}
 		}
 	}
-	
+
 	public function getAllData($params){
 		$isSuc = true;
 		$msg = "農友資料查詢成功！";
-		
+
 		try {
 			$usr = $_SESSION["website_login_session"];
 			$memberId = $usr["memberId"];
-			$searchSql = 
+			$searchSql =
 				"select fm.*, CONCAT(c.cityName,t.townName,fm.address) as fullAddress ".
 				"from farmer fm ".
 				"left join city c on c.cityId = fm.city ".
@@ -392,6 +392,6 @@ class Farmer extends Base {
 		}
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "list"=>$data));
 	}
-	
+
 }
 ?>

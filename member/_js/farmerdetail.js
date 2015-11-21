@@ -37,6 +37,7 @@ require(['../../_js/_require_path'], function() {
 							$(".view_citySelectList").val(info["city"]);
 							aj_listTown(info["town"]);
 							$(".bind_address").attr("value", info["address"]);
+                            CKEDITOR.instances.detail.setData(info["detail"]);  // set textarea value
 							
 							var bool_phone = 0;
 							var bool_email = 0;
@@ -162,6 +163,12 @@ require(['../../_js/_require_path'], function() {
 						
 						var formObj = $(".form_saveFarmer");   
 						//alert($(formObj).serialize());
+
+                        // Fix: ckeditor jQuery ajax serialize() issue
+                        for ( instance in CKEDITOR.instances ){
+                            CKEDITOR.instances[instance].updateElement();
+                        }
+
 						$.ajax({
 							async : false,
 							url : "../ctrl/Controller.php",
