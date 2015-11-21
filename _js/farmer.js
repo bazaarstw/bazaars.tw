@@ -22,6 +22,7 @@ require(['_require_path'], function() {
 							$("#farmer-personal .name").html(info["name"]);
 							$("#farmer-personal .atricle").html(info["content"]);
 							$("#farmer-personal .addrs").html(info["fullAddress"]);
+							$("#farmer-information .detail").html(info["detail"]);
 
                             $.each(result['desc'], function( index, value ) {
                                 switch(value[2]) {
