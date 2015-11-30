@@ -267,6 +267,7 @@ require(['../../_js/_require_path'], function() {
 						},
 						dataType : "json", 
 						success : function(result) {  
+							$(".view_citySelectList").append('<option value="">請選擇</option>');
 							for (idx = 0 ; idx < result.length ; idx++) {
 								$(".view_citySelectList").append('<option value="'+result[idx]["cityId"]+'">'+result[idx]["cityName"]+'</option>');
 							}
@@ -298,6 +299,7 @@ require(['../../_js/_require_path'], function() {
 						},
 						dataType : "json", 
 						success : function(result) {  
+							$(".view_townSelectList").append('<option value="">請選擇</option>');
 							for (idx = 0 ; idx < result.length ; idx++) {
 								var selected = '';
 								if (townId == result[idx]["townId"]) selected = 'selected';
