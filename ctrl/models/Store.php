@@ -1,13 +1,13 @@
 <?php
 
 class Store extends Base {
-	
+
 	public function getDistanceList($params){
 		$page = $params["page"] - 1;
 		$pageNumber = $params["pageNumber"];
 		$page = $page * $pageNumber;
-		
-		$searchSql = 
+
+		$searchSql =
 			"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress, ".
 			"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
 			"from store s ".
@@ -16,7 +16,7 @@ class Store extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$sth->execute();
 		$rows = $sth->fetchAll();
-		
+
 		$data = array();
 		for ($i = 0 ; $i < count($rows) ; $i++) {
 			$row = $rows[$i];
@@ -28,13 +28,13 @@ class Store extends Base {
 		usort($data, array("Store", "sort_by_dist"));
 		return json_encode(array("list"=>array_slice($data, $page, $pageNumber), "listCnt"=>count($data)));
 	}
-	
+
 	function sort_by_dist($a, $b)
 	{
 		if($a['dist'] == $b['dist']) return 0;
 		return ($a['dist'] > $b['dist']) ? 1 : -1;
 	}
-	
+
 	#lat1,lon1是第一個點的經緯度
 	#lat2,lon2是第二個點的經緯度
 	#unit的話就用"K" (這樣的話傳回值就會是公尺)
@@ -47,7 +47,7 @@ class Store extends Base {
 	  $miles = $dist * 60 * 1.1515;
 	  $unit = strtoupper($unit);
 	  $distDesc = "";
-	 
+
 	  if ($unit == "K") {
 		$meters = intval($miles * 1.609344 * 1000);
 		if($meters > 1000){
@@ -62,12 +62,12 @@ class Store extends Base {
 	  } else {
 		$distDesc = $miles + '';
 	  }
-	  
+
 	  return array("dist"=>$meters, "distDesc"=>$distDesc);
 	}
-	
+
 	public function getListData($params){
-		$searchSql = 
+		$searchSql =
 			"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress, ".
 			"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
 			"from store s ".
@@ -77,7 +77,7 @@ class Store extends Base {
 			//"and s.storeName like '%". $params["keyword"]. "%' ".
 			"and s.city like '%". $params["city"]. "%' ".
 			"and s.town like '%". $params["town"]. "%' ";
-			
+
 		$storeTypeSearchSQL = "";
 		$storeType = $params["storeType"];
 		if ($storeType != "") {
@@ -99,10 +99,10 @@ class Store extends Base {
 	public function getDetail($params){
 		$isSuc = true;
 		$msg = "店家資料查詢成功！";
-		
+
 		try {
 			$storeId = $params["storeId"];
-			$searchSql = 
+			$searchSql =
 				"select s.*, CONCAT(c.cityName,t.townName,s.address) as fullAddress ".
 				"from store s ".
 				"left join city c on c.cityId = s.city ".
@@ -111,16 +111,16 @@ class Store extends Base {
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$data = $sth->fetchAll();
-			
-			$searchSql = 
+
+			$searchSql =
 				"select sd.* ".
 				"from storedesc sd ".
 				"where sd.storeId = $storeId";
 			$sth = $this->dbh->prepare($searchSql);
 			$this->execSQL($sth, array());
 			$desc = $sth->fetchAll();
-			
-			$searchSql = 
+
+			$searchSql =
 				"select f.* ".
 				"from storefarmer sf ".
 				"join farmer f on f.farmerId = sf.farmerId ".
@@ -132,18 +132,18 @@ class Store extends Base {
 			$isSuc = false;
 			$msg = "店家資料查詢失敗：". $e->getMessage();
 		}
-		
+
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "info"=>$data, "desc"=>$desc, "farmer"=>$farmer));
 	}
-	
+
 	public function getItemChosen($params){
 		$farmerId = $params["farmerId"];
 		$storeId = $params["storeId"];
 		$chosenPage = $params["chosenPage"];
-		
+
 		if ($chosenPage == "farmer") {
 			if ($farmerId != "") {
-				$searchSql = 
+				$searchSql =
 					"select s.*, ".
 					"  case when (select count(sf.storeFarmerId) from storefarmer sf where sf.farmerId = '$farmerId' and sf.storeId = s.storeId) > 0 then '1' else '0' end as selected ".
 					"from store s";
@@ -151,7 +151,7 @@ class Store extends Base {
 				$sth->execute();
 				$storeItem = $sth->fetchAll();
 			} else {
-				$searchSql = 
+				$searchSql =
 					"select s.*, '0' as selected ".
 					"from store s";
 				$sth = $this->dbh->prepare($searchSql);
@@ -160,7 +160,7 @@ class Store extends Base {
 			}
 		} else {
 			if ($storeId != "") {
-				$searchSql = 
+				$searchSql =
 					"select f.*, ".
 					"  case when (select count(sf.storeFarmerId) from storefarmer sf where sf.storeId = '$storeId' and sf.farmerId = f.farmerId) > 0 then '1' else '0' end as selected ".
 					"from farmer f";
@@ -168,7 +168,7 @@ class Store extends Base {
 				$sth->execute();
 				$storeItem = $sth->fetchAll();
 			} else {
-				$searchSql = 
+				$searchSql =
 					"select f.*, '0' as selected ".
 					"from farmer f";
 				$sth = $this->dbh->prepare($searchSql);
@@ -178,12 +178,12 @@ class Store extends Base {
 		}
 		echo json_encode(array("storeItem"=>$storeItem));
 	}
-	
+
 	public function getStoreTypeItemChosen($params){
 		$storeId = $params["storeId"];
-		
+
 		if ($storeId != "") {
-			$searchSql = 
+			$searchSql =
 				"select st.*, case when sat.authId is not null then '1' else '0' end as selected ".
 				"from storetype st ".
 				"left join storeauthtype sat on sat.storeTypeId = st.typeId and sat.storeId = ?";
@@ -191,7 +191,7 @@ class Store extends Base {
 			$sth->execute(array($storeId));
 			$storeTypeItem = $sth->fetchAll();
 		} else {
-			$searchSql = 
+			$searchSql =
 				"select st.*, '0' as selected ".
 				"from storetype st";
 			$sth = $this->dbh->prepare($searchSql);
@@ -204,34 +204,34 @@ class Store extends Base {
 	/********************************************************************************************************************************************
 	Admin Function
 	*/
-	
+
 	public function prcUpd($params){
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "店家資料編輯成功！";
 		$storeId = "";
-		
+
 		try {
 			$chkValid = $this->chkValidFunc($params);
 			if ($chkValid != "") throw new Exception($chkValid);
-			
+
 			$usr = $_SESSION["website_login_session"];
 			$storeId = $params["storeId"];
 
 			$sth = $this->dbh->prepare(
-			     "update store set storeName = ?, content = ?, city = ?, town = ?, address = ?, latitude = ?, longitude = ?, updateDT = now() where storeId = ?");
+			     "update store set storeName = ?, content = ?, detail = ?, city = ?, town = ?, address = ?, latitude = ?, longitude = ?, updateDT = now() where storeId = ?");
 			$this->execSQL($sth, array(
-				$params["storeName"], nl2br($params["content"]), 
-				$params["city"], $params["town"], $params["address"], 
+				$params["storeName"], nl2br($params["content"]), $params["detail"],
+				$params["city"], $params["town"], $params["address"],
 				$params["latitude"], $params["longitude"], $storeId));
-				
+
 			$this->processPhoneData($storeId, $params["phone"]);
 			$this->processEmailData($storeId, $params["email"]);
 			$this->processLinkData($storeId, $params["link"], $params["linkDesc"]);
 
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
-			
+
 			$storeTypeItems = preg_split("/[\,,]+/", $params["storeTypeItem"]);
 			$this->processStoreTypeItemData($storeId, $storeTypeItems);
 
@@ -244,39 +244,39 @@ class Store extends Base {
 		}
 		echo json_encode(array("isSuc"=>$isSuc, "msg"=>$msg, "storeId"=>$storeId));
 	}
-	
+
 	public function prcAdd($params){
 		$this->dbh->beginTransaction();
 		$isSuc = true;
 		$msg = "店家資料新增成功！";
 		$storeId = "";
 		$storeImg = $this->getDefaultImgPath("store");
-		
+
 		try {
 			$chkValid = $this->chkValidFunc($params);
 			if ($chkValid != "") throw new Exception($chkValid);
-			
-			$usr = $_SESSION["website_login_session"];  
-			
+
+			$usr = $_SESSION["website_login_session"];
+
 			$sth = $this->dbh->prepare(
-			     "insert into store(memberId, storeName, content, city, town, address, storeImg, latitude, longitude, createDT, updateDT) ".
+			     "insert into store(memberId, storeName, content, detail, city, town, address, storeImg, latitude, longitude, createDT, updateDT) ".
 				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
-			$this->execSQL($sth, array($usr["memberId"], 
-				$params["storeName"], nl2br($params["content"]), 
-				$params["city"], $params["town"], $params["address"], 
+			$this->execSQL($sth, array($usr["memberId"],
+				$params["storeName"], nl2br($params["content"]), detail,
+				$params["city"], $params["town"], $params["address"],
 				$storeImg, $params["latitude"], $params["longitude"]));
 			$storeId = $this->dbh->lastInsertId();
-			
+
 			$this->processPhoneData($storeId, $params["phone"]);
 			$this->processEmailData($storeId, $params["email"]);
 			$this->processLinkData($storeId, $params["link"], $params["linkDesc"]);
-			
+
 			$farmerItems = preg_split("/[\,,]+/", $params["farmerItem"]);
 			$this->processFarmerItemData($storeId, $farmerItems);
-			
+
 			$storeTypeItems = preg_split("/[\,,]+/", $params["storeTypeItem"]);
 			$this->processStoreTypeItemData($storeId, $storeTypeItems);
-		
+
 			$this->dbh->commit();
 		} catch (Exception $e) {
 			//print_r($e);
@@ -291,7 +291,7 @@ class Store extends Base {
 		$msg = "";
 		if ($params["storeName"] == "") $msg .= "\n請輸入店家姓名！";
 		if ($params["storeTypeItem"] == "") $msg .= "\n請選擇至少一項店家型態！";
-		
+
 		/*
 		$phone = $params["phone"];
 		for ($i = 0 ; $i < count($phone) ; $i++) {
@@ -299,7 +299,7 @@ class Store extends Base {
 			if ($phone[$i] == "") $msg .= "\n請輸入手機項目[$curIdx]資料！";
 			else if (!$this->isPhone($phone[$i])) $msg .= "\n手機項目[$curIdx]資料格式錯誤！";
 		}
-		
+
 		$email = $params["email"];
 		for ($i = 0 ; $i < count($email) ; $i++) {
 			$curIdx = $i + 1;
@@ -307,15 +307,15 @@ class Store extends Base {
 			else if (!$this->isEmail($email[$i])) $msg .= "\n電子信箱項目[$curIdx]資料格式錯誤！";
 		}
 		*/
-		
+
 		return $msg;
 	}
-	
+
 	public function processPhoneData($storeId, $phone) {
 		$curPhone = array();
 		$existPhone = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select sd.* ".
 			"from storedesc sd ".
 			"where sd.storeId = ? ".
@@ -323,7 +323,7 @@ class Store extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($storeId, "phone"));
 		$curPhone = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curPhone) ; $i++) {
 			if (!in_array($curPhone[$i]["descValue"], $phone)) {
@@ -350,8 +350,8 @@ class Store extends Base {
 	public function processEmailData($storeId, $email) {
 		$curEmail = array();
 		$existEmail = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select sd.* ".
 			"from storedesc sd ".
 			"where sd.storeId = ? ".
@@ -359,7 +359,7 @@ class Store extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($storeId, "email"));
 		$curEmail = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curEmail) ; $i++) {
 			if (!in_array($curEmail[$i]["descValue"], $email)) {
@@ -382,12 +382,12 @@ class Store extends Base {
 			}
 		}
 	}
-	
+
 	public function processLinkData($storeId, $link, $linkDesc) {
 		$curLink = array();
 		$existLink = array();
-		
-		$searchSql = 
+
+		$searchSql =
 			"select sd.* ".
 			"from storedesc sd ".
 			"where sd.storeId = ? ".
@@ -395,7 +395,7 @@ class Store extends Base {
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($storeId, "link"));
 		$curLink = $sth->fetchAll();
-		
+
 		//刪除,修改
 		for ($i = 0 ; $i < count($curLink) ; $i++) {
 			if (!in_array($curLink[$i]["descValue"], $link)) {
@@ -412,7 +412,7 @@ class Store extends Base {
 			}
 			array_push($existLink, $curLink[$i]["descValue"]);
 		}
-		
+
 		//新增
 		for ($i = 0 ; $i < count($link) ; $i++) {
 			if (!in_array($link[$i], $existLink)) {
@@ -425,19 +425,19 @@ class Store extends Base {
 			}
 		}
 	}
-	
+
 	public function processFarmerItemData($storeId, $farmerItems) {
 		$curFarmerItem = array();
 		$existFarmerItem = array();
 
-		$searchSql = 
+		$searchSql =
 			"select sf.* ".
 			"from storefarmer sf ".
 			"where sf.storeId = ?";
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($storeId));
 		$curFarmerItem = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curFarmerItem) ; $i++) {
 			if (!in_array($curFarmerItem[$i]["farmerId"], $farmerItems)) {
@@ -460,19 +460,19 @@ class Store extends Base {
 			}
 		}
 	}
-	
+
 	public function processStoreTypeItemData($storeId, $storeTypeItems) {
 		$curStoreTypeItem = array();
 		$existStoreTypeItem = array();
 
-		$searchSql = 
+		$searchSql =
 			"select sat.* ".
 			"from storeauthtype sat ".
 			"where sat.storeId = ?";
 		$sth = $this->dbh->prepare($searchSql);
 		$this->execSQL($sth, array($storeId));
 		$curStoreTypeItem = $sth->fetchAll();
-		
+
 		//刪除
 		for ($i = 0 ; $i < count($curStoreTypeItem) ; $i++) {
 			if (!in_array($curStoreTypeItem[$i]["storeTypeId"], $storeTypeItems)) {
@@ -495,15 +495,15 @@ class Store extends Base {
 			}
 		}
 	}
-	
+
 	public function getAllData($params){
 		$isSuc = true;
 		$msg = "店家資料查詢成功！";
-		
+
 		try {
 			$usr = $_SESSION["website_login_session"];
 			$memberId = $usr["memberId"];
-			$searchSql = 
+			$searchSql =
 				"select s.*, CONCAT(ifnull(c.cityName,''),ifnull(t.townName,''),ifnull(s.address,'')) as fullAddress, ".
 				"(select count(storeFarmerId) from storefarmer where storeId = s.storeId) as farmerCnt ".
 				"from store s ".
