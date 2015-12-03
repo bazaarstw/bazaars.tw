@@ -35,9 +35,9 @@ require(['_require_path'], function() {
 					},
 					eventClick: function(calEvent, jsEvent, view) {
 						if (calEvent.type == 'news') {
-							location.href = "active_detail.html?newsId=" + calEvent.id;
+							location.href = "/event/" + calEvent.id;
 						} else {
-							location.href = "work_detail.html?workId=" + calEvent.id;
+							location.href = "/work/" + calEvent.id;
 						}
 					},
 					eventMouseover: function(calEvent, jsEvent) {
