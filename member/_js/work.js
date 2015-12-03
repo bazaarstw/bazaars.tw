@@ -71,7 +71,7 @@ require(['../../_js/_require_path'], function() {
 								} else {
 									listCell.push("<a href='workSign.html?workId="+result.list[idx]["workId"]+"'>"+result.list[idx]["signCnt"]+"</a>");
 								}
-								listCell.push("<a href='workDetail.html?workId="+result.list[idx]["workId"]+"'>編輯</a>");
+								listCell.push("<a href='workDetail.html?workId="+result.list[idx]["workId"]+"'>編輯</a> <a href='/work/"+result.list[idx]["workId"]+"' target='_blank'>檢視</a>");
 								rtnresult.push(listCell);
 							}
 							//alert(JSON.stringify(rtnresult));
