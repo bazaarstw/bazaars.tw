@@ -60,7 +60,7 @@ require(['../../_js/_require_path'], function() {
 								listCell.push(result.list[idx]["title"]);
 								listCell.push(result.list[idx]["fullAddress"]);
 								listCell.push(result.list[idx]["startDT"] + "<br/>" + result.list[idx]["endDT"]);
-								listCell.push("<a href='newsDetail.html?newsId="+result.list[idx]["newsId"]+"'>編輯</a>");
+								listCell.push("<a href='newsDetail.html?newsId="+result.list[idx]["newsId"]+"'>編輯</a> <a href='/event/"+result.list[idx]["newsId"]+"' target='_blank'>檢視</a>");
 								rtnresult.push(listCell);
 							}
 							//alert(JSON.stringify(rtnresult));
