@@ -82,7 +82,7 @@ require(['_require_path'], function() {
 								var farmer = $("#farmers-list").html();
 								for (idx = 0 ; idx < result.list.length ; idx++) {
 									$("#farmers-list").append(farmer);
-									$("#farmers-list li").last().find("a").attr("href","farmer.html?farmerId="+result.list[idx]["farmerId"]);
+									$("#farmers-list li").last().find("a").attr("href","/farmer/"+result.list[idx]["farmerId"]);
 									$("#farmers-list li").last().find(".name").html(result.list[idx]["name"]);
 									$("#farmers-list li").last().find("a").attr("title",result.list[idx]["name"]);
 									$("#farmers-list li").last().find(".article").html(result.list[idx]["content"]);
