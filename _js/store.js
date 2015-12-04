@@ -77,7 +77,7 @@ require(['_require_path'], function() {
 								var news = $(".cols-body").html();
 								for (idx = 0 ; idx < result.list.length ; idx++) {
 									$(".cols-body").append(news);
-									$(".cols-body a").last().attr("href","store_detail.html?storeId="+result.list[idx]["storeId"]);
+									$(".cols-body a").last().attr("href","/store/"+result.list[idx]["storeId"]);
 									$(".cols-body a").last().find(".items").eq(0).text(result.list[idx]["storeName"]);
 									$(".cols-body a").last().find(".items").eq(1).text(result.list[idx]["fullAddress"]);
 									$(".cols-body a").last().find(".items").eq(2).text(result.list[idx]["farmerCnt"]);
@@ -140,7 +140,7 @@ require(['_require_path'], function() {
 								for (idx = 0 ; idx < result.list.length ; idx++) {
 									
 									$(".cols-body").append(news);
-									$(".cols-body a").last().attr("href","store_detail.html?storeId="+result.list[idx]["storeId"]);
+									$(".cols-body a").last().attr("href","/store/"+result.list[idx]["storeId"]);
 									$(".cols-body a").last().find(".items").eq(0).text(result.list[idx]["storeName"]);
 									$(".cols-body a").last().find(".items").eq(1).text(result.list[idx]["fullAddress"]);
 									$(".cols-body a").last().find(".items").eq(2).text(result.list[idx]["farmerCnt"]);
