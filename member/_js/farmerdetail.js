@@ -239,7 +239,12 @@ require(['../../_js/_require_path'], function() {
 								for (var subIdx = 0 ; subIdx < foodItem.length ; subIdx++) {
 									var selected = "";
 									if (foodItem[subIdx]["selected"] == "1") selected = "selected";
-									$(itemGroup).append("<option " + selected + " value='" + foodItem[subIdx]["foodItemId"] + "'>" + foodItem[subIdx]["itemName"]　+ "</option>")
+
+                                    if(foodItem[subIdx]["itemAlias"]) {
+                                        $(itemGroup).append("<option " + selected + " value='" + foodItem[subIdx]["foodItemId"] + "'>" + foodItem[subIdx]["itemName"] + " (" + foodItem[subIdx]["itemAlias"] + ")" + "</option>")
+                                    } else {
+                                        $(itemGroup).append("<option " + selected + " value='" + foodItem[subIdx]["foodItemId"] + "'>" + foodItem[subIdx]["itemName"] + "</option>")
+                                    }
 								}
 								$(".foodItem").append($(itemGroup));
 							}
