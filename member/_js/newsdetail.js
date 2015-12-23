@@ -42,7 +42,8 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_address").attr("value", info["address"]);
 							$(".bind_startDT").attr("value", info["startDT"]);
 							$(".bind_endDT").attr("value", info["endDT"]);
-							$(".bind_content").text(info["content"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
+							// $(".bind_content").text(info["content"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
+                            CKEDITOR.instances.content.setData(info["content"]);  // set textarea value
 							
 						},
 						error : function(jqXHR, textProject, errorThrown) {
@@ -58,6 +59,12 @@ require(['../../_js/_require_path'], function() {
 						
 						var formObj = $(".form_saveNews");   
 						//alert($(formObj).serialize());
+
+                        // Fix: ckeditor jQuery ajax serialize() issue
+                        for ( instance in CKEDITOR.instances ){
+                            CKEDITOR.instances[instance].updateElement();
+                        }
+
 						$.ajax({
 							async : false,
 							url : "../ctrl/Controller.php",
