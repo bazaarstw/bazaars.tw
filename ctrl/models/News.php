@@ -79,7 +79,7 @@ class News extends Base {
 				 "values(?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"], 
 				$params["title"], $params["city"], $params["town"], $params["address"], 
-				$params["startDT"], $params["endDT"], nl2br($params["content"])));
+				$params["startDT"], $params["endDT"], $params["content"]));
 			$newsId = $this->dbh->lastInsertId();
 
 			$this->dbh->commit();

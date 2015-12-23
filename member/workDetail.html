@@ -35,6 +35,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="../_library/ckeditor/ckeditor.js"></script>
 </head>
 
 <body>
@@ -190,6 +191,13 @@
 	<script src="../_library/require.min.js" defer async="true"></script>
 	<script src="../_library/require.min.js" data-main="_js/workdetail"></script>
 	
+    <script>
+        CKEDITOR.replace('memo',{
+            // filebrowserBrowseUrl: '/browser/browse.php',
+            filebrowserUploadUrl: '/upload.php',
+            height: 500
+        });
+    </script>
 </body>
 
 </html>

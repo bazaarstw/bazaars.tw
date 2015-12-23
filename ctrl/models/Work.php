@@ -177,7 +177,7 @@ class Work extends Base {
 			     "workCnt = ?, workDay = ?, updateDT = now() where workId = ?");
 			$this->execSQL($sth, array(
 				$params["title"], $params["city"], $params["town"], $params["address"], 
-				$params["salary"], $params["startDT"], $params["endDT"], nl2br($params["memo"]),
+				$params["salary"], $params["startDT"], $params["endDT"], $params["memo"],
 				$params["workCnt"], $workDay, $workId));
 
 			$this->dbh->commit();
@@ -205,7 +205,7 @@ class Work extends Base {
 				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"], 
 				$params["title"], $params["city"], $params["town"], $params["address"], 
-				$params["salary"], $params["startDT"], $params["endDT"], nl2br($params["memo"]),
+				$params["salary"], $params["startDT"], $params["endDT"], $params["memo"],
 				$params["workCnt"], $workDay));
 			$workId = $this->dbh->lastInsertId();
 

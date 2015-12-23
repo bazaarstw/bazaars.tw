@@ -43,7 +43,8 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_startDT").attr("value", info["startDT"]);
 							$(".bind_endDT").attr("value", info["endDT"]);
 							$(".bind_workCnt").attr("value", info["workCnt"]);
-							$(".bind_memo").text(info["memo"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
+							// $(".bind_memo").text(info["memo"].replace(/&nbsp;/g, ' ').replace(/<br.*?>/g, ''));
+                            CKEDITOR.instances.memo.setData(info["memo"]);  // set textarea value
 						},
 						error : function(jqXHR, textProject, errorThrown) {
 							alert('HTTP project code: ' + jqXHR.project + '\n' + 'textProject: ' + textProject + '\n' + 'errorThrown: ' + errorThrown);
@@ -58,6 +59,12 @@ require(['../../_js/_require_path'], function() {
 						
 						var formObj = $(".form_saveWork");   
 						//alert($(formObj).serialize());
+
+                        // Fix: ckeditor jQuery ajax serialize() issue
+                        for ( instance in CKEDITOR.instances ){
+                            CKEDITOR.instances[instance].updateElement();
+                        }
+
 						$.ajax({
 							async : false,
 							url : "../ctrl/Controller.php",
