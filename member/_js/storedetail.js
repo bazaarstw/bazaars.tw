@@ -163,7 +163,10 @@ require(['../../_js/_require_path'], function() {
 							$(".bind_city :selected").text() + 
 							$(".bind_town :selected").text() + 
 							$(".bind_address").val();
-						codeAddress(addr);
+                        if($(".bind_city :selected").val()) {
+                            codeAddress(addr);
+                        }
+                        processForm();
 					});
 				}
 				
@@ -329,7 +332,6 @@ require(['../../_js/_require_path'], function() {
 						if (status == google.maps.GeocoderStatus.OK) {
 							$(".bind_lat").val(results[0].geometry.location.lat());
 							$(".bind_lon").val(results[0].geometry.location.lng());
-							processForm();
 						} else {
 							alert("輸入地址格式錯誤: " + status);
 						}

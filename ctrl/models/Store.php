@@ -260,9 +260,9 @@ class Store extends Base {
 
 			$sth = $this->dbh->prepare(
 			     "insert into store(memberId, storeName, content, detail, city, town, address, storeImg, latitude, longitude, createDT, updateDT) ".
-				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
+				 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), now())");
 			$this->execSQL($sth, array($usr["memberId"],
-				$params["storeName"], nl2br($params["content"]), detail,
+				$params["storeName"], nl2br($params["content"]), $params["detail"],
 				$params["city"], $params["town"], $params["address"],
 				$storeImg, $params["latitude"], $params["longitude"]));
 			$storeId = $this->dbh->lastInsertId();
